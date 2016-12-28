@@ -11,10 +11,16 @@ source ./lib_sh/requirers.sh
 
 bot "Hi! I'm going to install tooling and tweak your system settings. Here I go..."
 
-# Do we need to ask for sudo password or is it already passwordless?
-grep -q 'NOPASSWD:     ALL' /etc/sudoers.d/$LOGNAME > /dev/null 2>&1
-if [ $? -ne 0 ]; then
-  echo "no suder file"
+# ensure ~/.gitshots exists to prevent "Error." in terminal after git commits
+# TODO: use node/yoeman to templatize elements of this project and use inquerer to ask if the
+# user wants to use gitshots
+# mkdir -p ~/.gitshots
+
+# Ask for the administrator password upfront
+if sudo grep -q "# %wheel\tALL=(ALL) NOPASSWD: ALL" "/etc/sudoers"; then
+
+  # Ask for the administrator password upfront
+  bot "I need you to enter your sudo password so I can install some things:"
   sudo -v
 
   # Keep-alive: update existing sudo time stamp until the script has finished
@@ -249,6 +255,36 @@ else
   ok "skipped. Install by running :PluginInstall within vim"
 fi
 
+<<<<<<< HEAD
+||||||| merged common ancestors
+bot "installing fonts"
+./fonts/install.sh
+brew tap caskroom/fonts
+require_cask font-awesome
+require_cask font-awesome-terminal-fonts
+require_cask font-hack
+require_cask font-inconsolata-dz-for-powerline
+require_cask font-inconsolata-g-for-powerline
+require_cask font-inconsolata-for-powerline
+require_cask font-roboto-mono
+require_cask font-roboto-mono-for-powerline
+require_cask font-source-code-pro
+ok
+=======
+bot "installing fonts"
+./fonts/install.sh
+brew tap caskroom/fonts
+require_cask font-fontawesome
+require_cask font-awesome-terminal-fonts
+require_cask font-hack
+require_cask font-inconsolata-dz-for-powerline
+require_cask font-inconsolata-g-for-powerline
+require_cask font-inconsolata-for-powerline
+require_cask font-roboto-mono
+require_cask font-roboto-mono-for-powerline
+require_cask font-source-code-pro
+ok
+>>>>>>> Making mods to my set up
 
 read -r -p "Install fonts? [y|N] " response
 if [[ $response =~ (y|yes|Y) ]];then
@@ -311,7 +347,7 @@ if [[ -z $response || $response =~ ^(n|N) ]]; then
   open /Applications/iTerm.app
   bot "All done"
   exit
-fi 
+fi
 
 ###############################################################################
 bot "Configuring General System UI/UX..."
@@ -831,8 +867,8 @@ running "Top right screen corner → Desktop"
 defaults write com.apple.dock wvous-tr-corner -int 4
 defaults write com.apple.dock wvous-tr-modifier -int 0;ok
 running "Bottom right screen corner → Start screen saver"
-defaults write com.apple.dock wvous-br-corner -int 5
-defaults write com.apple.dock wvous-br-modifier -int 0;ok
+# defaults write com.apple.dock wvous-br-corner -int 5
+# defaults write com.apple.dock wvous-br-modifier -int 0;ok
 
 ###############################################################################
 bot "Configuring Safari & WebKit"
@@ -939,7 +975,7 @@ bot "Terminal & iTerm2"
 ###############################################################################
 
 # running "Only use UTF-8 in Terminal.app"
-# defaults write com.apple.terminal StringEncodings -array 4;ok
+defaults write com.apple.terminal StringEncodings -array 4;ok
 #
 # running "Use a modified version of the Solarized Dark theme by default in Terminal.app"
 # TERM_PROFILE='Solarized Dark xterm-256color';
@@ -977,8 +1013,8 @@ defaults write com.googlecode.iterm2 HotkeyModifiers -int 262401;
 running "Make iTerm2 load new tabs in the same directory"
 /usr/libexec/PlistBuddy -c "set \"New Bookmarks\":0:\"Custom Directory\" Recycle" ~/Library/Preferences/com.googlecode.iterm2.plist
 running "setting fonts"
-defaults write com.googlecode.iterm2 "Normal Font" -string "Hack-Regular 12";
-defaults write com.googlecode.iterm2 "Non Ascii Font" -string "RobotoMonoForPowerline-Regular 12";
+defaults write com.googlecode.iterm2 "Normal Font" -string "Hack-Regular 15";
+defaults write com.googlecode.iterm2 "Non Ascii Font" -string "RobotoMonoForPowerline-Regular 15";
 ok
 running "reading iterm settings"
 defaults read -app iTerm > /dev/null 2>&1;
@@ -1055,25 +1091,11 @@ running "Disable continuous spell checking"
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false;ok
 
 ###############################################################################
-bot "SizeUp.app"
-###############################################################################
-
-running "Start SizeUp at login"
-defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true;ok
-
-running "Don’t show the preferences window on next start"
-defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false;ok
-
-killall cfprefsd
-
-open /Applications/iTerm.app
-
-###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
 bot "OK. Note that some of these changes require a logout/restart to take effect. Killing affected applications (so they can reboot)...."
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
-  "Dock" "Finder" "Mail" "Messages" "Safari" "SizeUp" "SystemUIServer" \
+  "Dock" "Finder" "Mail" "Messages" "Safari" "SystemUIServer" \
   "iCal" "Terminal"; do
   killall "${app}" > /dev/null 2>&1
 done

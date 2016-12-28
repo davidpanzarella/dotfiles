@@ -1,3 +1,4 @@
+
 module.exports = {
   brew: [
     // http://conqueringthecommandline.com/book/ack_ag
@@ -7,6 +8,7 @@ module.exports = {
     'autojump',
     // alternative to `cat`: https://github.com/sharkdp/bat
     'bat',
+    'brew-cask-completion',
     // Install GNU core utilities (those that come with macOS are outdated)
     // Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
     'coreutils',
@@ -19,6 +21,7 @@ module.exports = {
     'gawk',
     // http://www.lcdf.org/gifsicle/ (because I'm a gif junky)
     'gifsicle',
+		'git-extras',
     'gnupg',
     // Install GNU `sed`, overwriting the built-in `sed`
     // so we can do "sed -i 's/foo/bar/' file" instead of "sed -i '' 's/foo/bar/' file"
@@ -26,7 +29,12 @@ module.exports = {
     // upgrade grep so we can get things like inverted match (-v)
     'grep --with-default-names',
     // better, more recent grep
+		// better/more recent version of grep, nano, openssh, & screen
     'homebrew/dupes/grep',
+		'homebrew/dupes/nano',
+		'homebrew/dupes/openssh',
+		'homebrew/dupes/screen',
+		'homebrew/dupes/rsync',
     // https://github.com/jkbrzt/httpie
     'httpie',
     // jq is a sort of JSON grep
@@ -36,62 +44,80 @@ module.exports = {
     // Install some other useful utilities like `sponge`
     'moreutils',
     'nmap',
+    'n',
     'openconnect',
     'reattach-to-user-namespace',
-    // better/more recent version of screen
-    'homebrew/dupes/screen',
     'tmux',
     'todo-txt',
     'tree',
     'ttyrec',
-    // better, more recent vim
     'vim --with-client-server --with-override-system-vi',
     'watch',
-    // Install wget with IRI support
-    'wget --enable-iri'
+    'wget --enable-iri',
+		'wifi-password'
   ],
   cask: [
-    //'adium',
-    //'amazon-cloud-drive',
-    //'atom',
-    // 'box-sync',
-    //'comicbooklover',
-    //'diffmerge',
-    'docker', // docker for mac
-    //'dropbox',
-    //'evernote',
-    'flux',
-    'gpg-suite',
-    //'ireadfast',
+		'1password',
+		'adobe-creative-cloud',
+		'adobe-reader',
+		'alfred',
+		'betterzipql',
+		'firefox',
+		'flux',
+		'google-chrome',
+		'google-drive',
+		'gpgtools',
+		'gyazo',
+		'hammerspoon',
+		'imagealpha',
+		'imageoptim',
+		'imazing',
+		'macdown',
+		'qlcolorcode',
+		'qlimagesize',
+		'qlmarkdown',
+		'qlprettypatch',
+		'qlstephen',
+		'qlvideo'
+		'quicklook-csv',
+		'quicklook-json',
+		'quicklookase',
+		'sketch-toolbox',
+		'suspicious-package',
+		'textwrangler',
+		'webpquicklook',
+	  'docker',
+    'diffmerge',
+    'evernote',
     'iterm2',
-    'little-snitch',
     'macbreakz',
-    'micro-snitch',
+    'omnifocus',
+    'opera',
+    'rescuetime',
     'signal',
-    //'macvim',
     'sizeup',
-    //'sketchup',
-    'slack',
+    'sketch',
+    'sourcetree',
     'the-unarchiver',
-    //'torbrowser',
-    //'transmission',
     'visual-studio-code',
-    //'vlc',
-    'xquartz'
+    'vlc',
   ],
   gem: [
   ],
   npm: [
     'antic',
-    'buzzphrase',
+		'diff-so-fancy',
     'eslint',
+    'generator-dockerize',
+    'git-open',
+    'git-recent',
     'instant-markdown-d',
-    // 'generator-dockerize',
-    // 'gulp',
     'npm-check-updates',
+    'npm-check',
+    'generator-dockerize',
     'prettyjson',
+		'servedir',
     'trash',
     'vtop'
-    // ,'yo'
   ]
 };
