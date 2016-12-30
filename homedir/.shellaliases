@@ -1,6 +1,18 @@
 #!/bin/sh
 
 #################################
+# David Panzarella MBP
+alias sit='cd ~/Work/sites'
+alias cli='cd ~/Work/clients'
+alias doc='cd ~/Documents'
+alias des='cd ~/Desktop'
+alias dow='cd ~/Downloads'
+
+alias rserv='ssh root@208.95.104.123'
+alias nserv='ssh sbiwd@208.95.104.123'
+
+
+#################################
 # Simple Program Name Shortening
 alias g=git
 
@@ -32,7 +44,6 @@ alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep
 # Files in use in the Users directory
 alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep Users'
 
-alias game.seek='txt="";for i in {1..20};do txt=$txt"$i. ";done;txt=$txt" Ready or not, here I come";say $txt'
 
 # Git Tools
 # assumes git-up is installed (gem install git-up)
