@@ -11,6 +11,9 @@ alias dow='cd ~/Downloads'
 alias rserv='ssh root@208.95.104.123'
 alias nserv='ssh sbiwd@208.95.104.123'
 
+alias build='npm run build'
+alias bs='npm run bs'
+
 
 #################################
 # Simple Program Name Shortening
@@ -30,7 +33,7 @@ alias bpc='git add -A . && git cam "$(buzzphrase 2)" && git push'
 alias dos2lf='dos2unix `find ./ -type f`'
 
 # Flush the DNS on Mac
-alias dnsflush='dscacheutil -flushcache'
+alias dnsflush='sudo killall -HUP mDNSResponder'
 
 # Empty the Trash on all mounted volumes and the main HDD.
 # Also, clear Apple’s System Logs to improve shell startup speed.

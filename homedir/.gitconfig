@@ -1,6 +1,6 @@
 [user]
-  name = David Panzarella
-  email = david@deven.io
+	name = David Panzarella
+	email = david@deven.io
 [github]
   # https://github.com/blog/180-local-github-config
   user = davidpanzarella
@@ -206,3 +206,5 @@
 [mergetool "sourcetree"]
 	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+[commit]
+	template = /Users/davidpanzarella/.stCommitMsg

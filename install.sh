@@ -255,22 +255,6 @@ else
   ok "skipped. Install by running :PluginInstall within vim"
 fi
 
-<<<<<<< HEAD
-||||||| merged common ancestors
-bot "installing fonts"
-./fonts/install.sh
-brew tap caskroom/fonts
-require_cask font-awesome
-require_cask font-awesome-terminal-fonts
-require_cask font-hack
-require_cask font-inconsolata-dz-for-powerline
-require_cask font-inconsolata-g-for-powerline
-require_cask font-inconsolata-for-powerline
-require_cask font-roboto-mono
-require_cask font-roboto-mono-for-powerline
-require_cask font-source-code-pro
-ok
-=======
 bot "installing fonts"
 ./fonts/install.sh
 brew tap caskroom/fonts
@@ -284,7 +268,6 @@ require_cask font-roboto-mono
 require_cask font-roboto-mono-for-powerline
 require_cask font-source-code-pro
 ok
->>>>>>> Making mods to my set up
 
 read -r -p "Install fonts? [y|N] " response
 if [[ $response =~ (y|yes|Y) ]];then
@@ -313,10 +296,9 @@ fi
 # fi
 
 # node version manager
-require_brew nvm
+require_brew n
 
-# nvm
-require_nvm stable
+n --latest
 
 # always pin versions (no surprises, consistent dev/build machines)
 npm config set save-exact true
@@ -414,7 +396,7 @@ sudo systemsetup -setremotelogin off
 sudo systemsetup -setwakeonmodem off
 
 # Disable wake-on LAN
-sudo systemsetup -setwakeonnetworkaccess off
+# sudo systemsetup -setwakeonnetworkaccess off
 
 # Disable file-sharing via AFP or SMB
 # sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.AppleFileServer.plist

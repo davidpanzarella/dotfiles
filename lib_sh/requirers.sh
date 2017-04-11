@@ -77,22 +77,4 @@ function require_apm() {
     ok
 }
 
-function sourceNVM(){
-    export NVM_DIR=~/.nvm
-    source $(brew --prefix nvm)/nvm.sh
-}
 
-
-function require_nvm() {
-    mkdir -p ~/.nvm
-    cp $(brew --prefix nvm)/nvm-exec ~/.nvm/
-    sourceNVM
-    nvm install $1
-    if [[ $? != 0 ]]; then
-        action "installing nvm"
-        require_brew nvm
-        . ~/.bashrc
-        nvm install $1
-    fi
-    ok
-}
