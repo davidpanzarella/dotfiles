@@ -35,6 +35,7 @@ module.exports = {
 		'homebrew/dupes/openssh',
 		'homebrew/dupes/screen',
 		'homebrew/dupes/rsync',
+
     // https://github.com/jkbrzt/httpie
     'httpie',
     // jq is a sort of JSON grep
