@@ -139,6 +139,7 @@ module.exports = {
 		'servedir',
     'trash',
     'vtop',
+    'vue-cli',
 		'yo'
   ]
 };
