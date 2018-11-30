@@ -41,10 +41,10 @@
   quotepath = false
   # line endings
   # force LF during add
-  autocrlf = input
+	autocrlf = false
   # autocrlf = true # for windows to convert to CRLF on checkout and LF on add
   # warn but allow line ending conversion to proceed
-  safecrlf = warn
+	safecrlf = false
   # prevent crlf (then you will have to deal with the problem -- dos2unix, etc)
   #safecrlf = true
   editor = vim

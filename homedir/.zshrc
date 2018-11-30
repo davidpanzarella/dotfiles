@@ -44,4 +44,9 @@ add-zsh-hook chpwd
 unsetopt correct
 
 # run fortune on new terminal :)
-# fortune
+fortune
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+  # This loads nvm bash_completion
+[ -d "/usr/local/opt/python@2/bin" ] && export PATH="/usr/local/opt/python@2/bin:$PATH"
+
+export PATH="$PATH:`yarn global bin`"
