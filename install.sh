@@ -11,13 +11,8 @@ source ./lib_sh/requirers.sh
 
 bot "Hi! I'm going to install tooling and tweak your system settings. Here I go..."
 
-# ensure ~/.gitshots exists to prevent "Error." in terminal after git commits
-# TODO: use node/yoeman to templatize elements of this project and use inquerer to ask if the
-# user wants to use gitshots
-# mkdir -p ~/.gitshots
-
 # Ask for the administrator password upfront
-if sudo grep -q "# %wheel\tALL=(ALL) NOPASSWD: ALL" "/etc/sudoers"; then
+if ! sudo grep -q "%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles" "/etc/sudoers"; then
 
   # Ask for the administrator password upfront
   bot "I need you to enter your sudo password so I can install some things:"
@@ -31,14 +26,23 @@ if sudo grep -q "# %wheel\tALL=(ALL) NOPASSWD: ALL" "/etc/sudoers"; then
   read -r -p "Make sudo passwordless? [y|N] " response
 
   if [[ $response =~ (yes|y|Y) ]];then
-      sed --version 2>&1 > /dev/null
-      sudo sed -i '' 's/^#\s*\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)/\1/' /etc/sudoers
-      if [[ $? == 0 ]];then
-          sudo sed -i 's/^#\s*\(%wheel\s\+ALL=(ALL)\s\+NOPASSWD:\s\+ALL\)/\1/' /etc/sudoers
-      fi
+      sudo cp /etc/sudoers /etc/sudoers.back
+      echo '%wheel		ALL=(ALL) NOPASSWD: ALL #atomantic/dotfiles' | sudo tee -a /etc/sudoers > /dev/null
       sudo dscl . append /Groups/wheel GroupMembership $(whoami)
       bot "You can now run sudo commands without password!"
   fi
+fi
+
+# /etc/hosts
+read -r -p "Overwrite /etc/hosts with the ad-blocking hosts file from someonewhocares.org? (from ./configs/hosts file) [y|N] " response
+if [[ $response =~ (yes|y|Y) ]];then
+    action "cp /etc/hosts /etc/hosts.backup"
+    sudo cp /etc/hosts /etc/hosts.backup
+    ok
+    action "cp ./configs/hosts /etc/hosts"
+    sudo cp ./configs/hosts /etc/hosts
+    ok
+    bot "Your /etc/hosts file has been updated. Last version is saved in /etc/hosts.backup"
 fi
 
 grep 'user = GITHUBUSER' ./homedir/.gitconfig > /dev/null 2>&1
@@ -102,6 +106,7 @@ if [[ $? = 0 ]]; then
     sed -i '' "s/GITHUBFULLNAME/$firstname $lastname/" ./homedir/.gitconfig;
     sed -i '' 's/GITHUBEMAIL/'$email'/' ./homedir/.gitconfig;
     sed -i '' 's/GITHUBUSER/'$githubuser'/' ./homedir/.gitconfig;
+    ok
   else
     echo
     bot "looks like you are already using gnu-sed. woot!"
@@ -125,8 +130,10 @@ if [[ "$MD5_NEWWP" != "$MD5_OLDWP" ]]; then
     sudo rm -f /System/Library/CoreServices/DefaultDesktop.jpg > /dev/null 2>&1
     sudo rm -f /Library/Desktop\ Pictures/El\ Capitan.jpg > /dev/null 2>&1
     sudo rm -f /Library/Desktop\ Pictures/Sierra.jpg > /dev/null 2>&1
+    sudo rm -f /Library/Desktop\ Pictures/Sierra\ 2.jpg > /dev/null 2>&1
     sudo cp ./img/wallpaper.jpg /System/Library/CoreServices/DefaultDesktop.jpg;
     sudo cp ./img/wallpaper.jpg /Library/Desktop\ Pictures/Sierra.jpg;
+    sudo cp ./img/wallpaper.jpg /Library/Desktop\ Pictures/Sierra\ 2.jpg;
     sudo cp ./img/wallpaper.jpg /Library/Desktop\ Pictures/El\ Capitan.jpg;ok
   fi
 fi
@@ -181,6 +188,8 @@ require_brew fontconfig
 # update zsh to latest
 require_brew zsh
 # update ruby to latest
+# use versions of packages installed with homebrew
+RUBY_CONFIGURE_OPTS="--with-openssl-dir=`brew --prefix openssl` --with-readline-dir=`brew --prefix readline` --with-libyaml-dir=`brew --prefix libyaml`"
 require_brew ruby
 # set zsh as the user login shell
 CURRENTSHELL=$(dscl . -read /Users/$USER UserShell | awk '{print $2}')
@@ -221,8 +230,10 @@ done
 popd > /dev/null 2>&1
 
 
-+bot "Installing vim plugins"
- +vim +PluginInstall +qall > /dev/null 2>&1
+bot "Installing vim plugins"
+# cmake is required to compile vim bundle YouCompleteMe
+# require_brew cmake
+vim +PluginInstall +qall > /dev/null 2>&1
 
 bot "installing fonts"
 ./fonts/install.sh
@@ -248,7 +259,7 @@ fi
 require_brew nvm
 
 # nvm
-require_nvm 7.3.0
+require_nvm stable
 
 # always pin versions (no surprises, consistent dev/build machines)
 npm config set save-exact true
@@ -331,17 +342,17 @@ sudo defaults write /Library/Preferences/com.apple.alf stealthenabled -int 1
 sudo systemsetup -setremoteappleevents off
 
 # Disable remote login
-#sudo systemsetup -setremotelogin off
+sudo systemsetup -setremotelogin off
 
 # Disable wake-on modem
 sudo systemsetup -setwakeonmodem off
 
 # Disable wake-on LAN
-# sudo systemsetup -setwakeonnetworkaccess off
+sudo systemsetup -setwakeonnetworkaccess off
 
 # Disable file-sharing via AFP or SMB
-sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.AppleFileServer.plist
-sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.smbd.plist
+# sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.AppleFileServer.plist
+# sudo launchctl unload -w /System/Library/LaunchDaemons/com.apple.smbd.plist
 
 # Display login window as name and password
 #sudo defaults write /Library/Preferences/com.apple.loginwindow SHOWFULLNAME -bool true
@@ -392,8 +403,8 @@ defaults write com.apple.LaunchServices LSQuarantine -bool false
 running "Disable local Time Machine snapshots"
 sudo tmutil disablelocal;ok
 
-running "Disable hibernation (speeds up entering sleep mode)"
-sudo pmset -a hibernatemode 0;ok
+# running "Disable hibernation (speeds up entering sleep mode)"
+# sudo pmset -a hibernatemode 0;ok
 
 running "Remove the sleep image file to save disk space"
 sudo rm -rf /Private/var/vm/sleepimage;ok
@@ -552,8 +563,8 @@ sudo systemsetup -setcomputersleep Off > /dev/null;ok
 running "Check for software updates daily, not just once per week"
 defaults write com.apple.SoftwareUpdate ScheduleFrequency -int 1;ok
 
-running "Disable Notification Center and remove the menu bar icon"
-launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist > /dev/null 2>&1;ok
+# running "Disable Notification Center and remove the menu bar icon"
+# launchctl unload -w /System/Library/LaunchAgents/com.apple.notificationcenterui.plist > /dev/null 2>&1;ok
 
 running "Disable smart quotes as they’re annoying when typing code"
 defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false;ok
@@ -596,7 +607,7 @@ running "Disable press-and-hold for keys in favor of key repeat"
 defaults write NSGlobalDomain ApplePressAndHoldEnabled -bool false;ok
 
 running "Set a blazingly fast keyboard repeat rate"
-defaults write NSGlobalDomain KeyRepeat -int 1
+defaults write NSGlobalDomain KeyRepeat -int 2
 defaults write NSGlobalDomain InitialKeyRepeat -int 10;ok
 
 running "Set language and text formats (english/US)"
@@ -792,8 +803,8 @@ running "Top right screen corner → Desktop"
 defaults write com.apple.dock wvous-tr-corner -int 4
 defaults write com.apple.dock wvous-tr-modifier -int 0;ok
 running "Bottom right screen corner → Start screen saver"
-# defaults write com.apple.dock wvous-br-corner -int 5
-# defaults write com.apple.dock wvous-br-modifier -int 0;ok
+defaults write com.apple.dock wvous-br-corner -int 5
+defaults write com.apple.dock wvous-br-modifier -int 0;ok
 
 ###############################################################################
 bot "Configuring Safari & WebKit"
@@ -900,7 +911,7 @@ bot "Terminal & iTerm2"
 ###############################################################################
 
 # running "Only use UTF-8 in Terminal.app"
-defaults write com.apple.terminal StringEncodings -array 4;ok
+# defaults write com.apple.terminal StringEncodings -array 4;ok
 #
 # running "Use a modified version of the Solarized Dark theme by default in Terminal.app"
 # TERM_PROFILE='Solarized Dark xterm-256color';
@@ -938,8 +949,8 @@ defaults write com.googlecode.iterm2 HotkeyModifiers -int 262401;
 running "Make iTerm2 load new tabs in the same directory"
 /usr/libexec/PlistBuddy -c "set \"New Bookmarks\":0:\"Custom Directory\" Recycle" ~/Library/Preferences/com.googlecode.iterm2.plist
 running "setting fonts"
-defaults write com.googlecode.iterm2 "Normal Font" -string "Hack-Regular 15";
-defaults write com.googlecode.iterm2 "Non Ascii Font" -string "RobotoMonoForPowerline-Regular 15";
+defaults write com.googlecode.iterm2 "Normal Font" -string "Hack-Regular 12";
+defaults write com.googlecode.iterm2 "Non Ascii Font" -string "RobotoMonoForPowerline-Regular 12";
 ok
 running "reading iterm settings"
 defaults read -app iTerm > /dev/null 2>&1;
@@ -1016,11 +1027,23 @@ running "Disable continuous spell checking"
 defaults write com.apple.messageshelper.MessageController SOInputLineSettings -dict-add "continuousSpellCheckingEnabled" -bool false;ok
 
 ###############################################################################
+bot "SizeUp.app"
+###############################################################################
+
+running "Start SizeUp at login"
+defaults write com.irradiatedsoftware.SizeUp StartAtLogin -bool true;ok
+
+running "Don’t show the preferences window on next start"
+defaults write com.irradiatedsoftware.SizeUp ShowPrefsOnNextStart -bool false;ok
+
+killall cfprefsd
+
+###############################################################################
 # Kill affected applications                                                  #
 ###############################################################################
 bot "OK. Note that some of these changes require a logout/restart to take effect. Killing affected applications (so they can reboot)...."
 for app in "Activity Monitor" "Address Book" "Calendar" "Contacts" "cfprefsd" \
-  "Dock" "Finder" "Mail" "Messages" "Safari" "SystemUIServer" \
+  "Dock" "Finder" "Mail" "Messages" "Safari" "SizeUp" "SystemUIServer" \
   "iCal" "Terminal"; do
   killall "${app}" > /dev/null 2>&1
 done
