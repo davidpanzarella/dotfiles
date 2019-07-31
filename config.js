@@ -6,6 +6,7 @@ module.exports = {
     'ag',
     // https://github.com/wting/autojump
     'autojump',
+    'awscli',
     // alternative to `cat`: https://github.com/sharkdp/bat
     'bat',
     'brew-cask-completion',
