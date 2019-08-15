@@ -42,7 +42,8 @@ module.exports = {
     'tree',
     'vim --with-client-server --with-override-system-vi',
     'wget --enable-iri',
-		'wifi-password'
+    'wifi-password',
+    'yarn'
   ],
   cask: [
     '1password',
@@ -65,7 +66,7 @@ module.exports = {
 		'qlmarkdown',
 		'qlprettypatch',
 		'qlstephen',
-		'qlvideo'
+		'qlvideo',
 		'quicklook-csv',
 		'quicklook-json',
 		'quicklookase',
