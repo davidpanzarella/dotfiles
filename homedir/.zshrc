@@ -59,3 +59,6 @@ unsetopt correct
 # [ -d "/usr/local/opt/python@2/bin" ] && export PATH="/usr/local/opt/python@2/bin:$PATH"
 
 export PATH="$PATH:`yarn global bin`"
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
