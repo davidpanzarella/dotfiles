@@ -1,0 +1,65 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/bash
+
+set -eufo pipefail
+
+{{ $brews := list
+  "brew-cask-completion"
+  "curl"
+  "exa"
+  "ffmpeg"
+  "gh"
+  "git-lfs"
+  "git"
+  "gnu-units"
+  "gnupg"
+  "n"
+  "nano"
+  "node"
+  "postgresql"
+  "pyenv"
+  "ripgrep"
+  "shopify/shopify"
+  "wget"
+  "wifi-password"
+  "yarn"
+-}}
+{{ $casks := list
+    "1password"
+    "1password-cli"
+    "adobe-creative-cloud"
+    "adobe-reader"
+    "alfred"
+    "docker"
+    "firefox"
+    "flux"
+    "gh"
+    "google-chrome"
+    "google-cloud-sdk"
+    "google-drive"
+    "grammarly"
+    "iterm2"
+    "omnifocus"
+    "spotify"
+    "themekit"
+    "visual-studio-code"
+    "vlc"
+    "zoom" -}}
+
+{{ if .rupie -}}
+{{   $brews = concat $brews (list
+       "aws-iam-authenticator"
+       "awscli"
+       "helm"
+       "kubernetes-cli") -}}
+{{ end -}}
+
+brew bundle --no-lock --file=/dev/stdin <<EOF
+{{ range ($brews | sortAlpha | uniq) -}}
+brew "{{ . }}"
+{{ end -}}
+{{ range ($casks | sortAlpha | uniq) -}}
+cask "{{ . }}"
+{{ end -}}
+EOF
+{{ end -}}
