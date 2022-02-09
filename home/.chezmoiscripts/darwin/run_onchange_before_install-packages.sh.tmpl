@@ -3,16 +3,30 @@
 
 set -eufo pipefail
 
+{{ $taps := list
+  "github/gh"
+  "homebrew/cask"
+  "homebrew/cask-fonts"
+  "homebrew/core"
+  "shopify/shopify"
+-}}
+
 {{ $brews := list
+  "aws-iam-authenticator"
+  "awscli"
   "brew-cask-completion"
+  "chezmoi"
   "curl"
   "exa"
   "ffmpeg"
   "gh"
-  "git-lfs"
   "git"
   "gnu-units"
   "gnupg"
+  "grep"
+  "helm"
+  "kubernetes-cli"
+  "mas"
   "n"
   "nano"
   "node"
@@ -20,46 +34,56 @@ set -eufo pipefail
   "pyenv"
   "ripgrep"
   "shopify/shopify"
+  "themekit"
+  "tree"
   "wget"
   "wifi-password"
   "yarn"
 -}}
+
 {{ $casks := list
-    "1password"
-    "1password-cli"
-    "adobe-creative-cloud"
-    "adobe-reader"
-    "alfred"
-    "docker"
-    "firefox"
-    "flux"
-    "gh"
-    "google-chrome"
-    "google-cloud-sdk"
-    "google-drive"
-    "grammarly"
-    "iterm2"
-    "omnifocus"
-    "spotify"
-    "themekit"
-    "visual-studio-code"
-    "vlc"
-    "zoom" -}}
+  "1password-cli"
+  "1password"
+  "adobe-acrobat-reader"
+  "adobe-creative-cloud"
+  "alfred"
+  "docker"
+  "firefox"
+  "flux"
+  "font-awesome-terminal-fonts"
+  "font-fontawesome"
+  "font-hack-nerd-font"
+  "font-hack"
+  "font-inconsolata-dz-for-powerline"
+  "font-inconsolata-for-powerline"
+  "font-inconsolata-g-for-powerline"
+  "font-roboto-mono-for-powerline"
+  "font-roboto-mono"
+  "google-chrome"
+  "google-cloud-sdk"
+  "google-drive"
+  "grammarly"
+  "iterm2"
+  "omnifocus"
+  "qlimagesize"
+  "qlmarkdown"
+  "qlvideo"
+  "quicklook-json"
+  "quicklookase"
+  "setapp"
+  "visual-studio-code"
+  "vlc"
+  "zoom"
+-}}
 
-{{ if .rupie -}}
-{{   $brews = concat $brews (list
-       "aws-iam-authenticator"
-       "awscli"
-       "helm"
-       "kubernetes-cli") -}}
-{{ end -}}
-
-brew bundle --no-lock --file=/dev/stdin <<EOF
+brew bundle --no-lock --file=/dev/stdin <<EOF || :
+{{ range ($taps | sortAlpha | uniq) -}}
+tap "{{ . }}"
+{{ end }}
 {{ range ($brews | sortAlpha | uniq) -}}
 brew "{{ . }}"
-{{ end -}}
+{{ end }}
 {{ range ($casks | sortAlpha | uniq) -}}
 cask "{{ . }}"
-{{ end -}}
+{{ end }}
 EOF
-{{ end -}}
