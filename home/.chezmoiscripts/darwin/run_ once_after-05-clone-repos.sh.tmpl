@@ -13,7 +13,7 @@ echo "Clone Repos"
 
 DIRECTORY_DEVELOPMENT={{ .chezmoi.homeDir }}/Development
 
-{{ if ! -d $DIRECTORY_DEVELOPMENT }}
+{{ if not .chezmoi.os.Stat($DIRECTORY_DEVELOPMENT) -}}
 # Create dev directories
 echo "Creating directories..."
 mkdir -p $DIRECTORY_DEVELOPMENT
