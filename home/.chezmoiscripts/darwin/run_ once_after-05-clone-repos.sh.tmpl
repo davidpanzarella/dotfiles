@@ -5,38 +5,31 @@ source /tmp/chezmoi-utils.sh
 
 printf "${green}[05 - Cloning] ${reset}"
 {{ if or (lt 5 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_CLONE_SETUP") -}}
-  echo "Skip clone repos"
+echo "Skip clone repos"
 exit 0
 {{ else }}
-  echo "Clone Repos"
+echo "Clone Repos"
 {{- end }}
 
-  {{ if {{ .chezmoi.homeDir }}/Development (env "SKIP_CLONE_SETUP") -}}
-    echo "Skip clone repos"
-    exit 0
-  {{ else }}
-    echo "Clone Repos"
-  {{- end }}
+DIRECTORY_DEVELOPMENT={{ .chezmoi.homeDir }}/Development
 
-  DIRECTORY_DEVELOPMENT={{ .chezmoi.homeDir }}/Development
+{{ if ! -d $DIRECTORY_DEVELOPMENT }}
+# Create dev directories
+echo "Creating directories..."
+mkdir -p $DIRECTORY_DEVELOPMENT
 
-  {{ if ! -d $DIRECTORY_DEVELOPMENT }}
-  # Create dev directories
-    echo "Creating directories..."
-    mkdir -p $DIRECTORY_DEVELOPMENT
+DIRECTORY_DEVENIO={{ .chezmoi.homeDir }}/Development/Devenio
+DIRECTORY_RUPIE={{ .chezmoi.homeDir }}/Development/Rupie
 
-    DIRECTORY_DEVENIO={{ .chezmoi.homeDir }}/Development/Devenio
-    DIRECTORY_RUPIE={{ .chezmoi.homeDir }}/Development/Rupie
+mkdir -p $DIRECTORY_DEVENIO
+mkdir -p $DIRECTORY_RUPIE
 
-    mkdir -p $DIRECTORY_DEVENIO
-    mkdir -p $DIRECTORY_RUPIE
-
-    echo "Clone Repos"
-    git clone https://github.com/RupieNetwork/Rupie.git $DIRECTORY_RUPIE/rupie
-    git clone https://github.com/RupieNetwork/email-templates.git $DIRECTORY_RUPIE/email-templates
-    git clone https://github.com/RupieNetwork/website.git $DIRECTORY_RUPIE/website
-  {{ else }}
-    echo "Already exists"
-    exit 0
-  {{- end }}
+echo "Clone Repos"
+git clone https://github.com/RupieNetwork/Rupie.git $DIRECTORY_RUPIE/rupie
+git clone https://github.com/RupieNetwork/email-templates.git $DIRECTORY_RUPIE/email-templates
+git clone https://github.com/RupieNetwork/website.git $DIRECTORY_RUPIE/website
+{{ else }}
+echo "Already exists"
+exit 0
+{{- end }}
 {{ end -}}
