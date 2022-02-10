@@ -6,7 +6,7 @@ source /tmp/chezmoi-utils.sh
 printf "${green}[05 - Cloning] ${reset}"
 {{ if or (lt 5 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_CLONE_SETUP") -}}
   echo "Skip clone repos"
-  exit 0
+exit 0
 {{ else }}
   echo "Clone Repos"
 {{- end }}
@@ -18,10 +18,12 @@ printf "${green}[05 - Cloning] ${reset}"
     echo "Clone Repos"
   {{- end }}
 
-  {{ if ! -d "/path/to/dir" }}
+  DIRECTORY_DEVELOPMENT={{ .chezmoi.homeDir }}/Development
+
+  {{ if ! -d $DIRECTORY_DEVELOPMENT }}
   # Create dev directories
     echo "Creating directories..."
-    mkdir -p {{ .chezmoi.homeDir }}/Development
+    mkdir -p $DIRECTORY_DEVELOPMENT
 
     DIRECTORY_DEVENIO={{ .chezmoi.homeDir }}/Development/Devenio
     DIRECTORY_RUPIE={{ .chezmoi.homeDir }}/Development/Rupie
