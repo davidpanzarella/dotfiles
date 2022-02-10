@@ -14,8 +14,8 @@ echo "Install python and packages"
 set -eufo pipefail
 
 # Link Homebrew's Python versions
-mkdir -p {{ .chezmoi.homeDir }}/.pyenv/versions/
-ln -s $(brew --cellar python)/* {{ .chezmoi.homeDir }}/.pyenv/versions/
+# mkdir -p {{ .chezmoi.homeDir }}/.pyenv/versions/
+# ln -s $(brew --cellar python)/* {{ .chezmoi.homeDir }}/.pyenv/versions/
 
 # Set global Python version
 if pyenv versions | grep -q "3.10.1"; then
