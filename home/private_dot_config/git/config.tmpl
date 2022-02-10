@@ -201,13 +201,24 @@
 	smudge = git-lfs smudge -- %f
   required = true
 	process = git-lfs filter-process
+
 [difftool "sourcetree"]
 	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
+	path =
+
 [mergetool "sourcetree"]
 	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
 	trustExitCode = true
+
 [commit]
 	template = /Users/davidpanzarella/.stCommitMsg
+
 [http]
 	postBuffer = 15728640
+
+{{ $rupiePassword := "" -}}
+{{ if eq .hostname "rupie" -}}
+{{   $rupiePassword = (onepassword "GitHub Access Token" .vault).details.password -}}
+{{ end -}}
+[url "https://davidpanzarella:{{ $rupiePassword }}@github.com/rupienetwork/"]
+	insteadOf = https://github.com/rupienetwork/
