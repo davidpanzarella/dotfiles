@@ -5,7 +5,7 @@
 
 source /tmp/chezmoi-utils.sh
 
-printf "${green}[00 - macOS] ${reset}"
+printf "${green}[00 - Homebrew] ${reset}"
 {{ if or (lt 0 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_HOMEBREW_SETUP") -}}
 echo "Skip installing Homebrew"
 exit 0
