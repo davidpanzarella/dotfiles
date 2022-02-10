@@ -1,6 +1,16 @@
 {{ if (eq .chezmoi.os "darwin") -}}
 #!/bin/bash
 
+source /tmp/chezmoi-utils.sh
+
+printf "${green}[04 - Configure] ${reset}"
+{{ if or (lt 04 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_CONFIGURATIONS_SETUP") -}}
+echo "Skip Installing Configurations"
+exit 0
+{{ else }}
+echo "Install Configurations"
+{{- end }}
+
 set -eufo pipefail
 
 #!/usr/bin/env bash

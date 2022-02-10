@@ -5,8 +5,8 @@
 
 source /tmp/chezmoi-utils.sh
 
-printf "${green}[10 - macOS] ${reset}"
-{{- if or (lt 10 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_BREW") }}
+printf "${green}[02 - Brew Packages] ${reset}"
+{{- if or (lt 02 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_BREW") }}
 echo "Skip installing common macOS packages"
 exit 0
 {{ else }}

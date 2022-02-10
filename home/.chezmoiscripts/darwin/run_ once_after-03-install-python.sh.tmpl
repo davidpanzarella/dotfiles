@@ -3,8 +3,8 @@
 
 source /tmp/chezmoi-utils.sh
 
-printf "${green}[10 - macOS] ${reset}"
-{{- if or (lt 10 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_PYTHON") }}
+printf "${green}[03 - Python] ${reset}"
+{{- if or (lt 03 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_PYTHON") }}
 echo "Skip installing python and packages"
 exit 0
 {{ else }}

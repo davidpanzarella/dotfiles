@@ -5,7 +5,7 @@
 
 source /tmp/chezmoi-utils.sh
 
-printf "${green}[01 - macOS] ${reset}"
+printf "${green}[01 - Rosetta] ${reset}"
 {{- if or (lt 01 (atoi (env "SCRIPTS_START_AT"))) }}
 echo "Skip installing Rosetta 2"
 exit 0
