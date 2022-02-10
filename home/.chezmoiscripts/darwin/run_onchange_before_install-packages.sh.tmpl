@@ -3,15 +3,15 @@
 
 # Install common macOS packages
 
-{# source /tmp/chezmoi-utils.sh #}
+source /tmp/chezmoi-utils.sh
 
-{# printf "${green}[10 - macOS] ${reset}"
+printf "${green}[10 - macOS] ${reset}"
 {{- if or (lt 10 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_BREW") }}
 echo "Skip installing common macOS packages"
 exit 0
 {{ else }}
 echo "Install common macOS packages"
-{{- end }} #}
+{{- end }}
 
 set -eufo pipefail
 
@@ -26,31 +26,43 @@ set -eufo pipefail
 {{ $brews := list
   "aws-iam-authenticator"
   "awscli"
+  "bash"
+  "bat"
   "brew-cask-completion"
   "chezmoi"
+  "coreutils"
   "curl"
+  "duti"
   "exa"
   "ffmpeg"
+  "fzy"
   "gh"
   "git"
+  "git-delta"
   "gnu-units"
   "gnupg"
   "grep"
   "helm"
+  "hub"
+  "jq"
   "kubernetes-cli"
   "mas"
   "n"
   "nano"
-  "node"
+  "npm"
   "postgresql"
   "pyenv"
   "ripgrep"
-  "shopify/shopify"
+  "shopify-cli"
+  "stern"
   "themekit"
   "tree"
+  "watch"
   "wget"
   "wifi-password"
-  "yarn"
+  "vivid"
+  "yarn",
+  "zoxide"
 -}}
 
 {{ $casks := list
@@ -59,7 +71,10 @@ set -eufo pipefail
   "adobe-acrobat-reader"
   "adobe-creative-cloud"
   "alfred"
+  "amazon-photos"
+  "apparency"
   "docker"
+  "figma"
   "firefox"
   "flux"
   "font-awesome-terminal-fonts"
@@ -69,20 +84,34 @@ set -eufo pipefail
   "font-inconsolata-dz-for-powerline"
   "font-inconsolata-for-powerline"
   "font-inconsolata-g-for-powerline"
-  "font-roboto-mono-for-powerline"
+  "font-lato"
+  "font-open-sans"
   "font-roboto-mono"
+  "font-roboto"
   "google-chrome"
   "google-cloud-sdk"
   "google-drive"
   "grammarly"
+  "gpg-suite"
+  "hammerspoon"
   "iterm2"
+  "ledger-live"
+  "notion"
+  "numi"
   "omnifocus"
+  "postman"
   "qlimagesize"
   "qlmarkdown"
   "qlvideo"
+  "quicken"
   "quicklook-json"
   "quicklookase"
+  "raycast"
+  "rescuetime"
   "setapp"
+  "shift"
+  "slack"
+  "spotify"
   "visual-studio-code"
   "vlc"
   "zoom"

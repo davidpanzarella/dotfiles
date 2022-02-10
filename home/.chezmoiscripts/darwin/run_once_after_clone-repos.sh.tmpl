@@ -1,0 +1,18 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/sh
+
+# Create dev directories
+echo "Creating directories..."
+mkdir -p {{ .chezmoi.homeDir }}/Development
+
+DIRECTORY_DEVENIO={{ .chezmoi.homeDir }}/Development/Devenio
+DIRECTORY_RUPIE={{ .chezmoi.homeDir }}/Development/Rupie
+
+mkdir -p $DIRECTORY_DEVENIO
+mkdir -p $DIRECTORY_RUPIE
+
+git clone https://github.com/RupieNetwork/Rupie.git $DIRECTORY_RUPIE/rupie
+git clone https://github.com/RupieNetwork/email-templates.git $DIRECTORY_RUPIE/email-templates
+git clone https://github.com/RupieNetwork/website.git $DIRECTORY_RUPIE/website
+
+{{ end -}}
