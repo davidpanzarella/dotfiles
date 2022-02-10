@@ -11,9 +11,9 @@ exit 0
 echo "Clone Repos"
 {{- end }}
 
-{{ if not stat (joinPath .chezmoi.homeDir "Development") }}
-echo "test doesn't exist"
-{{ end }}
+# {{ if not stat (joinPath .chezmoi.homeDir "Development") }}
+# echo "test doesn't exist"
+# {{ end }}
 
 
 # check to see if Development directory exists
