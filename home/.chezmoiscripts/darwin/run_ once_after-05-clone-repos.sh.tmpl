@@ -11,12 +11,19 @@ exit 0
 echo "Clone Repos"
 {{- end }}
 
-DIRECTORY_DEVELOPMENT={{ .chezmoi.homeDir }}/Development
+{{ if not stat (joinPath .chezmoi.homeDir "Development") }}
+echo "test doesn't exist"
+{{ end }}
 
-{{ if not .chezmoi.os.Stat($DIRECTORY_DEVELOPMENT) -}}
+
+# check to see if Development directory exists
+{{ if stat (joinPath .chezmoi.homeDir "Development") }}
+echo "Already exists"
+exit 0
+{{ else }}
 # Create dev directories
 echo "Creating directories..."
-mkdir -p $DIRECTORY_DEVELOPMENT
+mkdir -p {{ .chezmoi.homeDir }}/Development
 
 DIRECTORY_DEVENIO={{ .chezmoi.homeDir }}/Development/Devenio
 DIRECTORY_RUPIE={{ .chezmoi.homeDir }}/Development/Rupie
@@ -28,8 +35,6 @@ echo "Clone Repos"
 git clone https://github.com/RupieNetwork/Rupie.git $DIRECTORY_RUPIE/rupie
 git clone https://github.com/RupieNetwork/email-templates.git $DIRECTORY_RUPIE/email-templates
 git clone https://github.com/RupieNetwork/website.git $DIRECTORY_RUPIE/website
-{{ else }}
-echo "Already exists"
-exit 0
-{{- end }}
+
+{{ end }}
 {{ end -}}
