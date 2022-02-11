@@ -218,3 +218,10 @@ fi
 precmd() {
   echo -ne "\033]0; @ ${HOST%%.*} : ${PWD/#$HOME/~} \007"
 }
+
+# Use ~/.config/aws instead of $HOME for AWS
+export AWS_CONFIG_FILE="{{ .chezmoi.homeDir }}/.config/aws/config"
+# export AWS_SHARED_CREDENTIALS_FILE="{{ .chezmoi.homeDir }}/.config/aws/credentials"
+
+# kubectl config
+export KUBECONFIG="{{ .chezmoi.homeDir }}/.config/rupie/config/rupie-prod-cluster.yaml"
