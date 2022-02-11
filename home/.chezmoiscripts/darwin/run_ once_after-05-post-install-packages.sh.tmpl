@@ -26,8 +26,7 @@ set -eufo pipefail
   "themekit"
 -}}
 
-{{ $casks := list
--}}
+{{ $casks := list -}}
 
 brew bundle --no-lock --file=/dev/stdin <<EOF || :
 {{ range ($taps | sortAlpha | uniq) -}}
