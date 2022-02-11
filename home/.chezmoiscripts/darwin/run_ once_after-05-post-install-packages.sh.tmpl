@@ -12,7 +12,6 @@ exit 0
 {{ else }}
 echo "Install Mac Apps (Extra: Need additional actions or pre-dependencies)"
 {{- end }}
-{{- end }}
 
 set -eufo pipefail
 
@@ -42,3 +41,4 @@ cask "{{ . }}"
 {{ end }}
 EOF
 {{ end -}}
+
