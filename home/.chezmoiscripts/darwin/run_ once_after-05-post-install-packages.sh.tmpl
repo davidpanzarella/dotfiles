@@ -16,17 +16,20 @@ echo "Install Mac Apps (Extra: Need additional actions or pre-dependencies)"
 set -eufo pipefail
 
 {{ $taps := list
+  "homebrew/cask"
+  "homebrew/core"
   "shopify/shopify"
 -}}
 
 {{ $brews := list
-  "setapp"
-  "shift"
-  "shopify"
+  "shopify-cli"
   "themekit"
 -}}
 
-{{ $casks := list -}}
+{{ $casks := list 
+  "setapp"
+  "shift"
+-}}
 
 brew bundle --no-lock --file=/dev/stdin <<EOF || :
 {{ range ($taps | sortAlpha | uniq) -}}
