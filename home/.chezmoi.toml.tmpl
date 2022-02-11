@@ -28,7 +28,7 @@
 {{-   if eq $hostname "raspberrypi" -}}
 {{-     $headless = true -}}
 {{-     $personal = true -}}
-{{-   else if eq $hostname "davids-mbp" -}}
+{{-   else if eq $hostname "davids-mbp-2021" -}}
 {{-     $docker = true -}}
 {{-     $kubernetes = true -}}
 {{-     $personal = true -}}
@@ -54,7 +54,7 @@
 {{- if $rupie }}
     vaultRupie = "i4wi46ddwbe5vh4p2fbyliw5o4"
 {{- end }}
-{{- if eq $hostname "davids-mbp" }}
+{{- if eq $hostname "davids-mbp-2021" }}
 [onepassword]
     command = "op2"
 {{- end }}

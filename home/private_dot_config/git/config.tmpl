@@ -47,7 +47,7 @@
 	safecrlf = false
   # prevent crlf (then you will have to deal with the problem -- dos2unix, etc)
   #safecrlf = true
-  editor = vim
+  editor = code -w
   #editor = subl -w
 
 [alias]
@@ -164,7 +164,7 @@
   tool = vimdiff
 
 [init]
-  templatedir = ~/.dotfiles/.git_template
+  # templatedir = ~/.dotfiles/.git_template
 
 [mergetool]
   prompt = false
@@ -217,8 +217,8 @@
 	postBuffer = 15728640
 
 {{ $rupiePassword := "" -}}
-{{ if eq .hostname "rupie" -}}
-{{   $rupiePassword = (onepassword "GitHub Access Token" .vaultRupie).details.password -}}
+{{- if .rupie }}
+  {{   $rupiePassword = (onepassword "GitHub Access Token" .vaultRupie).details.password -}}
+  [url "https://davidpanzarella:{{ $rupiePassword }}@github.com/rupienetwork/"]
+    insteadOf = https://github.com/rupienetwork/
 {{ end -}}
-[url "https://davidpanzarella:{{ $rupiePassword }}@github.com/rupienetwork/"]
-	insteadOf = https://github.com/rupienetwork/

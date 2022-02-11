@@ -1,7 +1,3 @@
 [default]
-
-{{- if .rupie -}}
-region = {{ (onepasswordItemFields "AWS" .vaultRupie).region.v }}
-aws_access_key_id = {{ (onepasswordItemFields "AWS" .vaultRupie).key_id.v }}
-aws_secret_access_key = {{ (onepasswordItemFields "AWS" .vaultRupie).password }}
-{{- end -}}
+cli_pager=
+region=us-east-1
