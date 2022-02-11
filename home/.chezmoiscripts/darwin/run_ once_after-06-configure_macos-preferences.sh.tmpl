@@ -11,8 +11,8 @@ defaults read >~/Desktop/macos-defaults.txt
 
 source /tmp/chezmoi-utils.sh
 
-printf "${green}[04 - Configure] ${reset}"
-{{ if or (lt 04 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_CONFIGURATIONS_SETUP") -}}
+printf "${green}[06 - Configure Mac Prefs] ${reset}"
+{{ if or (lt 06 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_CONFIGURATIONS_SETUP") -}}
 echo "Skip Installing Configurations"
 exit 0
 {{ else }}
