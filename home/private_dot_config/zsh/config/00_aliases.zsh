@@ -168,6 +168,41 @@ alias kgz='kubectl get secret'
 alias kd='kubectl describe'
 alias kx='kubectl exec'
 
+
+# Directories
+alias sit='cd ~/Documents/dev'
+alias cli='cd ~/Documents/clients'
+alias doc='cd ~/Documents'
+alias des='cd ~/Desktop'
+alias dow='cd ~/Downloads'
+
+# Servers
+alias do='ssh david@'
+alias nserv='ssh sbiwd@208.95.104.123'
+
+
+# Utilities
+
+# Lock the screen (when going AFK)
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+# Flush the DNS on Mac
+alias dnsflush='sudo killall -HUP mDNSResponder'
+
+# Empty the Trash on all mounted volumes and the main HDD.
+# Also, clear Apple’s System Logs to improve shell startup speed.
+# Finally, clear download history from quarantine. https://mths.be/bum
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+
+# Files being opened
+alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'
+# Files used, anywhere on the filesystem
+alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep'
+# Files in use in the Users directory
+alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep Users'
+
+# Functions
+
 # Unused aliases
 ua() {
   one_alphabet_aliases=$(alias | gsed -E 's/=.*//g' | gsed -E '/^.{1}$/!d' | sort)
@@ -176,3 +211,5 @@ ua() {
   echo "Unused aliases $(echo $unused_aliases | wc -l): "
   echo $unused_aliases | paste -s -d " " -
 }
+
+
