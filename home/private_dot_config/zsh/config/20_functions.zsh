@@ -30,10 +30,10 @@ nn() {
   fi
 }
 
-timezsh() {
-  shell=${1-$SHELL}
-  for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
-}
+# timezsh() {
+#   shell=${1-$SHELL}
+#   for i in $(seq 1 10); do /usr/bin/time $shell -i -c exit; done
+# }
 
 # use_zinit() {
 #   cp ~/.zinit_rc ~/.zshrc
@@ -45,11 +45,11 @@ use_omz() {
   exec $SHELL -l
 }
 
-touch-safe() {
-  for f in "$@"; do
-    [ -d $f:h ] || mkdir -p $f:h && command touch $f
-  done
-}
+# touch-safe() {
+#   for f in "$@"; do
+#     [ -d $f:h ] || mkdir -p $f:h && command touch $f
+#   done
+# }
 
 touch-editor() {
   touch-safe $@
