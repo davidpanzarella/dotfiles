@@ -206,8 +206,8 @@ z4h source $HOME/.config/zsh/config/10_options.zsh
 z4h source $HOME/.config/zsh/config/20_functions.zsh
 
 # use brew installed asdf
-. $(brew --prefix asdf)/asdf.sh
-. source $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
+. $(brew --prefix asdf)/libexec/asdf.sh
+. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
 
 if [ -d "$HOME/.asdf/plugins/direnv" ]; then
   eval "$(asdf exec direnv hook zsh)"
@@ -232,4 +232,4 @@ export AWS_SHARED_CREDENTIALS_FILE="{{ .chezmoi.homeDir }}/.config/aws/credentia
 export KUBECONFIG="{{ .chezmoi.homeDir }}/.config/rupie/config/rupie-prod-cluster.yaml"
 
 # iterm2 config
-source $HOME/.config/iterm2/iterm2_shell_integration.zsh
+source $HOME/.config/iterm2/.iterm2_shell_integration.zsh

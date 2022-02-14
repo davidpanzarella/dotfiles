@@ -65,8 +65,8 @@
     # dotnet_version        # .NET version (https://dotnet.microsoft.com)
     # php_version           # php version (https://www.php.net/)
     # laravel_version       # laravel php framework version (https://laravel.com/)
-    java_version          # java version (https://www.java.com/)
-    package               # name@version from package.json (https://docs.npmjs.com/files/package.json)
+    java_version            # java version (https://www.java.com/)
+    package                 # name@version from package.json (https://docs.npmjs.com/files/package.json)
     rbenv                   # ruby version from rbenv (https://github.com/rbenv/rbenv)
     rvm                     # ruby version from rvm (https://rvm.io)
     fvm                     # flutter version management (https://github.com/leoafarias/fvm)
@@ -1021,8 +1021,8 @@
 
   ##############################[ node_version: node.js version ]###############################
   # Node version color.
-  # typeset -g POWERLEVEL9K_NODE_VERSION_FOREGROUND=7
-  # typeset -g POWERLEVEL9K_NODE_VERSION_BACKGROUND=2
+  typeset -g POWERLEVEL9K_NODE_VERSION_FOREGROUND=000
+  typeset -g POWERLEVEL9K_NODE_VERSION_BACKGROUND=072
   # Show node version only when in a directory tree containing package.json.
   typeset -g POWERLEVEL9K_NODE_VERSION_PROJECT_ONLY=true
   # Custom icon.
