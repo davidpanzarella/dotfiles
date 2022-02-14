@@ -16,6 +16,7 @@ echo "Install asdf plugins"
 {{ $plugins := dict
   "direnv"     "latest"
   "nodejs"     "lts"
+  "python"     "lts"
   "ruby"       "latest"
   "yarn"       "latest"
 }}
@@ -37,7 +38,6 @@ export NODEJS_CHECK_SIGNATURES=no
 {{ end -}}
 
 # -- Packages -- #
-
 {{ $rubyPackages := list
 }}
 
