@@ -146,6 +146,7 @@ alias wh="which "
 # alias wiki="gq narze/knowledge"
 alias ya='yarn'
 alias yd='yarn dev'
+alias yui='yarn upgrade-interactive --latest'
 alias yr='yarn run'
 alias yt='yarn test'
 alias ytw='yarn test --watch'
@@ -170,14 +171,13 @@ alias kx='kubectl exec'
 
 
 # Directories
-alias sit='cd ~/Documents/dev'
-alias cli='cd ~/Documents/clients'
+alias dev='cd ~/Documents/dev/Development'
 alias doc='cd ~/Documents'
 alias des='cd ~/Desktop'
 alias dow='cd ~/Downloads'
 
 # Servers
-alias do='ssh david@'
+alias do='ssh david@137.184.6.70'
 alias nserv='ssh sbiwd@208.95.104.123'
 
 
@@ -200,6 +200,39 @@ alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|
 alias files.usage='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep'
 # Files in use in the Users directory
 alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep Users'
+
+# IP addresses
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias iplocal="ipconfig getifaddr en0"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+# Show network connections
+# Often useful to prefix with SUDO to see more system level network usage
+alias network.connections='lsof -l -i +L -R -V'
+alias network.established='lsof -l -i +L -R -V | grep ESTABLISHED'
+alias network.externalip='curl -s http://checkip.dyndns.org/ | sed "s/[a-zA-Z<>/ :]//g"'
+alias network.internalip="ifconfig en0 | egrep -o '([0-9]+\.[0-9]+\.[0-9]+\.[0-9]+)'"
+
+# Show active network interfaces
+alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'"
+
+# Directory listings
+# LS_COLORS='no=01;37:fi=01;37:di=07;96:ln=01;36:pi=01;32:so=01;35:do=01;35:bd=01;33:cd=01;33:ex=01;31:mi=00;05;37:or=00;05;37:'
+# -G Add colors to ls
+# -l Long format
+# -h Short size suffixes (B, K, M, G, P)
+# -p Postpend slash to folders
+alias ls='ls -G -h -p '
+alias ll='ls -l -G -h -p '
+
+# Print each PATH entry on a separate line
+alias path='echo -e ${PATH//:/\\n}'
+
+# Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; asdf plugin update --all; mas upgrade;'
+
+alias vtop="vtop --theme wizard"
+
 
 # Functions
 
