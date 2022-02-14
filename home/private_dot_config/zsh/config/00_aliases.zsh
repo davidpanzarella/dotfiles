@@ -171,9 +171,9 @@ alias kx='kubectl exec'
 
 
 # Directories
-alias dev='cd ~/Documents/dev/Development'
-alias doc='cd ~/Documents'
 alias des='cd ~/Desktop'
+alias dev='cd ~/Development'
+alias doc='cd ~/Documents'
 alias dow='cd ~/Downloads'
 
 # Servers
