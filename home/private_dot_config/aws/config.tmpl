@@ -1,3 +1,5 @@
-[default]
-cli_pager=
-region=us-east-1
+{{- if .rupie -}}
+  [default]
+  cli_pager=
+  region=us-east-1
+{{- end -}}
