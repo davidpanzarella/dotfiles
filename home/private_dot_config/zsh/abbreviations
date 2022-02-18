@@ -1,6 +1,8 @@
 abbr -="cd -"
 abbr .tmux="\$EDITOR ~/.tmux.conf.local"
 abbr aa="arch -arm64 "
+abbr mzsh="arch -arm64 zsh"
+abbr izsh="arch -x86_64 zsh"
 abbr ag="argocd"
 abbr aliases="\$EDITOR ~/.config/zsh/config/00_aliases.zsh ; reload ; echo \"Aliases reloaded\""
 abbr arst="asdf"
