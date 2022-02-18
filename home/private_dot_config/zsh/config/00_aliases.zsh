@@ -5,6 +5,8 @@ alias zshrc='$EDITOR ~/.zshrc ; reload'
 
 # M1
 alias aa='arch -arm64 '
+alias mzsh="arch -arm64 zsh"
+alias izsh="arch -x86_64 zsh"
 
 # Git
 alias g='git'

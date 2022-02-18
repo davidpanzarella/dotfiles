@@ -40,10 +40,10 @@ nn() {
 #   exec $SHELL -l
 # }
 
-use_omz() {
-  cp ~/.omz_rc ~/.zshrc
-  exec $SHELL -l
-}
+# use_omz() {
+#   cp ~/.omz_rc ~/.zshrc
+#   exec $SHELL -l
+# }
 
 # touch-safe() {
 #   for f in "$@"; do
@@ -87,10 +87,6 @@ function prompt_my_arch_check() {
   elif [[ "$arch" == "x86_64" ]]; then
     p10k segment -t "x86" -b 232 -f 7
   fi
-}
-
-music() {
-  sh -c "nohup sh -c 'kitty --single-instance --session ~/.config/kitty/sessions/mpd' > /tmp/mpd_nohup.out 2>&1 &"
 }
 
 url_encode() {
