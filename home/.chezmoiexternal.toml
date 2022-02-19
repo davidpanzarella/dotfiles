@@ -4,6 +4,12 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "168h"
+[".oh-my-zsh/custom/plugins/zsh-abbr"]
+    type = "archive"
+    url = "https://github.com/olets/zsh-abbr/archive/master.tar.gz"
+    exact = true
+    stripComponents = 1
+    refreshPeriod = "168h"
 
 {{- if and (not .ephemeral) (not .headless) }}
 {{-   $fontDir := "" }}
