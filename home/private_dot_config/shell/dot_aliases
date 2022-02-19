@@ -1,7 +1,10 @@
 # Editing
-alias aliases='$EDITOR ~/.config/zsh/config/00_aliases.zsh ; reload ; echo "Aliases reloaded"'
-alias funcs='$EDITOR ~/.config/zsh/config/20_functions.zsh ; reload ; echo "Functions reloaded"'
+alias aliases='$EDITOR ~/.config/shell/.aliases ; reload ; echo "Aliases reloaded"'
+alias funcs='$EDITOR ~/.config/shell/.functions ; reload ; echo "Functions reloaded"'
 alias zshrc='$EDITOR ~/.zshrc ; reload'
+
+# Reload the shell (i.e. invoke as a login shell)
+alias reload="exec $SHELL -l"
 
 # M1
 alias aa='arch -arm64 '
@@ -234,17 +237,3 @@ alias path='echo -e ${PATH//:/\\n}'
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; asdf plugin update --all; mas upgrade;'
 
 alias vtop="vtop --theme wizard"
-
-
-# Functions
-
-# Unused aliases
-ua() {
-  one_alphabet_aliases=$(alias | gsed -E 's/=.*//g' | gsed -E '/^.{1}$/!d' | sort)
-  alphas=$(echo "qwfpgjluy:[]arstdhneio'zxcvbkm,./" | grep -o . | sort)
-  unused_aliases=$(comm -23 <(echo $alphas) <(echo $one_alphabet_aliases))
-  echo "Unused aliases $(echo $unused_aliases | wc -l): "
-  echo $unused_aliases | paste -s -d " " -
-}
-
-

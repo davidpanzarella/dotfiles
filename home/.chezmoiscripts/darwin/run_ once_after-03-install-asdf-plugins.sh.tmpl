@@ -42,7 +42,9 @@ export NODEJS_CHECK_SIGNATURES=no
 }}
 
 {{ range sortAlpha $rubyPackages }}
-  gem install {{ . }}
+  gem install {{ 
+    colorls
+  }}
 {{ end -}}
 
 asdf reshim

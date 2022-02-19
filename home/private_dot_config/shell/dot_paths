@@ -1,0 +1,5 @@
+export PATH=$PATH:.
+export PATH="$PATH:${HOME}/.local/bin"
+
+# Cleanup duplicated PATHs (mostly from shellenv evals above)
+PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"

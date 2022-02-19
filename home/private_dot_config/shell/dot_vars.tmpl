@@ -1,0 +1,14 @@
+# Export environment variables.
+export EDITOR="code -w"
+export GPG_TTY=$TTY
+export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+export TERM=xterm-256color
+export ABBR_USER_ABBREVIATIONS_FILE = "{{ .chezmoi.homeDir }}/.config/shell/abbreviations"
+
+# Use ~/.config/aws instead of $HOME for AWS
+export AWS_CONFIG_FILE="{{ .chezmoi.homeDir }}/.config/aws/config"
+export AWS_SHARED_CREDENTIALS_FILE="{{ .chezmoi.homeDir }}/.config/aws/credentials"
+
+# kubectl config
+export KUBECONFIG="{{ .chezmoi.homeDir }}/.config/rupie/config/rupie-prod-cluster.yaml"
