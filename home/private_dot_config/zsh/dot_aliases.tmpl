@@ -1,7 +1,7 @@
 # Editing
-alias aliases='$EDITOR ~/.config/shell/.aliases ; reload ; echo "Aliases reloaded"'
-alias funcs='$EDITOR ~/.config/shell/.functions ; reload ; echo "Functions reloaded"'
-alias zshrc='$EDITOR ~/.zshrc ; reload'
+alias aliases='$EDITOR {{ .chezmoi.homeDir }}/.config/shell/.aliases ; reload ; echo "Aliases reloaded"'
+alias funcs='$EDITOR {{ .chezmoi.homeDir }}/.config/shell/.functions ; reload ; echo "Functions reloaded"'
+alias zshrc='$EDITOR {{ .chezmoi.homeDir }}/.zshrc ; reload'
 
 # Reload the shell (i.e. invoke as a login shell)
 alias reload="exec $SHELL -l"
@@ -15,10 +15,7 @@ alias izsh="arch -x86_64 zsh"
 alias g='git'
 alias p="git add -A -N && git add -p"
 alias s="git status -sb"
-# Skips husky hooks
-mn() {
-  git commit -m "$*" --no-verify
-}
+
 alias gam="git commit --amend --no-edit"
 alias gp="git push"
 alias gl="git pull"
@@ -81,25 +78,17 @@ alias b="bundle"
 alias be="bundle exec"
 alias bi="bundle install"
 alias bf="bh | fzy"
-# alias blog='gq narze/monosor.com && git pull'
 alias br="brew"
 alias brci="brew install --cask"
 alias bri="brew install"
 alias brs="brew search"
 alias bz="blitz"
 alias cl="clear"
-alias c='cd ~/Development && ls'
+alias c='cd {{ .chezmoi.homeDir }}/Development && ls'
 alias c.="code ."
 alias cd.="code --user-data-dir /tmp/code-data/ --disable-extensions ."
-# alias c.="RUBYOPT=--jit code ."
-# alias cn='cd ~/Code/narze && ls'
-# alias co="RUBYOPT=--jit code"
 alias cwd='pwd | pbcopy'
-f() {
-	local dir
-	dir=$(find ${1:-.} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzy) && cd "$dir"
-}
-# This command is slow! (100ms)
+
 # alias finder="cd \"$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')\""
 alias da='direnv allow'
 alias de='direnv edit'
@@ -113,17 +102,17 @@ alias hdi='howdoi'
 alias ip='curl ifconfig.me'
 alias jsc='/System/Library/Frameworks/JavaScriptCore.framework/Versions/A/Resources/jsc'
 alias qr='qrcode'
-alias sand='cd ~/Sandbox && ls'
+alias sand='cd {{ .chezmoi.homeDir }}/Sandbox && ls'
 alias l='ls -la'
-alias lt='cd ~/laptop'
-alias ltgl='cd ~/laptop && git pull'
+alias lt='cd {{ .chezmoi.homeDir }}/laptop'
+alias ltgl='cd {{ .chezmoi.homeDir }}/laptop && git pull'
 alias mk='minikube'
 alias mux='tmuxinator'
 alias nf='neofetch'
 alias o.="open ."
 alias o="open"
 alias please='sudo bash -c "$(fc -l -1 | cut -d " " -f 4-)"'
-alias postmaster='rm ~/Library/Application\ Support/Postgres/var-12/postmaster.pid'
+alias postmaster='rm {{ .chezmoi.homeDir }}/Library/Application\ Support/Postgres/var-12/postmaster.pid'
 alias r="bundle exec rails"
 alias rc="bundle exec rails console"
 alias rge="bundle exec rails generate"
@@ -176,10 +165,10 @@ alias kx='kubectl exec'
 
 
 # Directories
-alias des='cd ~/Desktop'
-alias dev='cd ~/Development'
-alias doc='cd ~/Documents'
-alias dow='cd ~/Downloads'
+alias des='cd {{ .chezmoi.homeDir }}/Desktop'
+alias dev='cd {{ .chezmoi.homeDir }}/Development'
+alias doc='cd {{ .chezmoi.homeDir }}/Documents'
+alias dow='cd {{ .chezmoi.homeDir }}/Downloads'
 
 # Servers
 alias do='ssh david@137.184.6.70'
@@ -197,7 +186,7 @@ alias dnsflush='sudo killall -HUP mDNSResponder'
 # Empty the Trash on all mounted volumes and the main HDD.
 # Also, clear Apple’s System Logs to improve shell startup speed.
 # Finally, clear download history from quarantine. https://mths.be/bum
-alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv ~/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 ~/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
+alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv {{ .chezmoi.homeDir }}/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 {{ .chezmoi.homeDir }}/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
 # Files being opened
 alias files.open='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v grep|grep open'

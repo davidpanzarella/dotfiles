@@ -1,7 +1,8 @@
-# Path to your oh-my-zsh configuration.
-export ZSH=$HOME/.config/oh-my-zsh
+# .zshrc is sourced in interactive shells. 
+# It should contain commands to set up aliases, functions, options, key bindings, etc.
 
-ZSH_THEME="powerlevel10k/powerlevel10k"
+echo "zshrc"
+
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -11,7 +12,12 @@ if [[ -n "${GITHUB_CODESPACE_TOKEN}" ]]; then
   typeset -g POWERLEVEL9K_INSTANT_PROMPT=quiet
 fi
 
-ulimit -n 8192
+# source $HOME/.profile
+
+# Path to your oh-my-zsh installation.
+export ZSH=$HOME/.oh-my-zsh
+
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Which plugins would you like to load? (plugins can be found in ~/.dotfiles/oh-my-zsh/plugins/*)
 plugins=(
@@ -23,6 +29,7 @@ plugins=(
   git
   gulp
   history
+  osx
   olets/zsh-abbr
   z
   zmv
@@ -30,6 +37,12 @@ plugins=(
   zsh-syntax-highlighting
 )
 
+# Load theme Powerlevel10K
+if test "${ZSH_THEME#*powerlevel10k}" != "$ZSH_THEME"; then
+    [ -f {{ .chezmoi.homeDir }}/.config/p10k/.p10k.zsh ] && \. {{ .chezmoi.homeDir }}/.config/p10k/.p10k.zsh
+fi
+
+source $ZSH/oh-my-zsh.sh
 
 # Define key bindings.
 # z4h bindkey z4h-cd-back    Shift+Left   # cd into the previous directory
@@ -49,44 +62,11 @@ setopt autocd autopushd pushdminus pushdsilent pushdtohome cdablevars
 DIRSTACKSIZE=5
 
 # Allow [ or ] whereever you want
+ulimit -n 8192
 unsetopt nomatch
 setopt extendedglob  # enable extended globbing
 setopt glob_dots     # no special treatment for file names with a leading dot
 setopt no_auto_menu  # require an extra TAB press to open the completion menu
-
-# Homebrew setup based on mac & platform (Mac specific config)
-{{ if (eq .chezmoi.os "darwin" ) -}}
-if [ "$(uname -m)" == "arm64" ]; then
-  # 3. x86 brew bin
-  if [ -f /usr/local/bin/brew ]; then
-    eval $(/usr/local/bin/brew shellenv)
-    fpath+=($(/usr/local/bin/brew --prefix)/share/zsh/site-functions)
-  fi
-
-  # 2. arm64 brew
-  if [ -f /opt/homebrew/bin/brew ]; then
-    fpath+=($(/opt/homebrew/bin/brew --prefix)/share/zsh/site-functions)
-    eval $(/opt/homebrew/bin/brew shellenv)
-  fi
-else
-  # 3. arm64 brew
-  if [ -f /opt/homebrew/bin/brew ]; then
-    fpath+=($(/opt/homebrew/bin/brew --prefix)/share/zsh/site-functions)
-    eval $(/opt/homebrew/bin/brew shellenv)
-  fi
-
-  # 2. x86 brew bin
-  if [ -f /usr/local/bin/brew ]; then
-    fpath+=($(/usr/local/bin/brew --prefix)/share/zsh/site-functions)
-    eval $(/usr/local/bin/brew shellenv)
-  fi
-fi
-
-# 1. user brew
-if [ -f ~/homebrew/bin/brew ]; then
-  eval $(~/homebrew/bin/brew shellenv)
-fi
-{{- end }}
 
 # Zoxide : prompt hook mode
 if command -v zoxide &> /dev/null; then
@@ -95,7 +75,6 @@ fi
 
 # use brew installed asdf
 . $(brew --prefix asdf)/libexec/asdf.sh
-. $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
+# . $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash
 
-source $HOME/.profile
-source $HOME/.zshrc
+# source $HOME/.zshrc

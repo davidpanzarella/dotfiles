@@ -1,2 +1,3 @@
-fpath=($fpath $HOME/.config/shell/.functions)
-typeset -U fpath
+# setup zsh config directory
+ZDOTDIR=$HOME/.config/zsh
+. $ZDOTDIR/.zshenv

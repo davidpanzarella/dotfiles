@@ -45,6 +45,12 @@ nn() {
 #   exec $SHELL -l
 # }
 
+f() {
+	local dir
+	dir=$(find ${1:-.} -path '*/\.*' -prune -o -type d -print 2> /dev/null | fzy) && cd "$dir"
+}
+# This command is slow! (100ms)
+
 # touch-safe() {
 #   for f in "$@"; do
 #     [ -d $f:h ] || mkdir -p $f:h && command touch $f
