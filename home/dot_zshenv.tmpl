@@ -1,0 +1,11 @@
+# XDG Paths
+export XDG_CACHE_HOME={{ .chezmoi.homeDir }}/.cache
+export XDG_CONFIG_HOME={{ .chezmoi.homeDir }}/.config
+export XDG_DATA_HOME={{ .chezmoi.homeDir }}/.local/share
+
+# setup zsh config directory
+ZDOTDIR={{ .chezmoi.homeDir }}/.config/zsh
+. $ZDOTDIR/.zshenv
+
+# zsh config dir
+# export ZDOTDIR={{ .chezmoi.homeDir }}/.config/zsh

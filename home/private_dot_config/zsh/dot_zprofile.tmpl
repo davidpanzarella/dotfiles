@@ -1,37 +1,42 @@
-echo "profile"
-
 # Homebrew setup based on mac & platform (Mac specific config)
 {{ if (eq .chezmoi.os "darwin" ) -}}
-if [ "$(uname -m)" == "arm64" ]; then
-  # 3. x86 brew bin
-  if [ -f /usr/local/bin/brew ]; then
-    eval $(/usr/local/bin/brew shellenv)
-    fpath+=($(/usr/local/bin/brew --prefix)/share/zsh/site-functions)
+  if [[ "$(uname -m)" == "arm64" ]]; then
+    echo "Using arm64"
+
+    # 3. check and use x86 brew if we have it
+    if [ -f /usr/local/bin/brew ]; then
+      echo "Using x86 brew"
+      fpath+=($(/usr/local/bin/brew --prefix)/share/zsh/site-functions)
+      eval $(/usr/local/bin/brew shellenv)
+    fi
+
+    # 2. overwrite and use arm64 brew if we have it
+    if [ -f /opt/homebrew/bin/brew ]; then
+      echo "Using arm64 brew"
+      fpath+=($(/opt/homebrew/bin/brew --prefix)/share/zsh/site-functions)
+      eval $(/opt/homebrew/bin/brew shellenv)
+    fi
+
+  else
+    echo "Using x86"
+
+    # 3. check and use arm64 brew if we have it
+    if [ -f /opt/homebrew/bin/brew ]; then
+      echo "Using arm64 brew"
+      fpath+=($(/opt/homebrew/bin/brew --prefix)/share/zsh/site-functions)
+      eval $(/opt/homebrew/bin/brew shellenv)
+    fi
+
+    # 2. overwrite and use x86 brew if we have it
+    if [ -f /usr/local/bin/brew ]; then
+      echo "Using x86 brew"
+      fpath+=($(/usr/local/bin/brew --prefix)/share/zsh/site-functions)
+      eval $(/usr/local/bin/brew shellenv)
+    fi
   fi
 
-  # 2. arm64 brew
-  if [ -f /opt/homebrew/bin/brew ]; then
-    fpath+=($(/opt/homebrew/bin/brew --prefix)/share/zsh/site-functions)
-    eval $(/opt/homebrew/bin/brew shellenv)
+  # 1. user has some special brew configured, use that
+  if [ -f ~/homebrew/bin/brew ]; then
+    eval $(~/homebrew/bin/brew shellenv)
   fi
-else
-  # 3. arm64 brew
-  if [ -f /opt/homebrew/bin/brew ]; then
-    fpath+=($(/opt/homebrew/bin/brew --prefix)/share/zsh/site-functions)
-    eval $(/opt/homebrew/bin/brew shellenv)
-  fi
-
-  # 2. x86 brew bin
-  if [ -f /usr/local/bin/brew ]; then
-    fpath+=($(/usr/local/bin/brew --prefix)/share/zsh/site-functions)
-    eval $(/usr/local/bin/brew shellenv)
-  fi
-fi
-
-# 1. user brew
-if [ -f ~/homebrew/bin/brew ]; then
-  eval $(~/homebrew/bin/brew shellenv)
-fi
 {{- end }}
-
-fpath=($fpath $HOME/.config/zsh/.functions)

@@ -18,9 +18,13 @@ if command -v brew >/dev/null 2>&1; then
   exit 0
 fi
 
-echo "Installing Homebrew..."
+echo "Installing Homebrew for both arm64 and x86"
 
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# Install both versions
+arch -arm64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+arch -x86_64 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
 echo "Homebrew Installed!"
 {{ end -}}

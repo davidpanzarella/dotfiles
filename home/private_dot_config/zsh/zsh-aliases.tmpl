@@ -1,6 +1,6 @@
 # Editing
-alias aliases='$EDITOR {{ .chezmoi.homeDir }}/.config/shell/.aliases ; reload ; echo "Aliases reloaded"'
-alias funcs='$EDITOR {{ .chezmoi.homeDir }}/.config/shell/.functions ; reload ; echo "Functions reloaded"'
+alias aliases='$EDITOR {{ .chezmoi.homeDir }}/.config/zsh/zsh-aliases ; reload'
+alias funcs='$EDITOR {{ .chezmoi.homeDir }}/.config/zsh/zsh-functions ; reload'
 alias zshrc='$EDITOR {{ .chezmoi.homeDir }}/.zshrc ; reload'
 
 # Reload the shell (i.e. invoke as a login shell)
@@ -42,9 +42,6 @@ alias ga="git add"
 alias ga.="git add ."
 alias gaa="git add --all"
 alias gai="git add -i"
-gcam() {
-  git add --all && git commit -m "$*"
-}
 alias gcaa="git commit -a --amend"
 alias gco-="git checkout -"
 alias gcob="git checkout -b"
@@ -72,9 +69,6 @@ alias glr="git pull --rebase"
 
 # Misc
 alias -- -='cd -'
-alias a="asdf"
-alias arst="asdf"
-alias b="bundle"
 alias be="bundle exec"
 alias bi="bundle install"
 alias bf="bh | fzy"
@@ -82,7 +76,6 @@ alias br="brew"
 alias brci="brew install --cask"
 alias bri="brew install"
 alias brs="brew search"
-alias bz="blitz"
 alias cl="clear"
 alias c='cd {{ .chezmoi.homeDir }}/Development && ls'
 alias c.="code ."
