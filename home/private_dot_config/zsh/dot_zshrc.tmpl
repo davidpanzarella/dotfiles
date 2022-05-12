@@ -74,7 +74,7 @@ plugins=(
   dirpersist
   docker                  # Aliases for [Docker](https://www.docker.com/)
   docker-compose          # Aliases for [Docker-Compose](https://docs.docker.com/compose/)
-  dotenv                  # Load project ENV variables from folder `.env` files
+  # dotenv                  # Load project ENV variables from folder `.env` files
   extract                 # Multi-format decompression function `x`
   fzf
   fzf-tab                 # to turn it on and off: toggle-fzf-tab
@@ -156,6 +156,9 @@ setopt no_auto_menu  #
 if command -v zoxide &> /dev/null; then
   eval $(zoxide init zsh --hook prompt)
 fi
+
+
+eval "$(direnv hook zsh)"
 
 # use brew installed asdf
 # . $(brew --prefix asdf)/libexec/asdf.sh

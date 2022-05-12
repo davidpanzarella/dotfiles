@@ -218,7 +218,7 @@
 
 {{ $rupiePassword := "" -}}
 {{- if .rupie }}
-  {{   $rupiePassword = (onepassword "GitHub Access Token" .vaultpersonal).details.password -}}
+  {{   $rupiePassword = (onepasswordDetailsFields "GitHub Access Token" .vaultpersonal).password.value -}}
   [url "https://davidpanzarella:{{ $rupiePassword }}@github.com/rupienetwork/"]
     insteadOf = https://github.com/rupienetwork/
 {{ end -}}

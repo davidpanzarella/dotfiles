@@ -1,35 +1,35 @@
 # Homebrew setup based on mac & platform (Mac specific config)
 {{ if (eq .chezmoi.os "darwin" ) -}}
   if [[ "$(uname -m)" == "arm64" ]]; then
-    echo "Using arm64"
+    # echo "Using arm64"
 
     # 3. check and use x86 brew if we have it
     if [ -f /usr/local/bin/brew ]; then
-      echo "Using x86 brew"
+      # echo "Using x86 brew"
       fpath+=($(/usr/local/bin/brew --prefix)/share/zsh/site-functions)
       eval $(/usr/local/bin/brew shellenv)
     fi
 
     # 2. overwrite and use arm64 brew if we have it
     if [ -f /opt/homebrew/bin/brew ]; then
-      echo "Using arm64 brew"
+      # echo "Using arm64 brew"
       fpath+=($(/opt/homebrew/bin/brew --prefix)/share/zsh/site-functions)
       eval $(/opt/homebrew/bin/brew shellenv)
     fi
 
   else
-    echo "Using x86"
+    # echo "Using x86"
 
     # 3. check and use arm64 brew if we have it
     if [ -f /opt/homebrew/bin/brew ]; then
-      echo "Using arm64 brew"
+      # echo "Using arm64 brew"
       fpath+=($(/opt/homebrew/bin/brew --prefix)/share/zsh/site-functions)
       eval $(/opt/homebrew/bin/brew shellenv)
     fi
 
     # 2. overwrite and use x86 brew if we have it
     if [ -f /usr/local/bin/brew ]; then
-      echo "Using x86 brew"
+      # echo "Using x86 brew"
       fpath+=($(/usr/local/bin/brew --prefix)/share/zsh/site-functions)
       eval $(/usr/local/bin/brew shellenv)
     fi
