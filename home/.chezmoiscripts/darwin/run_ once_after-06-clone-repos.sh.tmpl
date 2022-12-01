@@ -3,7 +3,7 @@
 
 source /tmp/chezmoi-utils.sh
 
-printf "${green}[07 - Cloning] ${reset}"
+printf "${green}[06 - Cloning] ${reset}"
 {{ if or (lt 07 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_CLONE_SETUP") -}}
 echo "Skip clone repos"
 exit 0

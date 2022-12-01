@@ -5,7 +5,7 @@
 
 source /tmp/chezmoi-utils.sh
 
-printf "${green}[07 - Extra Mac Apps] ${reset}"
+printf "${green}[04 - Extra Mac Apps] ${reset}"
 {{- if or (lt 07 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_APPS") }}
 echo "Skip installing extra Mac Apps"
 exit 0
