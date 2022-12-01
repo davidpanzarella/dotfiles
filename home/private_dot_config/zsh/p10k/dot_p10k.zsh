@@ -57,7 +57,7 @@
     pyenv                   # python environment (https://github.com/pyenv/pyenv)
     #goenv                   # go environment (https://github.com/syndbg/goenv)
     # nvm                     # node.js version from nvm (https://github.com/nvm-sh/nvm)
-    nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
+    # nodeenv                 # node.js environment (https://github.com/ekalinin/nodeenv)
     node_version            # node.js version
     # go_version            # go version (https://golang.org)
     # rust_version          # rustc version (https://www.rust-lang.org)
