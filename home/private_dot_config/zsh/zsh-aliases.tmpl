@@ -179,7 +179,7 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 alias dnsflush='sudo killall -HUP mDNSResponder'
 
 # Empty the Trash on all mounted volumes and the main HDD.
-# Also, clear Apple’s System Logs to improve shell startup speed.
+# Also, clear Apple's System Logs to improve shell startup speed.
 # Finally, clear download history from quarantine. https://mths.be/bum
 alias emptytrash="sudo rm -rfv /Volumes/*/.Trashes; sudo rm -rfv {{ .chezmoi.homeDir }}/.Trash; sudo rm -rfv /private/var/log/asl/*.asl; sqlite3 {{ .chezmoi.homeDir }}/Library/Preferences/com.apple.LaunchServices.QuarantineEventsV* 'delete from LSQuarantineEvent'"
 
@@ -193,7 +193,7 @@ alias files.usage.user='sudo fs_usage -e -f filesystem|grep -v CACHE_HIT|grep -v
 # IP addresses
 alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias iplocal="ipconfig getifaddr en0"
-alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+alias ips="ifconfig -a | grep -o 'inet6? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
 
 # Show network connections
 # Often useful to prefix with SUDO to see more system level network usage
@@ -211,8 +211,10 @@ alias ifactive="ifconfig | pcregrep -M -o '^[^\t:]+:([^\n]|\n\t)*status: active'
 # -l Long format
 # -h Short size suffixes (B, K, M, G, P)
 # -p Postpend slash to folders
-alias ls='ls -G -h -p '
-alias ll='ls -l -G -h -p '
+alias ls='eza --icons'
+alias ll='eza -l --icons'
+alias la='eza -la --icons'
+alias lt='eza --tree --icons'
 
 # Print each PATH entry on a separate line
 alias path='echo -e ${PATH//:/\\n}'
@@ -221,3 +223,100 @@ alias path='echo -e ${PATH//:/\\n}'
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; asdf plugin update --all; mas upgrade;'
 
 alias vtop="vtop --theme wizard"
+
+# Development
+alias dev="cd {{ .chezmoi.homeDir }}/Development"
+alias pn="pnpm"
+alias pni="pnpm install"
+alias pna="pnpm add"
+alias pnad="pnpm add -D"
+alias pnr="pnpm run"
+alias pnb="pnpm run build"
+alias pnd="pnpm run dev"
+alias pnt="pnpm run test"
+alias y="yarn"
+alias yd="yarn dev"
+alias yb="yarn build"
+alias yt="yarn test"
+
+# Docker
+alias d="docker"
+alias dc="docker-compose"
+alias dcu="docker-compose up"
+alias dcd="docker-compose down"
+alias dcb="docker-compose build"
+
+# Git
+alias gs="git status"
+alias gp="git push"
+alias gpl="git pull"
+alias gc="git commit"
+alias gca="git commit --amend"
+alias gco="git checkout"
+alias gb="git branch"
+alias gf="git fetch"
+alias gl="git log --oneline"
+
+# PayloadCMS
+alias pdev="yarn dev"
+alias pbuild="yarn build"
+alias pstart="yarn start"
+
+# React
+alias cra="create-react-app"
+alias nrw="npm run watch"
+alias nrd="npm run dev"
+alias nrb="npm run build"
+alias nrt="npm run test"
+
+# TypeScript
+alias tsc="npx tsc"
+alias tsw="npx tsc --watch"
+
+# Database
+alias pgstart="brew services start postgresql"
+alias pgstop="brew services stop postgresql"
+
+# Shopify
+alias sd="shopify deploy"
+alias st="shopify theme"
+alias stw="shopify theme watch"
+alias stp="shopify theme pull"
+alias stpu="shopify theme push"
+
+# Prisma
+alias prs="prisma studio"
+alias prp="prisma push"
+alias prf="prisma format"
+alias prg="prisma generate"
+
+# Astro
+alias adev="astro dev"
+alias abuild="astro build"
+alias apreview="astro preview"
+
+# Next.js
+alias nd="next dev"
+alias nb="next build"
+alias ns="next start"
+
+# Vite
+alias vd="vite dev"
+alias vb="vite build"
+alias vp="vite preview"
+
+# asdf version management
+alias ai="asdf install"           # Install version
+alias al="asdf list"             # List installed versions
+alias alr="asdf list-all"        # List all available versions
+alias ag="asdf global"           # Set global version
+alias al="asdf local"            # Set local version
+alias ac="asdf current"          # Show current versions
+alias au="asdf update"           # Update asdf
+alias aup="asdf plugin update"   # Update plugins
+alias arb="asdf reshim"          # Reshim tool versions
+
+# AWS
+alias awsw="aws --profile work"
+alias awsp="aws --profile personal"
+alias awsl="aws configure list-profiles"

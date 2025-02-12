@@ -216,9 +216,3 @@
 [http]
 	postBuffer = 15728640
 
-{{ $rupiePassword := "" -}}
-{{- if .rupie }}
-  {{   $rupiePassword = (onepasswordDetailsFields "GitHub Access Token" .vaultPersonal).password.value -}}
-  [url "https://davidpanzarella:{{ $rupiePassword }}@github.com/rupienetwork/"]
-    insteadOf = https://github.com/rupienetwork/
-{{ end -}}

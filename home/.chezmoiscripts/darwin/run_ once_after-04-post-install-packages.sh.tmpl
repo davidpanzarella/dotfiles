@@ -16,14 +16,11 @@ echo "Install Mac Apps (Extra: Need additional actions or pre-dependencies)"
 set -eufo pipefail
 
 {{ $taps := list
-  "homebrew/cask"
-  "homebrew/core"
   "shopify/shopify"
 -}}
 
 {{ $brews := list
   "shopify-cli"
-  "themekit"
 -}}
 
 {{ $casks := list

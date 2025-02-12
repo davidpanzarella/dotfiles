@@ -14,11 +14,10 @@ echo "Install asdf plugins"
 {{- end }}
 
 {{ $plugins := dict
-  "direnv"     "latest"
-  "nodejs"     "20.2.0"
-  "python"     "3.8.5"
+  "java"       "latest"
+  "nodejs"     "latest"
+  "python"     "latest"
   "ruby"       "latest"
-  "yarn"       "latest"
 }}
 
 # Skip Node.js signature check
@@ -36,6 +35,8 @@ export NODEJS_CHECK_SIGNATURES=no
     asdf global {{ $key }} {{ $val }} || true
   {{- end -}}
 {{ end -}}
+
+. ~/.asdf/plugins/java/set-java-home.zsh
 
 # -- Packages -- #
 {{ $rubyPackages := list

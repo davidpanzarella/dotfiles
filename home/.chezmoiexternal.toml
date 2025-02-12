@@ -31,7 +31,7 @@
     url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz"
     exact = true
     stripComponents = 1
-    refreshPeriod = "24h"
+    refreshPeriod = "168h"
 
 [".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
     type = "archive"
@@ -46,13 +46,3 @@
     exact = true
     stripComponents = 1
     refreshPeriod = "24h"
-
-{{- if and (not .ephemeral) (not .headless) }}
-{{-   $fontDir := "" }}
-{{-   if eq .chezmoi.os "darwin" }}
-{{-     $fontDir = "Library/Fonts" }}
-{{-   else if eq .chezmoi.os "linux" }}
-{{-     $fontDir = ".local/share/fonts" }}
-{{-   end }}
-
-{{- end }}
