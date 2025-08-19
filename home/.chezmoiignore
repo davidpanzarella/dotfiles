@@ -23,6 +23,15 @@ Documents
 .aws
 {{ end }}
 
+# Development artifacts that shouldn't be managed by chezmoi
+node_modules/
+.next/
+dist/
+build/
+coverage/
+.cache/
+*.log
+
 {{ if not .personal }}
 .pypirc
 .psqlrc
