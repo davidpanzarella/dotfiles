@@ -40,7 +40,8 @@ echo "Installing latest stable versions of common tools"
 # Install latest versions of commonly used tools that are known to work
 mise use --global node@lts
 mise use --global python@latest  
-mise use --global ruby@3.3
+# Skip Ruby for now due to psych extension build issues on macOS 15.7
+# mise use --global ruby@3.3
 mise use --global java@openjdk-21
 
 # Note: If you have an existing .tool-versions file, you can run 'mise install' later
