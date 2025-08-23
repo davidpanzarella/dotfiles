@@ -15,6 +15,23 @@ echo "Install mise tools"
 
 set -eufo pipefail
 
+# Check if mise is available
+if ! command -v mise &> /dev/null; then
+  echo "Mise not found in PATH. Trying to source Homebrew environment..."
+  # Try to add Homebrew to PATH
+  if [[ -f "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [[ -f "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+  
+  # Check again
+  if ! command -v mise &> /dev/null; then
+    echo "Error: mise still not found. Please ensure Homebrew packages were installed correctly."
+    exit 1
+  fi
+fi
+
 # Configure mise
 mise settings set experimental true
 
