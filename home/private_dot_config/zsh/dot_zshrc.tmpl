@@ -3,14 +3,9 @@
 # https://unix.stackexchange.com/questions/71253/what-should-shouldnt-go-in-zshenv-zshrc-zlogin-zprofile-zlogout
 # https://www.youtube.com/watch?v=MSPu-lYF-A8
 
-# Conditional prompt setup for different terminals
-if [[ "$TERM_PROGRAM" != "WarpTerminal" ]]; then
-  # Enable Powerlevel10k instant prompt for non-Warp terminals
-  if [[ -r "${XDG_CACHE_HOME:-{{ .chezmoi.homeDir }}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-    source "${XDG_CACHE_HOME:-{{ .chezmoi.homeDir }}/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-  fi
-  # Suppress instant prompt warning
-  typeset -g POWERLEVEL10K_INSTANT_PROMPT=quiet
+# Initialize Starship prompt (works in all terminals)
+if command -v starship &> /dev/null; then
+  eval "$(starship init zsh)"
 fi
 
 # setopt appendhistory
@@ -31,26 +26,11 @@ fi
 # # compinit
 # _comp_options+=(globdots)		# Include hidden files.
 
-# Allow [ or ] whereever you want
-ulimit -n 8192
-unsetopt nomatch
-setopt auto_cd
-setopt extendedglob  # enable extended globbing
-setopt glob_dots     # no special treatment for file names with a leading dot
-setopt interactive_comments
-setopt no_auto_menu  # require an extra TAB press to open the completion menu
-
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-# Conditional theme loading based on terminal
-if [[ "$TERM_PROGRAM" != "WarpTerminal" ]]; then
-  # Load Powerlevel10k for traditional terminals
-  ZSH_THEME="powerlevel10k/powerlevel10k"
-else
-  # Use Warp's native prompt
-  ZSH_THEME=""
-fi
+# No theme needed - starship handles the prompt
+ZSH_THEME=""
 
 # fzf configurations
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
@@ -73,7 +53,7 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 plugins=(
   1password
   aliases
-  asdf                    # Aliases for [asdf](https://asdf-vm.com/)
+  # mise integration handled separately
   brew                    # Aliases for [Homebrew](https://brew.sh/)
   colorize
   command-not-found 
@@ -119,10 +99,9 @@ plugins=(
 )
 
 
-# source {{ .chezmoi.homeDir }}/.config/zsh/plugins/powerlevel10k/powerlevel10k.zsh-theme
-
-if test "${ZSH_THEME#*powerlevel10k}" != "$ZSH_THEME"; then
-  [ -f {{ .chezmoi.homeDir }}/.config/zsh/p10k/.p10k.zsh ] && \. {{ .chezmoi.homeDir }}/.config/zsh/p10k/.p10k.zsh
+# Mise (modern replacement for asdf)
+if command -v mise &> /dev/null; then
+  eval "$(mise activate zsh)"
 fi
 
 # Load oh-my-zsh
@@ -176,33 +155,24 @@ alias ls="${aliases[ls]:-ls} -A"
 setopt autocd autopushd pushdminus pushdsilent pushdtohome cdablevars
 DIRSTACKSIZE=5
 
-# Allow [ or ] whereever you want
+# Shell options
 ulimit -n 8192
 unsetopt nomatch
+setopt auto_cd
 setopt extendedglob  # enable extended globbing
 setopt glob_dots     # no special treatment for file names with a leading dot
-setopt no_auto_menu  #
+setopt interactive_comments
+setopt no_auto_menu  # require an extra TAB press to open the completion menu
 
 # Zoxide : prompt hook mode
 if command -v zoxide &> /dev/null; then
   eval $(zoxide init zsh --hook prompt)
 fi
 
-# Ensure that $HOME/.asdf/shims is in your PATH ahead of other node installations
-export PATH="$HOME/.asdf/shims:$PATH"
-
-
-if [ ! -d "$HOME/.asdf/completions" ]; then
-  mkdir -p "$HOME/.asdf/completions"
-  asdf completion zsh > "$HOME/.asdf/completions/_asdf"
-
-  # append completions to fpath
-  fpath=("$HOME/.asdf/completions" $fpath)
-
-  # initialize completions with ZSH's compinit
-  autoload -Uz compinit && compinit
+# Initialize atuin for better history search (if available)
+if command -v atuin &> /dev/null; then
+  eval "$(atuin init zsh)"
 fi
-
 
 # pnpm
 export PNPM_HOME="{{ .chezmoi.homeDir }}/Library/pnpm"

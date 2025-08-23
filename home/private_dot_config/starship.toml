@@ -1,0 +1,64 @@
+# Starship configuration - Clean modern prompt
+# Focused on functionality over aesthetics
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$python\
+$ruby\
+$java\
+$docker_context\
+$kubernetes\
+$aws\
+$cmd_duration\
+$line_break\
+$character"""
+
+# Directory
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+
+# Git 
+[git_branch]
+symbol = " "
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+# Language versions (only show when in relevant project)
+[nodejs]
+format = "via [$symbol($version )]($style)"
+detect_files = ["package.json", ".nvmrc"]
+
+[python]
+format = "via [$symbol($version )]($style)"
+
+[ruby]
+format = "via [$symbol($version )]($style)"
+
+[java]
+format = "via [$symbol($version )]($style)"
+
+# Docker & Kubernetes (useful for your work)
+[docker_context]
+format = "via [$symbol$context]($style) "
+
+[kubernetes]
+disabled = false
+format = 'on [$symbol$context( \($namespace\))]($style) '
+
+[aws]
+format = 'on [$symbol($profile )]($style)'
+
+# Command duration for long-running commands
+[cmd_duration]
+min_time = 2000
+format = "took [$duration]($style) "
+
+# Clean prompt character
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"

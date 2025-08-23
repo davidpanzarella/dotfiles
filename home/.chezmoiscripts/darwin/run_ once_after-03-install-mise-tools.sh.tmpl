@@ -1,0 +1,50 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/sh
+
+# Install mise tools (modern replacement for asdf)
+
+source /tmp/chezmoi-utils.sh
+
+printf "${green}[03 - Mise Tools] ${reset}"
+{{- if or (lt 03 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_MISE_TOOLS") }}
+echo "Skip installing mise tools"
+exit 0
+{{ else }}
+echo "Install mise tools"
+{{- end }}
+
+set -eufo pipefail
+
+# Configure mise
+mise settings set experimental true
+
+# Mise will read from .tool-versions file if it exists
+# Install tools specified in the file, or install latest versions
+if [ -f "{{ .chezmoi.homeDir }}/.tool-versions" ]; then
+  echo "Installing tools from existing .tool-versions file"
+  cd {{ .chezmoi.homeDir }}
+  mise install
+else
+  echo "Installing latest versions of common tools"
+  # Install latest versions of commonly used tools
+  mise use --global node@lts
+  mise use --global python@latest  
+  mise use --global ruby@latest
+  mise use --global java@openjdk-21
+fi
+
+# Verify installations
+echo "Verifying mise installations:"
+mise list --current
+
+# Install global packages if needed
+{{ $rubyPackages := list
+}}
+
+{{ range sortAlpha $rubyPackages }}
+gem install {{ . }}
+{{ end -}}
+
+echo "Mise tool installation complete!"
+
+{{ end -}}
