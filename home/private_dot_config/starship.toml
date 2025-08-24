@@ -1,64 +1,175 @@
-# Starship configuration - Clean modern prompt
-# Focused on functionality over aesthetics
+# Starship configuration - Contextual and practical prompt
+# Shows relevant info based on current directory context
+# Organized alphabetically for easy maintenance
 
 format = """
 $directory\
 $git_branch\
+$git_commit\
+$git_state\
 $git_status\
+$shell\
+$sudo\
+$username\
+$hostname\
+$package\
 $nodejs\
 $python\
 $ruby\
 $java\
+$bun\
 $docker_context\
 $kubernetes\
 $aws\
+$gcloud\
+$direnv\
+$status\
 $cmd_duration\
+$jobs\
 $line_break\
 $character"""
 
-# Directory
-[directory]
-truncation_length = 3
-truncation_symbol = "…/"
-
-# Git 
-[git_branch]
-symbol = " "
-
-[git_status]
-format = '([\[$all_status$ahead_behind\]]($style) )'
-
-# Language versions (only show when in relevant project)
-[nodejs]
-format = "via [$symbol($version )]($style)"
-detect_files = ["package.json", ".nvmrc"]
-
-[python]
-format = "via [$symbol($version )]($style)"
-
-[ruby]
-format = "via [$symbol($version )]($style)"
-
-[java]
-format = "via [$symbol($version )]($style)"
-
-# Docker & Kubernetes (useful for your work)
-[docker_context]
-format = "via [$symbol$context]($style) "
-
-[kubernetes]
-disabled = false
-format = 'on [$symbol$context( \($namespace\))]($style) '
-
+# AWS - disabled by default, only enable in AWS projects
 [aws]
+disabled = true
 format = 'on [$symbol($profile )]($style)'
+
+# Bun JavaScript runtime
+[bun]
+format = "via [$symbol$version]($style) "
+detect_files = ["bun.lockb", "bunfig.toml"]
+
+# Clean prompt character with better styling
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold yellow)"
 
 # Command duration for long-running commands
 [cmd_duration]
 min_time = 2000
 format = "took [$duration]($style) "
 
-# Clean prompt character
-[character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
+# Directory - show more context with better styling
+[directory]
+truncation_length = 4
+truncation_symbol = "…/"
+home_symbol = "~"
+style = "bold cyan"
+read_only = " 🔒"
+read_only_style = "red"
+
+# Direnv (like P10k's direnv segment)
+[direnv]
+format = "[direnv $loaded/$allowed]($style) "
+disabled = false
+
+# Docker - only show when in Docker context
+[docker_context]
+disabled = true
+format = "via [$symbol$context]($style) "
+only_with_files = true
+detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
+
+# Google Cloud - disabled by default, only enable in GCP projects  
+[gcloud]
+disabled = true
+format = 'on [$symbol$account(@$domain)(\($project\))]($style) '
+
+# Git - clean and informative with better styling
+[git_branch]
+symbol = " "
+format = "on [$symbol$branch]($style) "
+style = "bold purple"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style) )'
+style = "bold red"
+conflicted = "⚡"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+up_to_date = "✓"
+untracked = "?"
+stashed = "📦"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+
+# Git commit info
+[git_commit]
+commit_hash_length = 7
+format = "([\\($hash$tag\\)]($style) )"
+style = "green bold"
+only_detached = true
+
+# Git state (rebase, merge, etc.)
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
+
+# Java
+[java]
+format = "via [$symbol$version]($style) "
+detect_files = ["pom.xml", "build.gradle", ".java-version"]
+
+# Background jobs (like P10k's background_jobs)
+[jobs]
+format = "[$symbol$number]($style) "
+
+# Kubernetes - only show when kubectl context is relevant
+[kubernetes]
+disabled = false
+format = 'on [$symbol$context( \($namespace\))]($style) '
+# Only show in directories with k8s files
+detect_files = ["k8s", "kustomization.yaml", "Chart.yaml"]
+detect_folders = ["k8s", "kubernetes", ".kube"]
+
+# Node.js
+[nodejs]
+format = "via [$symbol$version]($style) "
+detect_files = ["package.json", ".nvmrc", "yarn.lock", "pnpm-lock.yaml"]
+detect_folders = ["node_modules"]
+
+# Package info (like P10k's package segment)
+[package]
+format = "[$symbol$version]($style) "
+display_private = false
+
+# Python
+[python]
+format = "via [$symbol$version]($style) "
+detect_files = ["requirements.txt", "pyproject.toml", "Pipfile", ".python-version"]
+
+# Ruby
+[ruby]
+format = "via [$symbol$version]($style) "
+detect_files = ["Gemfile", ".ruby-version"]
+
+# Shell indicator (useful for dotfiles testing)
+[shell]
+disabled = false
+format = "[$indicator]($style) "
+
+# Show when running with sudo (important for system configs)
+[sudo]
+disabled = false
+format = "[as $symbol]($style)"
+
+# Status (like P10k's status segment)
+[status]
+disabled = false
+format = "[$symbol$status]($style) "
+
+# Username - show when not default user or when SSH
+[username]
+disabled = false
+show_always = false
+format = "[$user]($style)@"
+
+# Hostname - show when SSH or when working on system configs
+[hostname]
+disabled = false
+ssh_only = true
+format = "[$hostname]($style) "

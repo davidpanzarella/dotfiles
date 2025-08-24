@@ -305,18 +305,106 @@ alias vd="vite dev"
 alias vb="vite build"
 alias vp="vite preview"
 
-# asdf version management
-alias ai="asdf install"           # Install version
-alias al="asdf list"             # List installed versions
-alias alr="asdf list-all"        # List all available versions
-alias ag="asdf global"           # Set global version
-alias al="asdf local"            # Set local version
-alias ac="asdf current"          # Show current versions
-alias au="asdf update"           # Update asdf
-alias aup="asdf plugin update"   # Update plugins
-alias arb="asdf reshim"          # Reshim tool versions
+# Mise version management (modern replacement for asdf)
+alias mi="mise install"          # Install version
+alias ml="mise list"             # List installed versions
+alias mla="mise list-all"        # List all available versions
+alias mg="mise global"           # Set global version
+alias mlo="mise local"           # Set local version
+alias mc="mise current"          # Show current versions
+alias mu="mise update"           # Update mise
+alias mup="mise plugin update"   # Update plugins
+alias mr="mise reshim"           # Reshim tool versions
+alias mw="mise which"            # Show which version is being used
+alias mx="mise exec"             # Execute command with specific version
+
+# Modern CLI Tools - Better replacements for standard tools
+alias cat="bat"                  # Better cat with syntax highlighting
+alias find="fd"                  # Better find
+alias grep="rg"                  # Better grep (ripgrep)
+alias top="btop"                 # Better top (if installed)
+alias du="dust"                  # Better du (if installed)
+alias ps="procs"                 # Better ps (if installed)
+
+# FZF - Fuzzy finder optimizations
+alias fzfp="fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+alias fzfd="fd --type d --hidden --follow --exclude .git | fzf --preview 'eza --tree --color=always {} | head -200'"  # Browse all directories
+alias fzff="fd --type f --hidden --follow --exclude .git | fzf --preview 'bat --color=always --style=numbers --line-range=:500 {}'"
+
+# Git with modern tools
+alias gd="git diff | delta"      # Use delta for better diffs
+alias gdh="git diff HEAD | delta"
+alias gds="git diff --staged | delta"
+
+# LazyGit and LazyDocker - TUI interfaces
+alias lg="lazygit"               # Beautiful git TUI
+alias ld="lazydocker"            # Beautiful docker TUI
+
+# Zoxide - Smart directory jumping (better than z)
+alias j="z"                      # Jump to frequently visited directories
+alias ji="zi"                    # Interactive directory selection
+
+# Directory navigation with eza (better ls)
+alias tree="eza --tree --icons --level=3"
+alias lt2="eza --tree --icons --level=2"
+alias lt3="eza --tree --icons --level=3"
+alias lta="eza --tree --icons -a"
+
+# Development workflow optimizations
+alias serve="python3 -m http.server 8000"  # Quick HTTP server
+alias myip="curl -s ifconfig.me"           # Get external IP
+alias localip="ipconfig getifaddr en0"     # Get local IP
+alias ports="lsof -i -P -n | grep LISTEN"  # Show listening ports
+
+# Kubernetes with modern tools
+alias kx="kubectx"               # Switch contexts easily
+alias kn="kubens"                # Switch namespaces easily
+alias kgp="kubectl get pods -o wide --sort-by=.metadata.creationTimestamp"
+alias kgs="kubectl get svc -o wide"
+alias kgd="kubectl get deployments -o wide"
+alias kgi="kubectl get ingress -o wide"
+alias klog="kubectl logs -f"    # Follow logs
+alias kdesc="kubectl describe"  # Describe resource
+
+# Docker optimizations
+alias dps="docker ps --format 'table {{ "{{" }}.Names{{ "}}" }}\t{{ "{{" }}.Image{{ "}}" }}\t{{ "{{" }}.Status{{ "}}" }}\t{{ "{{" }}.Ports{{ "}}" }}'"
+alias dimg="docker images --format 'table {{ "{{" }}.Repository{{ "}}" }}\t{{ "{{" }}.Tag{{ "}}" }}\t{{ "{{" }}.Size{{ "}}" }}\t{{ "{{" }}.CreatedAt{{ "}}" }}'"
+alias dclean="docker system prune -af"     # Clean up everything
+alias dstop="docker stop \$(docker ps -q)" # Stop all containers
+alias drm="docker rm \$(docker ps -aq)"    # Remove all containers
 
 # AWS
 alias awsw="aws --profile work"
 alias awsp="aws --profile personal"
 alias awsl="aws configure list-profiles"
+
+# Productivity aliases
+alias weather="curl wttr.in"     # Get weather
+alias qr="qrencode -t ansiutf8"  # Generate QR codes
+alias speedtest="speedtest-cli"  # Network speed test
+
+# Database management
+alias pgstart="brew services start postgresql"
+alias pgstop="brew services stop postgresql"
+alias redisstart="brew services start redis"
+alias redisstop="brew services stop redis"
+
+# Network monitoring
+alias netusage="bandwhich"       # Network usage monitor
+alias diskusage="ncdu"           # Interactive disk usage
+
+# YAML/JSON processing
+alias yaml2json="yq eval -o=json"
+alias json2yaml="yq eval -o=yaml"
+
+# AWS with vault
+alias aws="aws-vault exec"
+
+# Development tools
+alias j="just"                   # Just command runner
+alias m="make"                   # Make build tool
+
+# Docker shortcuts (when available)
+alias dc="docker-compose"
+alias dps="docker ps"
+alias dimg="docker images"
