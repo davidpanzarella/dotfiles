@@ -1,0 +1,5 @@
+{
+  "foam.dailyNote.filenameFormat": "YYYY-MM-DD",
+  "foam.dailyNote.directory": "memories/notes",
+  "foam.dailyNote.template": ".foam/templates/daily-note.md"
+}

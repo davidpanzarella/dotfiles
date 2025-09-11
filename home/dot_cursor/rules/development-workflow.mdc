@@ -1,0 +1,34 @@
+---
+description: Core development principles and workflow guidelines
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Development Workflow
+
+## Core Principles
+
+1. **Plan first, code second** - Always start with SPEC.md or architecture discussion
+2. **Context is everything** - Include relevant files, errors, and constraints
+3. **Test after every change** - Verify functionality before moving on
+
+## Code Standards
+
+- Define data model before writing code
+- Start with mock data instead of database
+- Split code into multiple files
+- Include error handling and input validation
+- Test after every change
+
+## Debugging
+
+- Include complete error messages and stack traces
+- Provide relevant code files and expected behavior
+- Use browser console (Cmd+Option+J) to check for errors
+
+## Quality Gates
+
+- [ ] Code compiles without errors
+- [ ] All tests pass
+- [ ] Memory system updated with learnings
+- [ ] Documentation updated

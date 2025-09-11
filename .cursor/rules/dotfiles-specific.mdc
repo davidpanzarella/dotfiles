@@ -1,0 +1,36 @@
+---
+description: Chezmoi dotfiles management rules
+globs: ["**/*"]
+alwaysApply: true
+---
+
+# Dotfiles-Specific Rules
+
+## Chezmoi Context
+
+- **Chezmoi**: Always run in interactive mode (`chezmoi apply --interactive`)
+- **ARM64 Context**: Always use ARM64 Homebrew path (`PATH="/opt/homebrew/bin:$PATH" chezmoi apply --interactive`)
+- **Templates**: Use `.tmpl` extension for chezmoi templates
+- **Structure**: Follow chezmoi directory structure (`home/`, `install.sh`, etc.)
+- **Apply**: Always use `chezmoi apply --interactive` for dotfile changes
+
+## Terminal Context
+
+- **Shell**: Always use zsh with configured dotfiles environment (`/bin/zsh`)
+- **Homebrew**: Use ARM64 path `/opt/homebrew/bin/brew` on Apple Silicon
+- **Aliases**: Ensure all configured aliases are available
+- **Environment**: Use configured context from dotfiles setup
+
+## Dotfiles Workflow
+
+- **Template variables**: Use `{{ .chezmoi.* }}` for chezmoi variables
+- **File permissions**: Set executable permissions for scripts
+- **Testing**: Test dotfiles in isolated environment before applying
+- **Backup**: Always backup existing dotfiles before major changes
+
+## Memory System for Dotfiles
+
+- **Configuration decisions** → `memories/decisions/` (ADRs for dotfile choices)
+- **Setup issues** → `memories/issues/` (problems with dotfile setup)
+- **Tool configurations** → `memories/knowledge/` (how tools are configured)
+- **Installation notes** → `memories/plans/` (setup procedures and requirements)
