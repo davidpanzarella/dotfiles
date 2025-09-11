@@ -79,11 +79,12 @@ tags: [index, routing, system]
 - **unsure** → \`inbox/\` with \`route-to:\` hint
 
 ## Quick Commands
+- \`mem help\` - Comprehensive help system and documentation
 - \`mem save-conversation "title"\` - Save current AI conversation
 - \`mem create-adr "title"\` - Create a new ADR
-- \`mem extract-knowledge\` - Extract knowledge from conversations
-- \`mem daily-to-issues\` - Process daily notes to issues
-- \`chi --select\` - Export Cursor conversations
+- \`mem extract-knowledge [file]\` - Extract knowledge from conversations
+- \`mem process-daily\` - Analyze daily notes and suggest actions
+- \`mem export-all\` - Export all project conversations
 - \`mem search "query"\` - Search across all content
 
 ## GitHub Integration
@@ -316,21 +317,25 @@ EOF
 echo "✅ Complete Memory System Setup Complete!"
 echo ""
 echo "🎯 Next Steps:"
-echo "1. Install Foam extension in Cursor/VS Code for wikilinks and graph view"
-echo "2. Use Option+D to create daily notes"
-echo "3. Use 'mem export-conversation' to select and export Cursor conversations"
-echo "4. Use 'mem export-latest' to export the latest Cursor conversation"
-echo "5. Use 'mem save-conversation \"title\"' to save AI conversations"
-echo "6. Use 'mem daily-to-issues' to process daily notes into issues"
+echo "1. Run 'mem help' to see comprehensive command documentation"
+echo "2. Install Foam extension in Cursor/VS Code for wikilinks and graph view"
+echo "3. Use Option+D to create daily notes"
+echo "4. Use 'mem export-all' to export all project conversations"
+echo "5. Use 'mem process-daily' to analyze daily notes"
+echo "6. Use 'mem save-conversation \"title\"' to save AI conversations"
 echo "7. Use 'mem extract-knowledge' to extract insights from conversations"
 echo ""
 echo "📚 Available Commands:"
+echo "- mem help (comprehensive help system)"
 echo "- mem save-conversation \"title\""
 echo "- mem create-adr \"title\""
 echo "- mem extract-decisions"
-echo "- mem daily-to-issues"
-echo "- mem export-conversation (select and export)"
-echo "- mem export-latest (export latest)"
+echo "- mem extract-knowledge [file]"
+echo "- mem process-daily (analyze daily notes)"
+echo "- mem export-conversation (show export instructions)"
+echo "- mem export-latest (export latest conversation)"
+echo "- mem export-all (export all project conversations)"
+echo "- mem move-exported <file> (move exported conversation)"
 echo "- mem check-github (check GitHub integration)"
 echo "- mem search \"query\""
 echo "- mem list [type]"
