@@ -79,7 +79,10 @@ alias brs="brew search"
 alias cl="clear"
 alias c='cd {{ .chezmoi.homeDir }}/Development && ls'
 alias c.="code ."
+alias ca="cursor-agent"
 alias cd.="code --user-data-dir /tmp/code-data/ --disable-extensions ."
+alias cur="cursor ."
+alias curd="cursor --user-data-dir /tmp/cursor-data/ --disable-extensions ."
 alias cwd='pwd | pbcopy'
 
 # alias finder="cd \"$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)')\""
@@ -408,3 +411,11 @@ alias m="make"                   # Make build tool
 alias dc="docker-compose"
 alias dps="docker ps"
 alias dimg="docker images"
+
+# Memory System - AI-powered knowledge management
+alias mem="~/.local/bin/mem"                    # Memory helper commands
+alias setup-memory="~/.local/bin/setup-memory"  # Complete system setup
+alias setup-project="~/.local/bin/setup-project-memory"  # Project setup
+alias init-project="~/.local/bin/init-project-with-best-practices"  # New project with best practices
+alias migrate-conversations="~/.local/bin/migrate-past-conversations"  # Migrate past conversations
+# Note: 'bm' is already available as the basic-memory CLI command
