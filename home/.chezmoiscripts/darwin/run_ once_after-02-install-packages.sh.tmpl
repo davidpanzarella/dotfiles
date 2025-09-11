@@ -15,10 +15,24 @@ echo "Install common macOS packages"
 
 set -eufo pipefail
 
+# Ensure we're using ARM64 Homebrew context on Apple Silicon
+if [[ "$(uname -m)" == "arm64" ]]; then
+  # Apple Silicon - use ARM64 Homebrew
+  if [[ -f "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+else
+  # Intel Mac - use x86_64 Homebrew
+  if [[ -f "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+fi
+
 {{ $taps := list
   "github/gh"
   "oven-sh/bun"
   "weaveworks/tap"
+  "basicmachines-co/basic-memory"
 -}}
 
 {{ $brews := list
@@ -30,6 +44,7 @@ set -eufo pipefail
   "bandwhich"
   "bash"
   "bat"
+  "basic-memory"
   "btop"
   "brew-cask-completion"
   "bun"
@@ -135,7 +150,9 @@ set -eufo pipefail
   "zoom"
 -}}
 
-brew bundle --file=/dev/stdin <<EOF || :
+# Use ARM64 architecture for brew bundle on Apple Silicon
+if [[ "$(uname -m)" == "arm64" ]]; then
+  arch -arm64 brew bundle --file=/dev/stdin <<EOF || :
 {{ range ($taps | sortAlpha | uniq) -}}
 tap "{{ . }}"
 {{ end }}
@@ -146,4 +163,17 @@ brew "{{ . }}"
 cask "{{ . }}"
 {{ end }}
 EOF
+else
+  brew bundle --file=/dev/stdin <<EOF || :
+{{ range ($taps | sortAlpha | uniq) -}}
+tap "{{ . }}"
+{{ end }}
+{{ range ($brews | sortAlpha | uniq) -}}
+brew "{{ . }}"
+{{ end }}
+{{ range ($casks | sortAlpha | uniq) -}}
+cask "{{ . }}"
+{{ end }}
+EOF
+fi
 {{ end -}}

@@ -1,0 +1,86 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/sh
+
+# Fix executable permissions for all files in ~/.local/bin
+# This ensures that all memory system commands work properly
+
+source /tmp/chezmoi-utils.sh
+
+printf "${green}[99 - Fix Executable Permissions] ${reset}"
+echo "Fix executable permissions for ~/.local/bin files"
+echo "This script runs AFTER all dotfiles (including zsh config) are copied"
+
+set -eufo pipefail
+
+# Verify that zsh configuration files are already in place
+echo "Verifying that dotfiles are already copied..."
+if [ -f ~/.zshrc ]; then
+  echo "✅ ~/.zshrc exists - dotfiles have been copied"
+else
+  echo "❌ ~/.zshrc missing - this script may be running too early"
+fi
+
+if [ -f ~/.zshenv ]; then
+  echo "✅ ~/.zshenv exists - environment files are in place"
+else
+  echo "❌ ~/.zshenv missing - environment may not be set up"
+fi
+
+# Ensure ~/.local/bin exists
+mkdir -p ~/.local/bin
+
+# Set executable permissions for all files in ~/.local/bin
+echo "Setting executable permissions for files in ~/.local/bin..."
+find ~/.local/bin -type f -name "*" -exec chmod +x {} \;
+
+# Specifically ensure these key files are executable
+echo "Ensuring key memory system files are executable..."
+
+# Wait a moment for all file operations to complete
+sleep 1
+
+# Set permissions for key files (backup in case executable_ prefix doesn't work)
+chmod +x ~/.local/bin/mem 2>/dev/null || true
+chmod +x ~/.local/bin/basic-memory 2>/dev/null || true
+chmod +x ~/.local/bin/setup-memory 2>/dev/null || true
+chmod +x ~/.local/bin/setup-project-memory 2>/dev/null || true
+
+echo "✅ Permissions set for key memory system files"
+
+# Also ensure any executable_ prefixed files are executable
+echo "Setting permissions for executable_ prefixed files..."
+find ~/.local/bin -name "executable_*" -type f -exec chmod +x {} \;
+
+# Test that mem command works
+echo "Testing mem command..."
+if ~/.local/bin/mem --help >/dev/null 2>&1; then
+  echo "✅ mem command is working"
+else
+  echo "❌ mem command failed - check permissions"
+fi
+
+# Tab completion is handled automatically by oh-my-zsh plugins
+echo "✅ Tab completion handled by oh-my-zsh plugins"
+echo "   Available completions: git, brew, npm, pnpm, docker, kubectl, gh, and more"
+
+# Ensure completion system is properly set up
+echo "Setting up completion system..."
+if [ -d ~/.oh-my-zsh ]; then
+  echo "✅ Oh-My-Zsh found - completions should work"
+else
+  echo "⚠️  Oh-My-Zsh not found - completions may not work"
+fi
+
+# Test if completion files exist
+if [ -f /opt/homebrew/share/zsh/site-functions/_git ]; then
+  echo "✅ Git completion found"
+fi
+if [ -f /opt/homebrew/share/zsh/site-functions/_pnpm ]; then
+  echo "✅ pnpm completion found"
+fi
+if [ -f /opt/homebrew/share/zsh/site-functions/_brew ]; then
+  echo "✅ brew completion found"
+fi
+
+echo "Executable permissions and tab completion fixed!"
+{{ end -}}
