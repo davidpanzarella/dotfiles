@@ -1,0 +1,44 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/bin/sh
+
+# Install basic-memory via Homebrew
+
+source /tmp/chezmoi-utils.sh
+
+printf "${green}[Install Basic Memory] ${reset}"
+{{- if or (lt 99 (atoi (env "SCRIPTS_START_AT"))) (env "SKIP_BASIC_MEMORY") }}
+echo "Skip installing basic-memory"
+exit 0
+{{ else }}
+echo "Install basic-memory"
+{{- end }}
+
+set -eufo pipefail
+
+# Ensure we're using ARM64 Homebrew context on Apple Silicon
+if [[ "$(uname -m)" == "arm64" ]]; then
+  # Apple Silicon - use ARM64 Homebrew
+  if [[ -f "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  fi
+else
+  # Intel Mac - use x86_64 Homebrew
+  if [[ -f "/usr/local/bin/brew" ]]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
+fi
+
+# Tap the basic-memory repository
+echo "Tapping basic-memory repository..."
+brew tap basicmachines-co/basic-memory
+
+# Install basic-memory
+echo "Installing basic-memory..."
+brew install basic-memory
+
+# Install cursor-history tool
+echo "Installing cursor-history..."
+pnpm install -g @johnlindquist/cursor-history@latest
+
+echo "Basic-memory and cursor-history installation complete!"
+{{ end -}}
