@@ -250,11 +250,17 @@ if command -v compdef >/dev/null 2>&1 && command -v mem >/dev/null 2>&1; then
       'extract-decisions:Extract decisions from conversations'
       'extract-knowledge:Extract knowledge from conversation file'
       'process-daily:Process daily notes (analyze content)'
-      'export-conversation:Select and export Cursor conversation'
+      'export-conversation:Show instructions for exporting conversations'
       'export-latest:Export latest Cursor conversation'
+      'export-all:Export all conversations for current project'
+      'export-missing:Export only missing conversations (safe for existing projects)'
+      'move-exported:Move exported conversation to memories directory'
       'check-github:Check GitHub integration status'
       'search:Search across all memories'
       'list:List items by type'
+      'help:Show comprehensive help documentation'
+      '--help:Show comprehensive help documentation'
+      '-h:Show comprehensive help documentation'
     )
     _describe 'mem commands' commands
   }

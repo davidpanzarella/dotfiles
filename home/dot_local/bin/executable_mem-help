@@ -35,6 +35,11 @@ Export ALL conversations for the current project
 Automatically filters and organizes by project name
 Adds proper frontmatter and moves to memories/conversations/
 
+export-missing
+Export only missing conversations (safe for existing projects)
+Checks existing conversations and only adds new ones
+Perfect for ongoing projects with existing conversation history
+
 move-exported <file-path>
 Move an exported conversation file to the memories directory
 Adds proper frontmatter and metadata
