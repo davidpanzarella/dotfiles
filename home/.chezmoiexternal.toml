@@ -12,26 +12,10 @@
     stripComponents = 1
     refreshPeriod = "24h"
 
-[".oh-my-zsh/custom/plugins/zsh-abbr"]
-    type = "archive"
-    url = "https://github.com/olets/zsh-abbr/archive/master.tar.gz"
-    exact = true
-    stripComponents = 1
-    refreshPeriod = "24h"
-
-[".oh-my-zsh/custom/plugins/zsh-history-substring-search"]
-    type = "archive"
-    url = "https://github.com/zsh-users/zsh-history-substring-search/archive/master.tar.gz"
-    exact = true
-    stripComponents = 1
-    refreshPeriod = "24h"
-
-[".oh-my-zsh/custom/plugins/zsh-syntax-highlighting"]
-    type = "archive"
-    url = "https://github.com/zsh-users/zsh-syntax-highlighting/archive/master.tar.gz"
-    exact = true
-    stripComponents = 1
-    refreshPeriod = "168h"
+# Removed unused Oh My Zsh plugins:
+# - zsh-abbr (not used in zshrc)
+# - zsh-history-substring-search (not used in zshrc)  
+# - zsh-syntax-highlighting (not used in zshrc)
 
 [".oh-my-zsh/custom/plugins/zsh-autosuggestions"]
     type = "archive"
@@ -40,9 +24,4 @@
     stripComponents = 1
     refreshPeriod = "24h"
 
-[".oh-my-zsh/custom/themes/powerlevel10k"]
-    type = "archive"
-    url = "https://github.com/romkatv/powerlevel10k/archive/v1.20.0.tar.gz"
-    exact = true
-    stripComponents = 1
-    refreshPeriod = "168h"
+# Removed powerlevel10k theme (using starship instead)
