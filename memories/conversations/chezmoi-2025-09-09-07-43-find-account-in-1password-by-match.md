@@ -2,18 +2,19 @@
 type: conversation
 category: ai-discussion
 project: chezmoi
-created: 2025-09-11
+created: 2025-09-12
 status: archived
 tags:
 - conversation
 - ai
 - discussion
-- exported
+- imported
 participants:
 - user
 - ai-assistant
-context: chezmoi-2025-09-09-07-43-find-account-in-1password-by-match
+context: chezmoi-2025-09-09-07-43-find-account-in-1password-by-match.md
 source: cursor-history
+workspace: chezmoi
 permalink: conversations/chezmoi-2025-09-09-07-43-find-account-in-1password-by-match
 ---
 

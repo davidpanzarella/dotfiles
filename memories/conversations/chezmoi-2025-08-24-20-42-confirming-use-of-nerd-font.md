@@ -2,18 +2,19 @@
 type: conversation
 category: ai-discussion
 project: chezmoi
-created: 2025-09-11
+created: 2025-09-12
 status: archived
 tags:
 - conversation
 - ai
 - discussion
-- exported
+- imported
 participants:
 - user
 - ai-assistant
-context: chezmoi-2025-08-24-20-42-confirming-use-of-nerd-font
+context: chezmoi-2025-08-24-20-42-confirming-use-of-nerd-font.md
 source: cursor-history
+workspace: chezmoi
 permalink: conversations/chezmoi-2025-08-24-20-42-confirming-use-of-nerd-font
 ---
 

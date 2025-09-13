@@ -2,18 +2,19 @@
 type: conversation
 category: ai-discussion
 project: chezmoi
-created: 2025-09-11
+created: 2025-09-12
 status: archived
 tags:
 - conversation
 - ai
 - discussion
-- exported
+- imported
 participants:
 - user
 - ai-assistant
-context: chezmoi-2025-09-11-10-58-testing-zsh-terminal-configurations
+context: chezmoi-2025-09-11-10-58-testing-zsh-terminal-configurations.md
 source: cursor-history
+workspace: chezmoi
 permalink: conversations/chezmoi-2025-09-11-10-58-testing-zsh-terminal-configurations
 ---
 
