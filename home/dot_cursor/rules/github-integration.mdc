@@ -4,16 +4,24 @@ description: "Rules for when and how to use GitHub for issue tracking and projec
 alwaysApply: false
 tags: ["github", "issues", "project-management", "workflow"]
 category: "ai-assistance"
-version: "1.0"
+version: "1.1"
 ---
 
 # GitHub Integration
 
-**GOAL**: Create GitHub issues for actionable work items while preserving knowledge and context in the memory system. Think step-by-step: 1) Identify actionable items, 2) Create GitHub issues with proper templates, 3) Link to memory system for context.
+**PRIMARY GOAL**: Create GitHub issues for actionable work items while preserving knowledge and context in the memory system.
+
+**WORKFLOW**: Think step-by-step: 1) Identify actionable items, 2) Create GitHub issues with proper templates, 3) Link to memory system for context, 4) Maintain bidirectional links.
+
+**REMEMBER**: GitHub for action, memory for context. Always link between them.
 
 ## Decision Framework: GitHub vs Memory System
 
-**Use GitHub For (Actionable Work Items):**
+**DECISION RULE**: If it requires implementation work, create a GitHub issue. If it's knowledge or context, save to memory system.
+
+### GitHub Issues (Actionable Work Items)
+
+**Create GitHub issues for these types of work:**
 
 - **Bugs** - Issues requiring fixes with clear reproduction steps
 - **Features** - New functionality with defined acceptance criteria
@@ -22,7 +30,9 @@ version: "1.0"
 - **Documentation** - Documentation updates with specific deliverables
 - **Any task requiring implementation** - Must have clear completion criteria
 
-**Use Memory System For (Knowledge & Context):**
+### Memory System (Knowledge & Context)
+
+**Save to memory system for these types of content:**
 
 - **Knowledge** - Learnings, insights, best practices, technical discoveries
 - **Plans** - Strategies, roadmaps, high-level goals, project vision
@@ -30,20 +40,20 @@ version: "1.0"
 - **Lessons Learned** - What worked, what didn't work, retrospective insights
 - **Context** - Project history, conversation records, background information
 
-**REMEMBER**: If it requires implementation work, create a GitHub issue. If it's knowledge or context, save to memory system.
-
 ## GitHub Issue Creation Workflow
 
-**Follow this exact sequence for every actionable item:**
+**EXECUTE THIS EXACT SEQUENCE for every actionable item:**
 
 1. **Identify actionable items** - Look for verbs like "fix", "implement", "create", "update", "refactor"
 2. **Create GitHub issue** - Use appropriate template and labels
 3. **Save context to memory** - Preserve background information and decisions
 4. **Link systems** - Reference memory notes in GitHub issues
 
-### **From Daily Notes:**
+**OUTPUT FORMAT**: Each workflow produces: 1) GitHub issue with proper template, 2) Memory note with context, 3) Bidirectional links between them.
 
-**Process daily notes systematically:**
+### From Daily Notes
+
+**PROCESSING STEPS:**
 
 ```bash
 # Step 1: Extract actionable items from daily note
@@ -54,9 +64,9 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 # Step 4: Link GitHub issue to memory note
 ```
 
-### **From Conversations:**
+### From Conversations
 
-**Extract and process conversation content:**
+**PROCESSING STEPS:**
 
 ```bash
 # Complete workflow for conversation processing
@@ -67,13 +77,15 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 5. Update memory note with GitHub issue reference
 ```
 
-**REMEMBER**: Always create GitHub issues for implementation work, save context to memory system.
+**STOP CONDITION**: Continue until all actionable items are processed and all context is preserved in memory system.
 
 ## Issue Templates
 
-**Use these templates exactly as shown. Replace bracketed placeholders with specific content.**
+**TEMPLATE USAGE**: Use these templates exactly as shown. Replace bracketed placeholders with specific content.
 
-### **Bug Report Template**
+### Bug Report Template
+
+**OUTPUT FORMAT**: Return as structured markdown with all sections completed.
 
 ```markdown
 ## Bug Description
@@ -107,7 +119,9 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 - Priority: [High/Medium/Low]
 ```
 
-### **Feature Request Template**
+### Feature Request Template
+
+**OUTPUT FORMAT**: Return as structured markdown with all sections completed.
 
 ```markdown
 ## Feature Description
@@ -135,7 +149,9 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 - Priority: [High/Medium/Low]
 ```
 
-### **Chore/Task Template**
+### Chore/Task Template
+
+**OUTPUT FORMAT**: Return as structured markdown with all sections completed.
 
 ```markdown
 ## Task Description
@@ -159,24 +175,24 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 - Priority: [High/Medium/Low]
 ```
 
-**REMEMBER**: Always include memory system links and clear acceptance criteria in every issue.
+**REQUIREMENT**: Always include memory system links and clear acceptance criteria in every issue.
 
 ## Integration with Memory System
 
-**Maintain bidirectional links between GitHub issues and memory system for complete project understanding.**
+**INTEGRATION GOAL**: Maintain bidirectional links between GitHub issues and memory system for complete project understanding.
 
-### **Link GitHub Issues to Memory**
+### Link GitHub Issues to Memory
 
-**Required actions for every GitHub issue:**
+**REQUIRED ACTIONS for every GitHub issue:**
 
 - Include links to related memory notes in issue body (use Context section)
 - Reference conversations that led to the issue creation
 - Keep detailed context in memory system, actionable work in GitHub
 - Add memory note links to issue comments when relevant
 
-### **Link Memory to GitHub Issues**
+### Link Memory to GitHub Issues
 
-**Required actions for memory notes:**
+**REQUIRED ACTIONS for memory notes:**
 
 - Reference GitHub issues in memory notes when discussing implementation
 - Track progress and decisions in memory system (use decisions/ folder)
@@ -185,7 +201,9 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 
 ## Commands
 
-### **Create Issue from Memory Note**
+### Create Issue from Memory Note
+
+**WORKFLOW STEPS:**
 
 ```bash
 # Complete workflow for extracting actionable items from memory
@@ -195,7 +213,9 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 4. Update memory note with GitHub issue reference
 ```
 
-### **Update Memory from GitHub**
+### Update Memory from GitHub
+
+**WORKFLOW STEPS:**
 
 ```bash
 # Complete workflow when GitHub issue is completed
@@ -206,13 +226,13 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 5. Link completed issue to lessons learned note
 ```
 
-**REMEMBER**: Always maintain bidirectional links between GitHub issues and memory system for complete project continuity.
+**CONTINUITY REQUIREMENT**: Always maintain bidirectional links between GitHub issues and memory system for complete project continuity.
 
 ## Best Practices
 
-### **Issue Creation Standards**
+### Issue Creation Standards
 
-**Follow these requirements for every GitHub issue:**
+**REQUIREMENTS for every GitHub issue:**
 
 - Use clear, actionable titles (start with verb: "Fix", "Implement", "Create", "Update")
 - Include specific acceptance criteria (must be testable and measurable)
@@ -221,9 +241,9 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 - Assign to appropriate milestone or project
 - Include priority level (High/Medium/Low)
 
-### **Memory Integration Standards**
+### Memory Integration Standards
 
-**Maintain these practices for memory system:**
+**PRACTICES for memory system:**
 
 - Keep detailed context in memory system (conversations/, decisions/, knowledge/)
 - Reference GitHub issues in memory notes when discussing implementation
@@ -231,9 +251,9 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 - Track decisions and rationale in decisions/ folder
 - Update memory notes when GitHub issues are completed
 
-### **Workflow Integration Standards**
+### Workflow Integration Standards
 
-**Follow this systematic approach:**
+**SYSTEMATIC APPROACH:**
 
 - Process daily notes for actionable items (look for implementation verbs)
 - Create GitHub issues for all implementation work
@@ -241,15 +261,13 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 - Use memory system for project continuity and historical context
 - Maintain bidirectional links between systems
 
-**REMEMBER**: GitHub for action, memory for context. Always link between them.
-
 ## Examples
 
-### **Daily Note Processing Example**
+### Daily Note Processing Example
 
-**Input:** Daily Note: "Need to fix authentication bug, learned about React hooks best practices"
+**INPUT:** Daily Note: "Need to fix authentication bug, learned about React hooks best practices"
 
-**Processing Steps:**
+**PROCESSING STEPS:**
 
 1. **Identify actionable items:** "fix authentication bug" → GitHub issue
 2. **Identify knowledge:** "React hooks best practices" → Memory system
@@ -257,7 +275,7 @@ gh issue create --title "Clear Actionable Title" --body "Detailed description wi
 4. **Save to memory:** Knowledge and lessons learned
 5. **Link systems:** Reference memory note in GitHub issue
 
-**Output:**
+**OUTPUT FORMAT:**
 
 ```text
 Memory System:
@@ -268,11 +286,11 @@ GitHub:
 - Issue: "Fix authentication bug" (bug label, links to memory notes)
 ```
 
-### **Conversation Processing Example**
+### Conversation Processing Example
 
-**Input:** Conversation: "Discussed database choice, decided on PostgreSQL, need to implement"
+**INPUT:** Conversation: "Discussed database choice, decided on PostgreSQL, need to implement"
 
-**Processing Steps:**
+**PROCESSING STEPS:**
 
 1. **Identify actionable items:** "implement PostgreSQL" → GitHub issue
 2. **Identify decisions:** "decided on PostgreSQL" → Memory system
@@ -280,7 +298,7 @@ GitHub:
 4. **Save to memory:** Decision record and conversation context
 5. **Link systems:** Reference memory note in GitHub issue
 
-**Output:**
+**OUTPUT FORMAT:**
 
 ```text
 Memory System:
@@ -291,4 +309,4 @@ GitHub:
 - Issue: "Implement PostgreSQL database" (feature label, links to memory notes)
 ```
 
-**REMEMBER**: Always follow the complete workflow: identify → create → save → link. GitHub for action, memory for context.
+**FINAL REMINDER**: Always follow the complete workflow: identify → create → save → link. GitHub for action, memory for context. Always link between them.
