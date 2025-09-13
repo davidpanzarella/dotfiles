@@ -1,0 +1,266 @@
+---
+title: "Cursor AI Rules"
+description: "Master framework for using Cursor as a universal productivity tool - orchestrates AI development, prompt optimization, memory management, and project architecture for consistent results"
+alwaysApply: true
+tags:
+  [
+    "ai-development",
+    "cursor-rules",
+    "prompt-optimization",
+    "memory-system",
+    "project-architecture",
+    "development-practices",
+  ]
+category: "ai-assistance"
+version: "2.0"
+---
+
+# Cursor AI Rules
+
+**GOAL**: Transform Cursor into a universal productivity tool that delivers consistent, high-quality results across any type of work - coding, writing, file management, analysis, and system configuration.
+
+## 🎯 Universal Cursor Framework
+
+**This framework orchestrates six specialized areas in a specific order for maximum effectiveness:**
+
+### Core Specialized Areas (Use in This Order)
+
+1. **Overall Cursor Rules** → Universal principles for ANY Cursor interaction
+2. **AI Development Tools** → Cursor-specific functionality and shortcuts
+3. **Prompt Optimization** → Systematic prompt improvement patterns
+4. **Memory System** → Knowledge management and conversation tracking
+5. **Project Architecture** → Project structure and organization best practices
+6. **Development Practices** → Code quality, testing, and production readiness (coding projects only)
+
+**REMEMBER**: Always apply areas 1-4 for every interaction. Use area 5 for project setup. Use area 6 only for coding projects.
+
+## 🚀 Overall Cursor Rules
+
+**APPLY TO**: Every single Cursor interaction, regardless of project type
+
+### Core Principles (Non-Negotiable)
+
+- **Context is Everything**: Quality of AI output = Quality of context provided
+- **Plan First, Execute Second**: Never jump straight to implementation - always plan first
+- **Three Pillars of Trust**: Familiarity, Trust, Control
+
+### Universal Workflow (Follow This Exact Sequence)
+
+**Before every interaction, complete this checklist:**
+
+1. **Define the problem or goal clearly** - What exactly do you want to accomplish?
+2. **Outline desired outcomes and constraints** - What should the result look like? What are the limitations?
+3. **Specify technical or format requirements** - Any specific technologies, formats, or standards?
+4. **Include relevant context and examples** - Files, error messages, expected outputs
+5. **Set clear success criteria** - How will you know it's done correctly?
+6. **Plan the approach before executing** - Break down the work into steps
+
+### Context Management Standards
+
+**Always include these types of context:**
+
+| Context Type     | What to Include                                        | Example                                                         |
+| ---------------- | ------------------------------------------------------ | --------------------------------------------------------------- |
+| **Error-Driven** | Complete error messages with stack traces              | "Error: Cannot read property 'map' of undefined at line 23"     |
+| **Visual**       | Screenshots, mocks, designs when relevant              | "The button should look like this: [screenshot]"                |
+| **Full Context** | Relevant files, API responses, expected vs actual      | "Expected: user object, Got: undefined"                         |
+| **Examples**     | Sample data, expected outputs, similar implementations | "Like this existing function but for users instead of products" |
+
+**REMEMBER**: Incomplete context leads to poor results. Always provide comprehensive context upfront.
+
+## 🎯 AI Development Tools in Cursor
+
+**APPLY TO**: Every Cursor interaction - these are your essential productivity shortcuts
+
+### Essential Cursor Shortcuts (Memorize These)
+
+| Shortcut          | Purpose               | When to Use                           |
+| ----------------- | --------------------- | ------------------------------------- |
+| **`Cmd+K`**       | Inline AI editor      | Improving any text, code, or content  |
+| **`Cmd+L`**       | Agent chat            | Analysis, comparison, complex tasks   |
+| **`@filename`**   | Reference files/rules | Including specific context in prompts |
+| **`Cmd+Shift+P`** | Command palette       | Accessing all Cursor features         |
+
+### File Management Best Practices
+
+**Optimize your workspace for AI assistance:**
+
+1. **Keep relevant files open** - AI can see open files for context
+2. **Use @-mentions strategically** - Reference specific files, rules, or folders
+3. **Include complete error context** - Full error messages, stack traces, logs
+4. **Organize workspace logically** - Group related files together
+
+### Universal Cursor Capabilities
+
+**Cursor can help with ANY type of work:**
+
+| Work Type                | Cursor Capabilities                          | Example Use Cases                            |
+| ------------------------ | -------------------------------------------- | -------------------------------------------- |
+| **Code Generation**      | Any programming language, markup, configs    | "Create a React component for user profiles" |
+| **Text Processing**      | Writing, editing, formatting, translation    | "Improve this email draft"                   |
+| **File Operations**      | Creating, organizing, managing files/folders | "Reorganize this project structure"          |
+| **Documentation**        | Generating docs, READMEs, specifications     | "Create API documentation from this code"    |
+| **Analysis**             | Data analysis, research, content review      | "Analyze this dataset and create insights"   |
+| **System Configuration** | Dotfiles, system setup, automation           | "Set up my development environment"          |
+
+**REMEMBER**: For dotfiles projects, always reference `@dotfiles-project.mdc` for system-wide implementations (zsh, homebrew, etc.).
+
+## 🎯 Prompt Optimization
+
+**APPLY TO**: Every prompt, rule, or instruction you create - use `@prompt-improvement.mdc` for systematic refinement
+
+### Prompt Improvement Workflow (Follow This Exact Process)
+
+**The fastest way to improve any prompt in Cursor:**
+
+1. **Select text** you want to improve (prompt, rule, or instruction)
+2. **Use `Cmd+K`** to open the inline AI editor
+3. **Reference `@prompt-improvement.mdc`** to apply best practices
+4. **Accept changes** with `Cmd+Enter`
+5. **Compare improvements** using `Cmd+L` to analyze changes with git history
+
+### Key Patterns to Apply (From Context Buddy Principles)
+
+**Always include these elements in your prompts:**
+
+| Pattern                    | Purpose                                   | Example                                             |
+| -------------------------- | ----------------------------------------- | --------------------------------------------------- |
+| **Lead with the ask**      | Put the goal first, context second        | "Create a React component. The requirements are..." |
+| **Repeat key ask at end**  | Reinforce the main goal                   | "...REMEMBER: Create a React component."            |
+| **Specify output format**  | Dictate exact format and constraints      | "Return as: 1) title, 2) table (CSV)"               |
+| **Use clear delimiters**   | Separate sections with backticks/headings | "TEXT TO ANALYZE"                                   |
+| **Step-by-step thinking**  | Break down complex tasks                  | "Think step-by-step then answer."                   |
+| **Set correction handles** | Define how to fix issues                  | "If length > 150 words, shorten."                   |
+
+**REMEMBER**: Quality of AI output = Quality of context provided. Always apply these patterns for better results.
+
+## 🧠 Memory System
+
+**APPLY TO**: Every project - use `@memory-system.mdc` for complete implementation
+
+### Essential Memory Tools (Use These Daily)
+
+| Tool Command                            | Purpose                     | When to Use                       |
+| --------------------------------------- | --------------------------- | --------------------------------- |
+| `bm --project "name" tool write-note`   | Save content to memory      | After important discussions       |
+| `bm --project "name" tool search-notes` | Search existing memories    | When looking for information      |
+| `chi --select`                          | Export Cursor conversations | For important project discussions |
+
+### Knowledge Routing (Quick Reference)
+
+**Route content to the correct memory folder:**
+
+- **Facts & Learnings** → `memories/knowledge/`
+- **Plans & Goals** → `memories/plans/`
+- **Decisions** → `memories/decisions/`
+- **Tasks** → `memories/tasks/`
+- **Conversations** → `memories/conversations/`
+- **Daily Notes** → `memories/notes/`
+- **Lessons Learned** → `memories/lessons-learned/`
+
+**For complete memory system setup and tool usage, see `@memory-system.mdc`**
+
+## 🏗️ Project Architecture
+
+**APPLY TO**: Every new project setup - use `@project-structure.mdc` for detailed implementation
+
+### Essential Project Structure (Quick Reference)
+
+**Required folders for every project:**
+
+- `.cursor/` - AI rules and project context
+- `.github/` - Automation and templates
+- `memories/` - AI knowledge base
+- `README.md` - Project overview
+
+### Project Organization Principles
+
+| Principle           | Implementation              | Example                         |
+| ------------------- | --------------------------- | ------------------------------- |
+| **Clear Structure** | Logical folder hierarchy    | Group related files together    |
+| **Documentation**   | README and docs for context | Include setup instructions      |
+| **Version Control** | Track changes and decisions | Use Git with meaningful commits |
+
+### File Naming Standards
+
+- **Use kebab-case**: `user-authentication.md`
+- **Be descriptive**: `database-schema-v2.md`
+- **Include dates**: `2024-01-15-daily-notes.md`
+
+**For complete project structure, setup commands, and detailed templates, see `@project-structure.mdc`**
+
+## 🛠️ Development Practices
+
+**APPLY TO**: Coding projects only - use these standards for production-ready code
+
+### Essential Code Quality Standards
+
+**Top 5 guidelines for every coding project:**
+
+| Guideline                       | Purpose                           | Implementation                     |
+| ------------------------------- | --------------------------------- | ---------------------------------- |
+| **1. Define data model first**  | Establish structure before coding | Create schemas, types, interfaces  |
+| **2. Start with mock data**     | Test without database complexity  | Use JSON files, hardcoded data     |
+| **3. Create component library** | Modular, reusable code            | Split into multiple files          |
+| **4. Include error handling**   | Graceful failure management       | Try-catch blocks, error boundaries |
+| **5. Add input validation**     | Security and data integrity       | Validate all user inputs           |
+
+### Testing Requirements (Enforce These)
+
+**Test ruthlessly after every change:**
+
+1. **Browser Console Check** - Open console (Cmd+Option+J) to check for errors
+2. **Unit Tests** - Generate tests for every AI-generated function
+3. **Security Validation** - Test input handling and security controls
+
+### Security Checklist
+
+**Always implement these security measures:**
+
+- ✅ **Input validation and sanitization** - Prevent malicious input
+- ✅ **Authentication and authorization** - Control access properly
+- ✅ **Sensitive data handling** - Encrypt passwords, tokens
+
+**For complete development practices, all 10 guidelines, and detailed security measures, see `@development-workflow.mdc`**
+
+## 🔄 Integration Workflow
+
+### When to Reference Each Area (Use This Decision Tree)
+
+**For EVERY interaction:**
+
+- ✅ **Overall Cursor Rules** - Apply universal principles and workflow
+- ✅ **AI Development Tools** - Use Cursor shortcuts and functionality
+- ✅ **Prompt Optimization** - Use `@prompt-improvement.mdc` for better prompts
+- ✅ **Memory System** - Use `@memory-system.mdc` for knowledge management
+
+**For new projects:**
+
+- ✅ **Project Architecture** - Apply structure and organization best practices
+
+**For coding projects only:**
+
+- ✅ **Development Practices** - Apply code quality and testing standards
+
+### Daily Workflow Integration
+
+**Start every work session with this checklist:**
+
+1. **Check `memories/plans/`** - Review current priorities and goals
+2. **Apply Overall Cursor Rules** - Follow universal workflow and context standards
+3. **Use AI Development Tools** - Leverage Cursor shortcuts and features
+4. **Apply Prompt Optimization** - Use `@prompt-improvement.mdc` for better prompts
+5. **Route to Memory System** - Save learnings and decisions appropriately
+6. **Follow Development Practices** - If coding, apply quality and testing standards
+
+### Continuous Improvement Process
+
+**Weekly review checklist:**
+
+- [ ] **Review AI suggestions critically** - Learn from what worked and what didn't
+- [ ] **Learn from debugging sessions** - Document solutions in memory system
+- [ ] **Update rules based on project needs** - Refine based on experience
+- [ ] **Share learnings with team** - Export important conversations
+- [ ] **Stay current with AI tool capabilities** - Explore new Cursor features
+
+**REMEMBER**: This framework transforms Cursor into a universal productivity tool that delivers consistent, high-quality results across any type of work - coding, writing, file management, analysis, and system configuration. Always apply the first 4 areas for every interaction.

@@ -1,0 +1,29 @@
+{
+  "// Foam Memory System Settings": "Essential for daily note functionality",
+  "foam.dailyNote.filenameFormat": "YYYY-MM-DD",
+  "foam.dailyNote.directory": "memories/notes",
+  "foam.dailyNote.template": ".foam/templates/daily-note.md",
+  "foam.openDailyNote.directory": "memories/notes",
+
+  "// Terminal Configuration": "Ensures proper zsh environment",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles.osx": {
+    "zsh": {
+      "path": "/bin/zsh",
+      "args": ["-l"]
+    }
+  },
+  "terminal.integrated.inheritEnv": true,
+
+  "// Memory System Integration": "Basic-memory and cursor-history tools",
+  "files.associations": {
+    "*.mdc": "markdown"
+  },
+
+  "// Project Structure": "Standard memory system directories",
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/.git": true,
+    "**/.DS_Store": true
+  }
+}

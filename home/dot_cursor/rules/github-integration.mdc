@@ -1,0 +1,294 @@
+---
+title: "GitHub Integration"
+description: "Rules for when and how to use GitHub for issue tracking and project management"
+alwaysApply: false
+tags: ["github", "issues", "project-management", "workflow"]
+category: "ai-assistance"
+version: "1.0"
+---
+
+# GitHub Integration
+
+**GOAL**: Create GitHub issues for actionable work items while preserving knowledge and context in the memory system. Think step-by-step: 1) Identify actionable items, 2) Create GitHub issues with proper templates, 3) Link to memory system for context.
+
+## Decision Framework: GitHub vs Memory System
+
+**Use GitHub For (Actionable Work Items):**
+
+- **Bugs** - Issues requiring fixes with clear reproduction steps
+- **Features** - New functionality with defined acceptance criteria
+- **Chores** - Maintenance tasks, refactoring, cleanup work
+- **Performance** - Performance improvements with measurable goals
+- **Documentation** - Documentation updates with specific deliverables
+- **Any task requiring implementation** - Must have clear completion criteria
+
+**Use Memory System For (Knowledge & Context):**
+
+- **Knowledge** - Learnings, insights, best practices, technical discoveries
+- **Plans** - Strategies, roadmaps, high-level goals, project vision
+- **Decisions** - Architecture decisions, technical choices, ADRs
+- **Lessons Learned** - What worked, what didn't work, retrospective insights
+- **Context** - Project history, conversation records, background information
+
+**REMEMBER**: If it requires implementation work, create a GitHub issue. If it's knowledge or context, save to memory system.
+
+## GitHub Issue Creation Workflow
+
+**Follow this exact sequence for every actionable item:**
+
+1. **Identify actionable items** - Look for verbs like "fix", "implement", "create", "update", "refactor"
+2. **Create GitHub issue** - Use appropriate template and labels
+3. **Save context to memory** - Preserve background information and decisions
+4. **Link systems** - Reference memory notes in GitHub issues
+
+### **From Daily Notes:**
+
+**Process daily notes systematically:**
+
+```bash
+# Step 1: Extract actionable items from daily note
+# Step 2: Create GitHub issue for each actionable item
+gh issue create --title "Clear Actionable Title" --body "Detailed description with acceptance criteria" --label "bug|feature|chore|perf|docs"
+
+# Step 3: Save context to memory system
+# Step 4: Link GitHub issue to memory note
+```
+
+### **From Conversations:**
+
+**Extract and process conversation content:**
+
+```bash
+# Complete workflow for conversation processing
+1. Read conversation for actionable items (look for implementation tasks)
+2. Create GitHub issue for each actionable item (use proper template)
+3. Save context and decisions to memory system (conversations/ folder)
+4. Link GitHub issue to memory note (include memory note link in issue body)
+5. Update memory note with GitHub issue reference
+```
+
+**REMEMBER**: Always create GitHub issues for implementation work, save context to memory system.
+
+## Issue Templates
+
+**Use these templates exactly as shown. Replace bracketed placeholders with specific content.**
+
+### **Bug Report Template**
+
+```markdown
+## Bug Description
+
+[One-sentence summary of the bug]
+
+## Steps to Reproduce
+
+1. [Specific step 1]
+2. [Specific step 2]
+3. [Specific step 3]
+
+## Expected Behavior
+
+[What should happen when steps are followed]
+
+## Actual Behavior
+
+[What actually happens - include error messages if any]
+
+## Environment
+
+- OS: [Operating system]
+- Browser/App: [Version if applicable]
+- Additional context: [Any relevant environment details]
+
+## Context
+
+- Related memory note: [link to memory system note]
+- Conversation: [link to conversation that identified this bug]
+- Priority: [High/Medium/Low]
+```
+
+### **Feature Request Template**
+
+```markdown
+## Feature Description
+
+[Clear, concise description of the feature]
+
+## Motivation
+
+[Why this feature is needed - include user story if applicable]
+
+## Acceptance Criteria
+
+- [ ] [Specific, testable criteria 1]
+- [ ] [Specific, testable criteria 2]
+- [ ] [Specific, testable criteria 3]
+
+## Implementation Notes
+
+[Technical considerations, dependencies, or constraints]
+
+## Context
+
+- Related memory note: [link to memory system note]
+- Conversation: [link to conversation that discussed this feature]
+- Priority: [High/Medium/Low]
+```
+
+### **Chore/Task Template**
+
+```markdown
+## Task Description
+
+[Clear description of the maintenance or cleanup task]
+
+## Acceptance Criteria
+
+- [ ] [Specific deliverable 1]
+- [ ] [Specific deliverable 2]
+- [ ] [Specific deliverable 3]
+
+## Implementation Notes
+
+[Any technical details or constraints]
+
+## Context
+
+- Related memory note: [link to memory system note]
+- Conversation: [link to conversation that identified this task]
+- Priority: [High/Medium/Low]
+```
+
+**REMEMBER**: Always include memory system links and clear acceptance criteria in every issue.
+
+## Integration with Memory System
+
+**Maintain bidirectional links between GitHub issues and memory system for complete project understanding.**
+
+### **Link GitHub Issues to Memory**
+
+**Required actions for every GitHub issue:**
+
+- Include links to related memory notes in issue body (use Context section)
+- Reference conversations that led to the issue creation
+- Keep detailed context in memory system, actionable work in GitHub
+- Add memory note links to issue comments when relevant
+
+### **Link Memory to GitHub Issues**
+
+**Required actions for memory notes:**
+
+- Reference GitHub issues in memory notes when discussing implementation
+- Track progress and decisions in memory system (use decisions/ folder)
+- Use memory system for retrospective analysis and lessons learned
+- Update memory notes when GitHub issues are completed
+
+## Commands
+
+### **Create Issue from Memory Note**
+
+```bash
+# Complete workflow for extracting actionable items from memory
+1. Read memory note for actionable items (look for implementation tasks)
+2. Create GitHub issue using appropriate template
+3. Include memory note link in issue Context section
+4. Update memory note with GitHub issue reference
+```
+
+### **Update Memory from GitHub**
+
+```bash
+# Complete workflow when GitHub issue is completed
+1. Mark GitHub issue as completed
+2. Update related memory note with completion status
+3. Add lessons learned to lessons-learned/ folder
+4. Document what worked/didn't work in memory note
+5. Link completed issue to lessons learned note
+```
+
+**REMEMBER**: Always maintain bidirectional links between GitHub issues and memory system for complete project continuity.
+
+## Best Practices
+
+### **Issue Creation Standards**
+
+**Follow these requirements for every GitHub issue:**
+
+- Use clear, actionable titles (start with verb: "Fix", "Implement", "Create", "Update")
+- Include specific acceptance criteria (must be testable and measurable)
+- Link to relevant memory notes in Context section
+- Use appropriate labels (bug, feature, chore, perf, docs)
+- Assign to appropriate milestone or project
+- Include priority level (High/Medium/Low)
+
+### **Memory Integration Standards**
+
+**Maintain these practices for memory system:**
+
+- Keep detailed context in memory system (conversations/, decisions/, knowledge/)
+- Reference GitHub issues in memory notes when discussing implementation
+- Use memory for retrospective analysis and lessons learned
+- Track decisions and rationale in decisions/ folder
+- Update memory notes when GitHub issues are completed
+
+### **Workflow Integration Standards**
+
+**Follow this systematic approach:**
+
+- Process daily notes for actionable items (look for implementation verbs)
+- Create GitHub issues for all implementation work
+- Keep knowledge and context in memory system
+- Use memory system for project continuity and historical context
+- Maintain bidirectional links between systems
+
+**REMEMBER**: GitHub for action, memory for context. Always link between them.
+
+## Examples
+
+### **Daily Note Processing Example**
+
+**Input:** Daily Note: "Need to fix authentication bug, learned about React hooks best practices"
+
+**Processing Steps:**
+
+1. **Identify actionable items:** "fix authentication bug" → GitHub issue
+2. **Identify knowledge:** "React hooks best practices" → Memory system
+3. **Create GitHub issue:** Use bug report template with reproduction steps
+4. **Save to memory:** Knowledge and lessons learned
+5. **Link systems:** Reference memory note in GitHub issue
+
+**Output:**
+
+```text
+Memory System:
+- Knowledge: "React Hooks Best Practices" (memories/knowledge/)
+- Lesson: "Authentication debugging process" (memories/lessons-learned/)
+
+GitHub:
+- Issue: "Fix authentication bug" (bug label, links to memory notes)
+```
+
+### **Conversation Processing Example**
+
+**Input:** Conversation: "Discussed database choice, decided on PostgreSQL, need to implement"
+
+**Processing Steps:**
+
+1. **Identify actionable items:** "implement PostgreSQL" → GitHub issue
+2. **Identify decisions:** "decided on PostgreSQL" → Memory system
+3. **Create GitHub issue:** Use feature request template with acceptance criteria
+4. **Save to memory:** Decision record and conversation context
+5. **Link systems:** Reference memory note in GitHub issue
+
+**Output:**
+
+```text
+Memory System:
+- Decision: "ADR-001: Database Choice - PostgreSQL" (memories/decisions/)
+- Context: "Database selection discussion" (memories/conversations/)
+
+GitHub:
+- Issue: "Implement PostgreSQL database" (feature label, links to memory notes)
+```
+
+**REMEMBER**: Always follow the complete workflow: identify → create → save → link. GitHub for action, memory for context.

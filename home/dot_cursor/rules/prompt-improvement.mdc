@@ -1,0 +1,208 @@
+---
+title: "Prompt Improvement Best Practices"
+description: "Systematic patterns for improving AI prompts and instructions, based on Addy Osmani's Context Buddy principles and proven prompt engineering best practices. Always applied to ensure consistent prompt quality."
+alwaysApply: true
+tags:
+  [
+    "prompt-engineering",
+    "ai-best-practices",
+    "context-management",
+    "cursor-rules",
+  ]
+category: "ai-assistance"
+version: "1.1"
+author: "Based on Addy Osmani's Context Buddy and proven prompt engineering patterns"
+lastUpdated: "2025-01-12"
+---
+
+# Prompt Improvement Best Practices
+
+## Quick Start: Cursor Workflow
+
+**The fastest way to improve any prompt or rule in Cursor:**
+
+1. **Select** the text (prompt or rule section) you want to improve
+2. **Use `Cmd+K`** to open the inline AI editor
+3. **Reference this rule** using `@prompt-improvement.mdc`
+4. **Accept** the improved version (`Cmd+Enter`)
+5. **Bonus: Use `Cmd+L`** to send the edited section to Agent chat and ask it to compare changes with git history and explain why the new version is better
+
+**Result**: Instantly improved prompt clarity and effectiveness based on proven patterns.
+
+## Overview
+
+This rule provides systematic patterns for improving AI prompts and instructions, based on Addy Osmani's Context Buddy principles and proven prompt engineering best practices. Use this when refining prompts, cursor rules, or any AI instructions to achieve clearer, more reliable responses.
+
+**Core Philosophy**: Context is everything. Quality of AI output = Quality of context provided.
+
+## Addy's Context Rules Integration
+
+**Based on [Context Buddy - Prompt Structure Builder](https://context.addy.ie/)**
+
+### Context-First Approach
+
+- **Always provide relevant context** before asking for code or analysis
+- Include relevant files, schemas, error messages, and constraints
+- Quality of AI output = Quality of context provided
+
+### Structured Context Delivery
+
+- **Lead with the goal**, then provide supporting context
+- Use clear delimiters to separate different types of information
+- Include examples and expected outputs when possible
+
+### Iterative Refinement
+
+- Start with broad context, then narrow down based on results
+- Test and iterate based on AI response quality
+- Apply systematic patterns for continuous improvement
+
+### Using with Cursor's `@` Reference System
+
+When you reference this rule with `@prompt-improvement.mdc` in Cursor's inline editor, the AI will automatically apply these Context Buddy principles along with the 12 core patterns below to improve your selected text.
+
+## Core Improvement Patterns
+
+### 1. Lead with the Ask
+
+**Why**: The model reads top-down; putting the goal first stops it wandering.
+**Template**: `Do X. [context]`
+**Example**: "Summarize this PDF in 5 bullet points. The text is below: ..."
+
+### 2. Repeat the Key Ask at the End
+
+**Why**: Long contexts sometimes truncate; an end-cap protects you.
+**Template**: `...[detail]... REMEMBER: Do X.`
+**Example**: "List pros & cons, keep it balanced. REMEMBER: 5 pros, 5 cons."
+
+### 3. Specify Output Shape
+
+**Why**: Dictating format cuts revision loops.
+**Template**: `Return as: 1) short title, 2) table (CSV).`
+**Example**: "Give 3 holiday ideas. Format: destination, flight-time-hrs, avg cost."
+
+### 4. Use Clear Delimiters
+
+**Why**: Backticks/headings/XML keep sections from blending.
+**Template**: `TEXT TO ANALYSE`
+**Example**: "Rate the style of the text between the fences."
+
+### 5. Induce Step-by-Step Thinking
+
+**Why**: Planning first boosts multi-step accuracy.
+**Template**: `Think step-by-step then answer.`
+**Example**: "Solve this puzzle. Think step-by-step before giving the final move."
+
+### 6. Ask It to Plan Its Workflow
+
+**Why**: For big jobs, AI outlines tasks before doing them.
+**Template**: `First draft a plan, wait, then execute.`
+**Example**: "We're writing an e-book. ❶ Outline chapters. ❷ Wait. ❸ When I say 'go', draft chapter 1."
+
+### 7. Limit or Widen Knowledge Sources
+
+**Why**: Controls hallucination.
+**Template**: `Use only the info below. / Combine basic knowledge + this context.`
+**Example**: "Using only the product sheet below, write FAQs."
+
+### 8. Guide Information Retrieval
+
+**Why**: Helps AI pick the right docs before answering.
+**Template**: `List which docs look relevant, then answer.`
+**Example**: "30 sales memos attached. 1) Name the 5 most relevant. 2) Summarise their common points."
+
+### 9. Show a Style/Example
+
+**Why**: Anchors tone, length, vocabulary.
+**Template**: `Match the style of: <example>`
+**Example**: "Review this gadget in the style of the sample below: 'Short, witty, 3 key facts...'"
+
+### 10. Set Correction Handles
+
+**Why**: One-line fixes let you steer quickly.
+**Template**: `If length > 150 words, shorten.`
+**Example**: "Describe blockchain to a child. If your answer is >150 words, cut it in half."
+
+### 11. Tell It When to Stop or Loop
+
+**Why**: Prevents half-finished lists or runaway essays.
+**Template**: `Keep going until you list 20 ideas, then stop.`
+**Example**: "Brainstorm webinar titles. Give exactly 12, then finish."
+
+### 12. Request the Hidden Reasoning
+
+**Why**: Good for audits; otherwise omit to keep it short.
+**Template**: `After the answer, include a brief reasoning section.`
+**Example**: "Which of these stocks looks over-valued? Answer first; add a 2-sentence rationale below a divider."
+
+## Advanced Usage Instructions
+
+### The Complete Cursor Workflow
+
+**Step-by-step process for maximum improvement:**
+
+1. **Select** the text (prompt or rule section) you want to improve
+2. **Use `Cmd+K`** to open the inline AI editor
+3. **Reference this rule** using `@prompt-improvement.mdc`
+4. **Accept** the improved version (`Cmd+Enter`)
+5. **Bonus: Use `Cmd+L`** to send the edited section to Agent chat and ask it to compare changes with git history and explain why the new version is better
+
+**Example Agent prompt for step 5:**
+
+```
+Please compare what we've edited in this file to our current commit and explain exactly how the language changed and why you think it changed.
+```
+
+### For Other AI Tools
+
+- Apply these patterns systematically when writing prompts
+- Use the templates as starting points for common scenarios
+- Focus on clarity, specificity, and explicit instructions
+- Test and iterate based on AI response quality
+
+## Key Benefits
+
+- **Instantly improve prompt clarity and effectiveness** using proven patterns
+- **Reduce ambiguity in instructions** for better AI outcomes
+- **Leverage reusable templates** for prompt refinement
+- **Gain insight into how and why prompts are improved** via git comparison
+- **Apply systematic best practices** to all AI interactions
+- **Stop wrestling with clunky prompts** - use this technique to systematically apply best practices
+
+## Application Areas
+
+- Cursor rules (`.mdc` files)
+- AI agent instructions
+- Prompt engineering for any AI tool
+- Documentation and specification writing
+- Code review guidelines
+- Project management instructions
+
+## Context Management Best Practices
+
+### Essential Pre-Prompt Checklist
+
+- [ ] Define the problem clearly
+- [ ] Outline user journey and desired outcomes
+- [ ] Specify technical constraints and requirements
+- [ ] Check knowledge cutoff for frameworks/APIs
+- [ ] Include relevant documentation in context
+- [ ] Set global coding rules and standards
+
+### Error-Driven Context
+
+```
+❌ Bad: "The button doesn't work"
+✅ Good: "I want the Save button to store the form data and then redirect to the dashboard page. Currently it's not saving and shows this error: [paste error]"
+```
+
+### Include Full Context
+
+- Paste complete error messages with stack traces
+- Include relevant code files
+- Provide API response examples
+- Show expected vs actual behavior
+
+---
+
+_Remember: Context is everything. Quality of AI output = Quality of context provided._

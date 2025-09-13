@@ -1,0 +1,114 @@
+---
+title: "Memory System"
+description: "Simple memory system using basic-memory and cursor-history tools directly"
+alwaysApply: true
+tags: ["memory-system", "basic-memory", "cursor-history", "ai-assistance"]
+category: "ai-assistance"
+version: "3.0"
+---
+
+# Memory System
+
+**GOAL**: Use basic-memory and cursor-history tools directly for simple, effective knowledge management without custom wrappers.
+
+## Memory System Setup
+
+**Create this folder structure in every project:**
+
+```
+memories/
+├── knowledge/         # Facts, learnings, documentation
+├── plans/             # Goals, roadmaps, strategies
+├── decisions/         # ADRs (Architectural Decision Records)
+├── tasks/             # Task management, todos
+├── conversations/     # AI conversation exports (from chi)
+├── notes/             # Daily notes, observations
+└── lessons-learned/   # What worked, what didn't, retrospectives
+```
+
+## Direct Tool Usage
+
+**Use these tools directly - no custom commands needed:**
+
+### Basic-Memory (bm) Commands
+
+```bash
+# Create notes
+bm --project "project-name" tool write-note --title "Title" --folder "knowledge" --content "Content"
+
+# Search memories
+bm --project "project-name" tool search-notes "query"
+
+# Read specific note
+bm --project "project-name" tool read-note "note-title"
+
+# List all notes
+bm --project "project-name" tool list-notes
+
+# Set up new project
+bm project add "project-name" "~/path/to/project/memories"
+```
+
+### Cursor-History (chi) Commands
+
+```bash
+# Interactive conversation selection
+chi --select
+
+# Export latest conversation
+chi
+
+# Export for specific workspace
+chi --workspace "project-name"
+
+# Browse all conversations
+chi --browse
+```
+
+## Content Routing
+
+**Route content to appropriate folders:**
+
+| Content Type                | Destination                 | Example                      |
+| --------------------------- | --------------------------- | ---------------------------- |
+| **Facts & Learnings**       | `memories/knowledge/`       | "React hooks best practices" |
+| **Plans & Strategies**      | `memories/plans/`           | "Q1 2024 roadmap"            |
+| **Architectural Decisions** | `memories/decisions/`       | "ADR-001: Database choice"   |
+| **Task Management**         | `memories/tasks/`           | "Implement user auth"        |
+| **AI Conversations**        | `memories/conversations/`   | "Design discussion with AI"  |
+| **Daily Notes**             | `memories/notes/`           | "2024-01-15 progress"        |
+| **Lessons Learned**         | `memories/lessons-learned/` | "What worked in sprint 1"    |
+
+## File Standards
+
+**Every markdown file MUST include YAML frontmatter:**
+
+```yaml
+---
+title: "File Title"
+description: "Brief description of content"
+created: "2024-01-15"
+tags: ["tag1", "tag2"]
+status: "active" # or "completed", "archived"
+---
+```
+
+## Daily Workflow
+
+**Simple daily process:**
+
+1. **Start**: Check `memories/plans/` for current priorities
+2. **Work**: Use `bm` to save learnings as you work
+3. **Export**: Use `chi` to save important conversations
+4. **Review**: Use `bm` to search and find relevant information
+
+## MCP Integration
+
+**In Cursor, use basic-memory MCP tools directly:**
+
+- `mcp_basic-memory_write_note` - Create new notes
+- `mcp_basic-memory_search_notes` - Search existing notes
+- `mcp_basic-memory_read_note` - Read specific notes
+- `mcp_basic-memory_list_notes` - List all notes
+
+**REMEMBER**: Use the tools directly as designed. No custom wrappers needed. Keep it simple and leverage the power of basic-memory and cursor-history.

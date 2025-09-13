@@ -1,23 +1,109 @@
 ---
-description: System context and environment setup for AI agent
-globs: ["**/*"]
+title: "System Context"
+description: "Global system understanding for AI agents - ARM64, package managers, terminal setup, and basic system operations"
 alwaysApply: true
+tags: ["system-context", "environment", "homebrew", "terminal"]
+category: "ai-assistance"
+version: "2.0"
 ---
 
 # System Context (Auto-Apply)
+
+## Primary Goal
+
+**CRITICAL**: When opening terminal, ensure it uses the configured dotfiles environment with proper aliases, Homebrew paths, and shell configuration. Think step-by-step: 1) Check current shell, 2) Verify Homebrew path, 3) Source dotfiles, 4) Execute command.
 
 ## Environment Setup
 
 - **Homebrew**: Use ARM64 path `/opt/homebrew/bin/brew` on Apple Silicon
 - **Package manager**: Use `pnpm` unless specified otherwise
 - **Terminal**: Always use configured context from dotfiles setup (zsh with aliases, ARM64 Homebrew, etc.)
-- **Zsh Path**: Use `/bin/zsh` (system zsh, not Homebrew zsh)
 - **Memory system**: Use `mem` commands for knowledge management
 
-**CRITICAL**: When opening terminal, ensure it uses the configured dotfiles environment with proper aliases, Homebrew paths, and shell configuration.
+## Terminal Environment
+
+- **Shell**: Always use zsh (not bash or other shells)
+- **Zsh Path**: Use `/bin/zsh` (system zsh - preferred over Homebrew zsh)
+- **Aliases**: Ensure all configured aliases from dotfiles are loaded
+- **Environment**: Source dotfiles configuration (zshrc, zshenv, etc.)
+- **Cursor Config**: Use `.vscode/settings.json` and `.vscode/tasks.json` for terminal setup
 
 ## System Commands (Auto-Apply)
 
 - Use `pnpm` for package management unless specified
 - Use ARM64 Homebrew path `/opt/homebrew/bin/brew`
 - Monitor terminal output and make changes as needed
+
+## System Understanding
+
+### File System Navigation
+
+- **Don't look for zsh at root**: Understand it's configured elsewhere in dotfiles
+- **Use proper paths**: ARM64 Homebrew paths, not Intel paths
+- **Respect dotfiles structure**: Files are managed through chezmoi, not directly
+
+### Package Management
+
+- **Default to pnpm**: Unless project specifically uses npm/yarn
+- **ARM64 context**: All installations should use ARM64 paths
+- **Global vs local**: Understand when to use global vs project-specific packages
+
+### Terminal Operations
+
+- **Interactive mode**: Use interactive flags when appropriate
+- **Environment sourcing**: Ensure proper shell environment is loaded
+- **Path management**: Use configured PATH with ARM64 Homebrew priority
+
+## AI Agent Instructions
+
+### Output Format
+
+When following these rules, format responses as: 1) Confirm environment setup, 2) Execute command with proper context, 3) Verify output.
+
+### Information Retrieval
+
+Before executing commands, check: 1) Current shell environment, 2) Homebrew installation path, 3) Available aliases.
+
+### Environment Detection
+
+**You're in the right environment when:**
+
+- `echo $SHELL` returns `/bin/zsh` (system zsh - preferred)
+- `which brew` returns `/opt/homebrew/bin/brew` (ARM64) or `/usr/local/bin/brew` (Intel)
+- `echo $PATH` includes `/opt/homebrew/bin` (ARM64) or `/usr/local/bin` (Intel)
+- Common aliases like `ll`, `la`, `gst` are available (if configured in dotfiles)
+
+**You need to set up environment when:**
+
+- `which brew` returns nothing or wrong path
+- `echo $PATH` doesn't include Homebrew paths
+- Shell is bash instead of zsh
+- Aliases from dotfiles are not available
+
+### Examples
+
+**Terminal setup example**: `zsh -c "source ~/.zshrc && your-command"`
+
+**Package installation example**: `pnpm install package-name`
+
+### Error Handling
+
+- If ARM64 Homebrew not found, use: `export PATH="/opt/homebrew/bin:$PATH"`
+- If zsh not available, fallback to: `/bin/zsh`
+- If dotfiles not sourced, run: `source ~/.zshrc`
+
+### Stopping Conditions
+
+Stop and ask user if: 1) Homebrew not found after 3 attempts, 2) Shell configuration fails, 3) Permission errors occur.
+
+### Workflow Planning
+
+For system setup tasks: First draft a plan, wait for confirmation, then execute step-by-step.
+
+### Reasoning Request
+
+After executing system commands, briefly explain: 1) Why this path was chosen, 2) What environment was verified, 3) Any fallbacks used.
+
+---
+
+**REMEMBER**: Always use ARM64 Homebrew paths, zsh with configured aliases, and monitor terminal output for proper system context.

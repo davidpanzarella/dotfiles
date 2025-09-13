@@ -1,26 +1,175 @@
 ---
-description: Standard project structure and file organization
-globs: ["**/*"]
+title: "Project Structure"
+description: "Set up any Cursor project with AI-optimized structure: memories system, cursor rules, GitHub integration, and organized development workflow"
 alwaysApply: false
+tags: ["project-structure", "default-setup", "memories", "cursor-rules"]
+category: "ai-assistance"
+version: "2.0"
 ---
 
 # Project Structure
 
-## Standard Structure
+**GOAL**: Create a standardized, AI-optimized project structure that enables effective knowledge management, consistent development workflows, and seamless AI assistance across any Cursor project.
+
+## Required Project Structure
+
+**Use this exact structure for every new Cursor project:**
 
 ```
 project-root/
-├── SPEC.md                 # Project specification
-├── .cursor/rules/         # Cursor AI rules
-├── README.md              # Project overview
-├── docs/                  # Static documentation (optional)
-├── memories/              # AI knowledge base
-└── src/                   # Source code
+├── .cursor/
+│   ├── rules/             # Project-specific AI rules
+│   └── project.md         # AI agent context (REQUIRED)
+├── .foam/                 # Knowledge workspace
+│   └── templates/         # Daily note templates
+├── .github/               # Automation & templates
+│   ├── workflows/         # CI/CD pipelines
+│   ├── ISSUE_TEMPLATE/    # Issue templates
+│   └── pull_request_template.md
+├── README.md              # Project overview (REQUIRED)
+├── memories/              # AI knowledge base (REQUIRED)
+│   ├── knowledge/         # Facts, learnings, documentation
+│   ├── plans/             # Goals, roadmaps, strategies
+│   ├── decisions/         # ADRs (Architectural Decision Records)
+│   ├── tasks/             # Task management, todos
+│   ├── conversations/     # AI conversation exports (from chi)
+│   ├── notes/             # Daily notes, observations
+│   └── lessons-learned/   # What worked, what didn't, retrospectives
+└── [project-specific]/    # Your actual project code
+    ├── src/               # Source code (if applicable)
+    ├── docs/              # Project documentation
+    └── [other]/           # Project-specific directories
 ```
 
-## Memory System Integration
+## Step-by-Step Project Setup
 
-- **Use `memories/` folder** for AI-assisted knowledge management
-- **Route content appropriately**: facts→knowledge, plans→plans, issues→issues
-- **Include YAML frontmatter** in all markdown files for AI discoverability
-- **Export conversations** using `mem export-conversation` for important discussions
+**Follow this exact sequence for new projects:**
+
+### 1. Create Core Structure
+
+```bash
+mkdir -p .cursor/rules .foam/templates .github/{workflows,ISSUE_TEMPLATE} memories/{knowledge,plans,decisions,tasks,conversations,notes,lessons-learned}
+```
+
+### 2. Initialize Project Context
+
+**Create `.cursor/project.md` with this template:**
+
+```markdown
+---
+title: "[Project Name]"
+description: "Brief project description"
+status: "active"
+created: "[date]"
+---
+
+# [Project Name] - AI Context
+
+## Project Overview
+
+- **Purpose**: What this project accomplishes
+- **Type**: Application, library, documentation, etc.
+- **Audience**: Who uses this project
+
+## Core Objectives
+
+1. **Primary Goal**: Main deliverable
+2. **Secondary Goals**: Supporting objectives
+3. **Success Metrics**: How you measure success
+
+## Technical Context
+
+- **Stack**: Technologies, frameworks, languages
+- **Architecture**: System design, patterns
+- **Constraints**: Performance, security, compatibility requirements
+
+## Development Workflow
+
+- **AI Integration**: How AI assists development
+- **Memory Routing**: Where different types of content go
+- **Review Process**: Code review, testing, deployment
+
+## Current Status
+
+- **Phase**: Planning, development, testing, production
+- **Next Steps**: Immediate priorities
+- **Blockers**: Current obstacles
+- **Timeline**: Key milestones
+```
+
+### 3. Set Up Memory System
+
+**Create these essential memory files:**
+
+- `memories/knowledge/project-overview.md` - Core project facts
+- `memories/plans/roadmap.md` - Development roadmap
+- `memories/decisions/README.md` - ADR template
+
+### 4. Configure GitHub Integration
+
+**Add these files:**
+
+- `.github/ISSUE_TEMPLATE/bug_report.md`
+- `.github/ISSUE_TEMPLATE/feature_request.md`
+- `.github/pull_request_template.md`
+
+## Memory System Rules
+
+**Route content to the correct memory folder:**
+
+| Content Type           | Destination                 | Example                      |
+| ---------------------- | --------------------------- | ---------------------------- |
+| Facts, learnings       | `memories/knowledge/`       | "React hooks best practices" |
+| Goals, roadmaps        | `memories/plans/`           | "Q1 2024 roadmap"            |
+| Architecture decisions | `memories/decisions/`       | "ADR-001: Database choice"   |
+| Tasks, todos           | `memories/tasks/`           | "Implement user auth"        |
+| AI conversations       | `memories/conversations/`   | "Design discussion with AI"  |
+| Daily notes            | `memories/notes/`           | "2024-01-15 progress"        |
+| Lessons learned        | `memories/lessons-learned/` | "What worked in sprint 1"    |
+
+**REQUIRED**: Include YAML frontmatter in ALL markdown files:
+
+```yaml
+---
+title: "File Title"
+description: "Brief description"
+created: "2024-01-15"
+tags: ["tag1", "tag2"]
+---
+```
+
+## Cursor Rules Integration
+
+**Project-specific rules go in `.cursor/rules/`:**
+
+- Reference global rules from main cursor system
+- Add project-specific context only when needed
+- Always include prompt improvement and memory system rules
+- Keep rules focused and actionable
+
+## File Organization Standards
+
+**Naming Conventions:**
+
+- Use kebab-case for files: `user-authentication.md`
+- Use descriptive names: `database-schema-v2.md`
+- Include dates for time-sensitive content: `2024-01-15-daily-notes.md`
+
+**Content Standards:**
+
+- Start every file with YAML frontmatter
+- Use clear headings and structure
+- Include context and examples
+- Link related files and resources
+
+## AI Integration Workflow
+
+**Daily Development Process:**
+
+1. **Start**: Check `memories/plans/` for current priorities
+2. **Work**: Use AI assistance with project context
+3. **Document**: Route learnings to appropriate memory folders
+4. **Review**: Export important conversations to `memories/conversations/`
+5. **Plan**: Update `memories/plans/` with progress and next steps
+
+**REMEMBER**: This structure enables AI agents to understand your project context, access relevant knowledge, and provide better assistance. Always maintain the memory system and keep project context current.
