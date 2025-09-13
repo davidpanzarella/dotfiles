@@ -130,13 +130,8 @@ copy_global_rules() {
     # Only copy project-specific rules if they exist
     print_status "Universal rules applied globally from ~/.cursor/rules/"
     
-    # Copy agent documentation from chezmoi source (like rules)
-    local chezmoi_agents="/Users/davidpanzarella/.local/share/chezmoi/home/dot_cursor/agents"
-    if [[ -d "$chezmoi_agents" ]]; then
-        mkdir -p "$project_path/.cursor/agents"
-        cp -r "$chezmoi_agents/"* "$project_path/.cursor/agents/"
-        print_status "Updated: agent documentation"
-    fi
+    # Agent documentation is handled globally - no project-specific agents needed
+    print_status "Skipped: .cursor/agents/ (using global agent documentation)"
     
     print_success "Global rules and templates updated"
 }
@@ -182,18 +177,8 @@ create_project_files() {
     
     print_status "Updating project configuration files..."
     
-    # Always overwrite MCP configuration (template)
-    cat > "$project_path/.cursor/mcp.json" << EOF
-{
-  "mcpServers": {
-    "basic-memory": {
-      "command": "bm",
-      "args": ["--project", "$project_name", "mcp"]
-    }
-  }
-}
-EOF
-    print_status "Updated: .cursor/mcp.json"
+    # MCP configuration is handled globally - no project-specific MCP needed
+    print_status "Skipped: .cursor/mcp.json (using global MCP configuration)"
     
     # Only create project.md if it doesn't exist or is a template
     if [[ ! -f "$project_path/.cursor/project.md" ]] || grep -q "\[Describe what this project accomplishes\]" "$project_path/.cursor/project.md"; then
@@ -243,34 +228,12 @@ EOF
         print_status "Skipped: .cursor/project.md (already customized)"
     fi
     
-    # Create minimal .vscode directory for project-specific tasks only
-    mkdir -p "$project_path/.vscode"
-    # Only create tasks.json for project-specific tasks (Foam settings are global)
-    cat > "$project_path/.vscode/tasks.json" << EOF
-{
-  "version": "2.0.0",
-  "tasks": [
-    {
-      "label": "Initialize Project",
-      "type": "shell",
-      "command": "init-project",
-      "args": ["--import-history"],
-      "group": "build",
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      },
-      "problemMatcher": []
-    }
-  ]
-}
-EOF
-    print_status "Updated: .vscode/tasks.json (project-specific tasks only)"
+    # VS Code tasks are handled globally - no project-specific tasks needed
+    print_status "Skipped: .vscode/tasks.json (using global VS Code configuration)"
     
-    # Always overwrite .gitignore (template)
-    cat > "$project_path/.gitignore" << EOF
+    # Only create .gitignore if it doesn't exist
+    if [[ ! -f "$project_path/.gitignore" ]]; then
+        cat > "$project_path/.gitignore" << EOF
 # Dependencies
 node_modules/
 npm-debug.log*
@@ -345,7 +308,10 @@ temp/
 # memories/knowledge/
 # memories/lessons-learned/
 EOF
-    print_status "Updated: .gitignore"
+        print_status "Created: .gitignore"
+    else
+        print_status "Skipped: .gitignore (already exists)"
+    fi
     
     # Only create README if it doesn't exist or is a template
     if [[ ! -f "$project_path/README.md" ]] || grep -q "\[Project description\]" "$project_path/README.md"; then
@@ -567,9 +533,10 @@ show_update_summary() {
     
     echo ""
     print_status "Update Summary:"
-    echo "  ✅ Always updated: Rules, agents, .vscode, MCP config"
+    echo "  ✅ Always updated: Global rules, global agents, global settings, global MCP, global VS Code"
+    echo "  ⚠️  Conditionally created: .gitignore (only if missing)"
     echo "  ⚠️  Conditionally updated: project.md, README.md (only if template)"
-    echo "  🔒 Never touched: User content (conversations, memories, decisions, etc.)"
+    echo "  🔒 Never touched: Existing project files, user content, conversations, memories"
     echo ""
 }
 
