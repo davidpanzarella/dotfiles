@@ -1,58 +1,124 @@
 ---
 title: "Dotfiles Project Rules"
-description: "Specific rules for chezmoi dotfiles management project"
+description: "Comprehensive rules for chezmoi dotfiles management with optimized prompts and safety guidelines"
 alwaysApply: true
-tags: ["dotfiles", "chezmoi", "system-configuration"]
+tags: ["dotfiles", "chezmoi", "system-configuration", "safety", "automation"]
 ---
 
 # Dotfiles Project Rules
 
-## Project-Specific Guidelines
+## Project Overview
 
-This project manages system-wide dotfiles using Chezmoi. These rules are specific to dotfiles management and system configuration.
+This project manages system-wide dotfiles using Chezmoi for Apple Silicon Macs. These rules ensure safe, consistent, and efficient dotfile management with proper ARM64 context and interactive safety measures.
 
-## Chezmoi Management
+## Chezmoi Application Strategy
 
-- **Always use interactive mode**: `PATH="/opt/homebrew/bin:$PATH" chezmoi apply`
-- **Test changes**: Use `chezmoi diff` to preview changes before applying
-- **Backup before major changes**: Ensure system is in a known good state
+### Interactive Mode (Default - Use When)
+
+- **System configuration changes**: Shell configs, terminal settings, editor configs
+- **Template files**: Files with `.tmpl` extension requiring variable substitution
+- **Permission changes**: Executable scripts, SSH keys, sensitive files
+- **First-time setup**: Initial dotfile installation
+- **Major updates**: Significant configuration changes
+
+**Command**: `PATH="/opt/homebrew/bin:$PATH" chezmoi apply --interactive`
+
+### Direct Application (Safe When)
+
+- **Documentation updates**: README, markdown files, comments
+- **Memory system files**: Knowledge base updates in `memories/` directory
+- **Project metadata**: `.cursor/` configuration, project rules
+- **Non-system files**: Files that don't affect system behavior
+
+**Command**: `PATH="/opt/homebrew/bin:$PATH" chezmoi apply`
+
+### Pre-Application Checks
+
+- **Always preview**: `chezmoi diff` to review changes before applying
+- **Test in isolation**: Use temporary directories for major changes
+- **Backup current state**: Ensure system is in known good state
 - **ARM64 context**: Always use ARM64 Homebrew paths for Apple Silicon
 
-## File Organization
+## File Organization Standards
+
+### Naming Conventions
+
+- **Templates**: Use `.tmpl` extension for files requiring variable substitution
+- **Executables**: Use `executable_` prefix for scripts needing execute permissions
+- **Private files**: Use `private_` prefix for sensitive configuration files
+- **Dot files**: Use `dot_` prefix for hidden files (e.g., `dot_zshrc.tmpl`)
+
+### Directory Structure
 
 - **Global rules**: Stored in `~/.cursor/rules/` for universal application
 - **Project-specific rules**: Only dotfiles-specific rules in `.cursor/rules/`
-- **Templates**: Use `.tmpl` extension for files that need variable substitution
-- **Executables**: Use `executable_` prefix for scripts that need execute permissions
+- **Memory system**: Use `memories/` for knowledge base and documentation
+- **Local scripts**: Store custom scripts in `dot_local/bin/`
 
-## System Integration
+## System Integration Requirements
 
-- **Homebrew**: Use ARM64 path `/opt/homebrew/bin/brew`
-- **Shell**: Use system zsh `/bin/zsh` with configured aliases
+### Environment Context
+
+- **Homebrew**: Always use ARM64 path `/opt/homebrew/bin/brew`
+- **Shell**: Use system zsh `/bin/zsh` with configured aliases and functions
 - **Terminal**: Ensure proper environment context when opening terminals
 - **Memory system**: Use `bm` and `chi` tools for knowledge management
 
-## Safety Guidelines
+### Safety Protocols
 
-- **Never apply non-interactively**: Always review changes before applying
-- **Test in isolated environment**: Use test directories for major changes
-- **Document changes**: Update memory system with significant modifications
-- **Version control**: Commit changes with descriptive messages
+- **Never apply non-interactively** for system-affecting changes
+- **Test in isolated environment** for major configuration changes
+- **Document changes** in memory system for significant modifications
+- **Version control** with descriptive commit messages
 
 ## Project Structure
 
 ```
 chezmoi/
 ├── home/                    # Chezmoi source files
-├── memories/               # Knowledge base
+│   ├── dot_cursor/         # Cursor configuration
+│   ├── dot_local/          # Local scripts and tools
+│   ├── private_dot_config/ # Private configuration files
+│   └── private_dot_ssh/    # SSH keys and configs
+├── memories/               # Knowledge base and documentation
+│   ├── conversations/      # Chat history and decisions
+│   ├── knowledge/          # Technical knowledge
+│   └── plans/              # Project plans and goals
 ├── .cursor/               # Project-specific Cursor config
 └── install.sh            # Installation script
 ```
 
 ## Development Workflow
 
+### Standard Process
+
 1. **Plan changes** in memory system first
-2. **Test changes** in isolated environment
-3. **Apply interactively** with chezmoi
-4. **Document results** in memory system
-5. **Commit changes** with descriptive messages
+2. **Preview changes** with `chezmoi diff`
+3. **Test changes** in isolated environment if needed
+4. **Apply changes** using appropriate mode (interactive vs direct)
+5. **Document results** in memory system
+6. **Commit changes** with descriptive messages
+
+### Emergency Procedures
+
+- **Rollback**: Use `chezmoi diff` to identify changes, then restore from backup
+- **Recovery**: Re-run installation script if system is in bad state
+- **Debugging**: Use `chezmoi status` and `chezmoi doctor` for diagnostics
+
+## AI Assistant Guidelines
+
+### When Working with This Project
+
+- **Always check file types** before applying changes
+- **Use interactive mode** for system configuration files
+- **Use direct mode** for documentation and memory files
+- **Preview changes** before applying
+- **Document significant changes** in memory system
+- **Follow ARM64 context** for all system commands
+
+### Safety Reminders
+
+- **Interactive mode is safer** - use it when in doubt
+- **Preview before applying** - always run `chezmoi diff` first
+- **Test major changes** - use isolated environments for significant updates
+- **Backup before changes** - ensure system is in known good state

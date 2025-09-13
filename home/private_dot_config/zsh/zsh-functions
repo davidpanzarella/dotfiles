@@ -25,11 +25,14 @@ function zsh_add_completion() {
         zsh_add_file "plugins/$PLUGIN_NAME/$PLUGIN_NAME.plugin.zsh"
     else
         git clone "https://github.com/$1.git" "$ZDOTDIR/plugins/$PLUGIN_NAME"
-		fpath+=$(ls $ZDOTDIR/plugins/$PLUGIN_NAME/_*)
+		completion_file_path=$(ls $ZDOTDIR/plugins/$PLUGIN_NAME/_*)
+		fpath+="$(dirname "${completion_file_path}")"
         [ -f $ZDOTDIR/.zccompdump ] && $ZDOTDIR/.zccompdump
     fi
 	completion_file="$(basename "${completion_file_path}")"
-	if [ "$2" = true ] && compinit "${completion_file:1}"
+	if [ "$2" = true ] && compinit "${completion_file:1}"; then
+		true
+	fi
 }
 
 
@@ -76,4 +79,108 @@ ua() {
   unused_aliases=$(comm -23 <(echo $alphas) <(echo $one_alphabet_aliases))
   echo "Unused aliases $(echo $unused_aliases | wc -l): "
   echo $unused_aliases | paste -s -d " " -
+}
+
+#########################################
+# Memory Optimization Functions
+
+# Comprehensive memory optimization with status reporting
+memclean() {
+  echo "🧹 Starting memory optimization..."
+  
+  # Get initial memory stats
+  local initial_free=$(vm_stat | grep "Pages free" | awk '{print $3}' | sed 's/\.//')
+  local initial_inactive=$(vm_stat | grep "Pages inactive" | awk '{print $3}' | sed 's/\.//')
+  local initial_purgeable=$(vm_stat | grep "Pages purgeable" | awk '{print $3}' | sed 's/\.//')
+  
+  echo "📊 Initial state:"
+  echo "   Free: $((initial_free * 16 / 1024)) MB"
+  echo "   Inactive: $((initial_inactive * 16 / 1024)) MB"
+  echo "   Purgeable: $((initial_purgeable * 16 / 1024)) MB"
+  
+  # Purge memory caches
+  echo "🔄 Purging memory caches..."
+  sudo purge
+  
+  # Wait a moment for the system to update
+  sleep 1
+  
+  # Get final memory stats
+  local final_free=$(vm_stat | grep "Pages free" | awk '{print $3}' | sed 's/\.//')
+  local final_inactive=$(vm_stat | grep "Pages inactive" | awk '{print $3}' | sed 's/\.//')
+  local final_purgeable=$(vm_stat | grep "Pages purgeable" | awk '{print $3}' | sed 's/\.//')
+  
+  echo "📊 Final state:"
+  echo "   Free: $((final_free * 16 / 1024)) MB"
+  echo "   Inactive: $((final_inactive * 16 / 1024)) MB"
+  echo "   Purgeable: $((final_purgeable * 16 / 1024)) MB"
+  
+  # Calculate improvements
+  local free_gained=$((final_free - initial_free))
+  local inactive_freed=$((initial_inactive - final_inactive))
+  local purgeable_freed=$((initial_purgeable - final_purgeable))
+  
+  echo "✅ Memory optimization complete!"
+  echo "   Free memory gained: $((free_gained * 16 / 1024)) MB"
+  echo "   Inactive memory freed: $((inactive_freed * 16 / 1024)) MB"
+  echo "   Purgeable memory freed: $((purgeable_freed * 16 / 1024)) MB"
+}
+
+# Quick memory status check
+memstat() {
+  echo "📊 Current Memory Status:"
+  echo "========================="
+  
+  # Get memory pressure
+  echo "🔍 Memory Pressure:"
+  memory_pressure | head -5
+  
+  echo ""
+  echo "📈 Detailed Memory Stats:"
+  vm_stat | grep -E "(Pages free|Pages active|Pages inactive|Pages speculative|Pages wired down|Pages purgeable)"
+  
+  echo ""
+  echo "💾 Memory Usage Summary:"
+  local free=$(vm_stat | grep "Pages free" | awk '{print $3}' | sed 's/\.//')
+  local active=$(vm_stat | grep "Pages active" | awk '{print $3}' | sed 's/\.//')
+  local inactive=$(vm_stat | grep "Pages inactive" | awk '{print $3}' | sed 's/\.//')
+  local purgeable=$(vm_stat | grep "Pages purgeable" | awk '{print $3}' | sed 's/\.//')
+  
+  echo "   Free: $((free * 16 / 1024)) MB"
+  echo "   Active: $((active * 16 / 1024)) MB"
+  echo "   Inactive: $((inactive * 16 / 1024)) MB"
+  echo "   Purgeable: $((purgeable * 16 / 1024)) MB"
+  echo "   Total Available: $(((free + inactive + purgeable) * 16 / 1024)) MB"
+}
+
+# Find memory-heavy processes
+memtop() {
+  echo "🔍 Top Memory Consumers:"
+  echo "========================"
+  ps aux | sort -nr -k 4 | head -10 | awk '{printf "%-8s %-6s %6s%% %s\n", $1, $2, $4, $11}'
+}
+
+# Smart memory optimization (only when needed)
+smartmem() {
+  local free=$(vm_stat | grep "Pages free" | awk '{print $3}' | sed 's/\.//')
+  local free_mb=$((free * 16 / 1024))
+  
+  echo "🧠 Smart Memory Check:"
+  echo "   Available memory: ${free_mb} MB"
+  
+  if [ $free_mb -lt 1000 ]; then
+    echo "⚠️  Low memory detected (< 1GB free). Running optimization..."
+    memclean
+  else
+    echo "✅ Memory levels are healthy. No optimization needed."
+    echo "   Use 'memclean' to force optimization if desired."
+  fi
+}
+
+# Memory optimization with notification
+memclean-notify() {
+  memclean
+  if command -v terminal-notifier >/dev/null 2>&1; then
+    terminal-notifier -title "Memory Optimization" -message "Memory cleanup completed successfully" -sound Glass
+  fi
 }

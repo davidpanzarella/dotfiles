@@ -1,0 +1,54 @@
+{
+  "name": "Memory Optimizer",
+  "title": "Memory Optimizer",
+  "description": "Quick memory optimization for macOS",
+  "icon": "memory-chip",
+  "author": "David Panzarella",
+  "version": "1.0.0",
+  "commands": [
+    {
+      "name": "optimize-memory",
+      "title": "Optimize Memory",
+      "description": "Quick memory cleanup and optimization",
+      "mode": "no-view",
+      "script": "memory-shortcut.sh optimize"
+    },
+    {
+      "name": "memory-status",
+      "title": "Memory Status",
+      "description": "Show current memory usage and status",
+      "mode": "fullOutput",
+      "script": "memory-shortcut.sh status"
+    },
+    {
+      "name": "memory-top",
+      "title": "Top Memory Consumers",
+      "description": "Show processes using the most memory",
+      "mode": "fullOutput",
+      "script": "memory-shortcut.sh top"
+    },
+    {
+      "name": "full-memory-optimizer",
+      "title": "Full Memory Optimizer",
+      "description": "Run comprehensive memory optimization with detailed output",
+      "mode": "fullOutput",
+      "script": "memory-optimizer.sh clean"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "autoNotify",
+      "title": "Auto Notify",
+      "description": "Send desktop notifications after optimization",
+      "type": "checkbox",
+      "default": true
+    },
+    {
+      "name": "threshold",
+      "title": "Memory Threshold (MB)",
+      "description": "Minimum free memory before optimization is recommended",
+      "type": "textfield",
+      "default": "1000"
+    }
+  ]
+}
