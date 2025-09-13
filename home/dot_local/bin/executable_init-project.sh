@@ -243,11 +243,31 @@ EOF
         print_status "Skipped: .cursor/project.md (already customized)"
     fi
     
-    # Always overwrite .vscode configuration (template)
+    # Create minimal .vscode directory for project-specific tasks only
     mkdir -p "$project_path/.vscode"
-    cp "/Users/davidpanzarella/.local/share/chezmoi/home/dot_vscode/settings.json" "$project_path/.vscode/settings.json"
-    cp "/Users/davidpanzarella/.local/share/chezmoi/home/dot_vscode/tasks.json" "$project_path/.vscode/tasks.json"
-    print_status "Updated: .vscode/tasks.json (Foam settings are global)"
+    # Only create tasks.json for project-specific tasks (Foam settings are global)
+    cat > "$project_path/.vscode/tasks.json" << EOF
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Initialize Project",
+      "type": "shell",
+      "command": "init-project",
+      "args": ["--import-history"],
+      "group": "build",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
+EOF
+    print_status "Updated: .vscode/tasks.json (project-specific tasks only)"
     
     # Always overwrite .gitignore (template)
     cat > "$project_path/.gitignore" << EOF
@@ -306,7 +326,7 @@ tmp/
 temp/
 
 # Editor directories and files
-.vscode/*
+.vscode/settings.json  # Global settings, not project-specific
 !.vscode/extensions.json
 !.vscode/tasks.json
 .idea
