@@ -1,26 +1,17 @@
 {
   "version": "2.0.0",
-  "options": {
-    "shell": {
-      "executable": "/bin/zsh",
-      "args": ["-l", "-c"]
-    }
-  },
   "tasks": [
     {
-      "label": "build",
+      "label": "init-project",
       "type": "shell",
-      "command": "pnpm build"
+      "command": "init-project",
+      "group": "build"
     },
     {
-      "label": "dev",
+      "label": "init-project-with-history",
       "type": "shell",
-      "command": "pnpm dev"
-    },
-    {
-      "label": "test",
-      "type": "shell",
-      "command": "pnpm test"
+      "command": "init-project --import-history",
+      "group": "build"
     }
   ]
 }

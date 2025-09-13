@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "basic-memory": {
-      "command": "~/.local/bin/basic-memory.sh",
-      "args": []
-    }
-  }
-}
