@@ -1,8 +1,0 @@
-{
-  "mcpServers": {
-    "basic-memory": {
-      "command": "bm",
-      "args": ["--project", "chezmoi", "mcp"]
-    }
-  }
-}
