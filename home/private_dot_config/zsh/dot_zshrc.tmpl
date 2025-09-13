@@ -74,18 +74,38 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_ALT_C_COMMAND='fd --type d --hidden --follow --exclude .git'
 
+# Enhanced ripgrep integration with FZF
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window up:3:hidden:wrap --bind '?:toggle-preview'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
+
 # FZF preview commands
 export FZF_CTRL_T_OPTS="--preview 'bat --color=always --style=numbers --line-range=:500 {}'"
 export FZF_ALT_C_OPTS="--preview 'eza --tree --color=always {} | head -200'"
 
 # FZF-tab configurations
 zstyle ':completion:*:git-checkout:*' sort false
-zstyle ':completion:*:descriptions' format '[%d]'
+zstyle ':completion:*:descriptions' format ' %F{yellow}-- %d --%f'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons $realpath'
 zstyle ':fzf-tab:complete:*:*' fzf-preview 'less ${(Q)realpath}'
 zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
+
+# Enhanced FZF-tab previews for modern tools
+zstyle ':fzf-tab:complete:rg:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 $realpath'
+zstyle ':fzf-tab:complete:fd:*' fzf-preview 'if [[ -d $realpath ]]; then eza --tree --color=always $realpath | head -200; else bat --color=always --style=numbers --line-range=:500 $realpath; fi'
+zstyle ':fzf-tab:complete:bat:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 $realpath'
+zstyle ':fzf-tab:complete:eza:*' fzf-preview 'if [[ -d $realpath ]]; then eza --tree --color=always $realpath | head -200; else bat --color=always --style=numbers --line-range=:500 $realpath; fi'
+
+# FZF-tab description display
+zstyle ':fzf-tab:*' show-group full
+zstyle ':fzf-tab:*' fzf-bindings 'tab:accept'
+zstyle ':fzf-tab:*' fzf-flags '--preview-window=right:60%:wrap'
+
+# FZF-tab: Show descriptions in the right panel
+zstyle ':fzf-tab:complete:*' fzf-preview 'echo $desc'
+zstyle ':fzf-tab:complete:*' fzf-flags '--preview-window=right:60%:wrap'
+zstyle ':fzf-tab:complete:*' fzf-preview 'echo "Description: $desc"'
 
 # Which plugins would you like to load? (plugins can be found in ~/.dotfiles/oh-my-zsh/plugins/*)
 plugins=(
@@ -139,13 +159,25 @@ plugins=(
   
   # Enhanced shell experience (keep these last)
   zsh-autosuggestions     # Fish-like autosuggestions
-  zsh-syntax-highlighting # Fish-like syntax highlighting
 )
 
 
 
 # Load oh-my-zsh (quiet)
 source $ZSH/oh-my-zsh.sh 2>/dev/null
+
+# Modern tool alternatives (in addition to Oh My Zsh plugins)
+# zoxide - faster, more accurate directory jumping (can replace z plugin)
+if command -v zoxide &> /dev/null; then
+  eval "$(zoxide init zsh)"
+  # Keep z plugin for now, but zoxide is available as alternative
+fi
+
+# direnv - environment management (can replace dotenv plugin)
+if command -v direnv &> /dev/null; then
+  eval "$(direnv hook zsh)"
+  # Keep dotenv plugin for now, but direnv is available as alternative
+fi
 
 # Ensure completion system is properly initialized after oh-my-zsh
 # This fixes issues where completions don't work properly
@@ -166,6 +198,39 @@ fi
 
 # Add flags to existing aliases.
 alias ls="${aliases[ls]:-ls} -A"
+
+# Modern tool aliases (enhanced versions of common commands)
+alias ll='eza -la --icons --git --group-directories-first'
+alias la='eza -la --icons --group-directories-first'
+alias lt='eza --tree --level=2 --icons --git'
+alias lta='eza --tree --level=3 --icons --git --all'
+alias cat='bat --paging=never'
+alias grep='rg --smart-case'
+alias find='fd'
+alias ps='procs'
+
+# Enhanced git aliases with delta
+alias gd='git diff --color-words'
+alias gds='git diff --staged --color-words'
+alias gl='git log --oneline --graph --decorate --all'
+alias gla='git log --oneline --graph --decorate --all --stat'
+
+# Git delta configuration (if delta is available)
+if command -v delta &> /dev/null; then
+  export GIT_PAGER="delta"
+  export DELTA_PAGER="less -R"
+fi
+
+# Directory navigation enhancements
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+
+# Quick project navigation (if you have common project directories)
+alias proj='cd ~/Projects'
+alias docs='cd ~/Documents'
+alias dl='cd ~/Downloads'
 
 # Set shell options: http://zsh.sourceforge.net/Doc/Release/Options.html.
 # Awesome cd movements from zshkit
@@ -240,30 +305,131 @@ help-cmd() {
   fi
 }
 
+# Enhanced search functions
+search-code() {
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: search-code <pattern> [directory]"
+    return 1
+  fi
+  local pattern="$1"
+  local dir="${2:-.}"
+  rg --smart-case --type-not=minified --type-not=lock "$pattern" "$dir"
+}
+
+search-files() {
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: search-files <pattern> [directory]"
+    return 1
+  fi
+  local pattern="$1"
+  local dir="${2:-.}"
+  fd --type f --smart-case "$pattern" "$dir"
+}
+
+# Quick directory operations
+mkcd() {
+  mkdir -p "$1" && cd "$1"
+}
+
+# Enhanced file operations
+cpv() {
+  rsync -avh --progress "$@"
+}
+
+# Git workflow helpers
+gco() {
+  if [[ $# -eq 0 ]]; then
+    git branch | fzf | xargs git checkout
+  else
+    git checkout "$@"
+  fi
+}
+
+gcb() {
+  if [[ $# -eq 0 ]]; then
+    echo "Usage: gcb <branch-name>"
+    return 1
+  fi
+  git checkout -b "$1"
+}
+
+# Docker helpers
+dps() {
+  docker ps --format "table {{`{{.Names}}`}}\t{{`{{.Image}}`}}\t{{`{{.Status}}`}}\t{{`{{.Ports}}`}}"
+}
+
+# System information
+sysinfo() {
+  echo "=== System Information ==="
+  echo "OS: $(uname -s) $(uname -r)"
+  echo "Shell: $SHELL"
+  echo "Architecture: $(uname -m)"
+  echo "Homebrew: $(brew --version 2>/dev/null | head -1 || echo 'Not installed')"
+  echo "Node: $(node --version 2>/dev/null || echo 'Not installed')"
+  echo "Python: $(python3 --version 2>/dev/null || echo 'Not installed')"
+  echo "Git: $(git --version 2>/dev/null || echo 'Not installed')"
+}
+
 # Custom completion for mem command
-if command -v compdef >/dev/null 2>&1 && command -v mem >/dev/null 2>&1; then
-  _mem() {
-    local -a commands
-    commands=(
-      'save-conversation:Save a new conversation'
-      'create-adr:Create a new Architecture Decision Record'
-      'extract-decisions:Extract decisions from conversations'
-      'extract-knowledge:Extract knowledge from conversation file'
-      'process-daily:Process daily notes (analyze content)'
-      'export-conversation:Show instructions for exporting conversations'
-      'export-latest:Export latest Cursor conversation'
-      'export-all:Export all conversations for current project'
-      'export-missing:Export only missing conversations (safe for existing projects)'
-      'move-exported:Move exported conversation to memories directory'
-      'check-github:Check GitHub integration status'
-      'search:Search across all memories'
-      'list:List items by type'
-      'help:Show comprehensive help documentation'
-      '--help:Show comprehensive help documentation'
-      '-h:Show comprehensive help documentation'
-    )
-    _describe 'mem commands' commands
-  }
+_mem() {
+  local -a commands
+  commands=(
+    '--help:Show comprehensive help documentation'
+    '-h:Show comprehensive help documentation'
+    'backfill:Comprehensive backfill of all historical conversations'
+    'check-github:Check GitHub integration status'
+    'create-adr:Create a new Architecture Decision Record'
+    'create-template:Create a file from a template'
+    'export-all:Export all conversations for current project'
+    'export-conversation:Show instructions for exporting conversations'
+    'export-latest:Export latest Cursor conversation'
+    'export-missing:Export only missing conversations (safe for existing projects)'
+    'extract-decisions:Extract decisions from conversations'
+    'extract-knowledge:Extract knowledge from conversation file'
+    'help:Show comprehensive help documentation'
+    'list:List items by type'
+    'move-exported:Move exported conversation to memories directory'
+    'process-daily:Process daily notes (analyze content)'
+    'save-conversation:Save a new conversation' 
+    'search:Search across all memories'
+    'setup-memory:Set up a new memory system for a project'
+    'setup-project-memory:Set up memory system for an existing project'
+  )
+  _describe 'mem commands' commands
+}
+
+# FZF-tab: Hide preview for commands, keep for files
+zstyle ':fzf-tab:complete:*:*' fzf-flags '--preview-window=hidden'
+
+# Keep preview for file-related completions
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always --icons $realpath'
+zstyle ':fzf-tab:complete:ls:*' fzf-preview 'eza -1 --color=always --icons $realpath'
+zstyle ':fzf-tab:complete:cat:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 $realpath'
+zstyle ':fzf-tab:complete:less:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 $realpath'
+zstyle ':fzf-tab:complete:head:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 $realpath'
+zstyle ':fzf-tab:complete:tail:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 $realpath'
+zstyle ':fzf-tab:complete:grep:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 $realpath'
+zstyle ':fzf-tab:complete:rg:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 $realpath'
+zstyle ':fzf-tab:complete:code:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 $realpath'
+zstyle ':fzf-tab:complete:vim:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 $realpath'
+zstyle ':fzf-tab:complete:nano:*' fzf-preview 'bat --color=always --style=numbers --line-range=:500 $realpath'
+
+# File operations with directory preview
+zstyle ':fzf-tab:complete:cp:*' fzf-preview 'if [[ -d $realpath ]]; then eza --tree --color=always $realpath | head -200; else bat --color=always --style=numbers --line-range=:500 $realpath; fi'
+zstyle ':fzf-tab:complete:mv:*' fzf-preview 'if [[ -d $realpath ]]; then eza --tree --color=always $realpath | head -200; else bat --color=always --style=numbers --line-range=:500 $realpath; fi'
+zstyle ':fzf-tab:complete:rm:*' fzf-preview 'if [[ -d $realpath ]]; then eza --tree --color=always $realpath | head -200; else bat --color=always --style=numbers --line-range=:500 $realpath; fi'
+
+# Git operations
+zstyle ':fzf-tab:complete:git-checkout:*' fzf-preview 'git log --oneline --graph --color=always $realpath'
+zstyle ':fzf-tab:complete:git-add:*' fzf-preview 'git diff --color=always $realpath'
+zstyle ':fzf-tab:complete:git-diff:*' fzf-preview 'git diff --color=always $realpath'
+zstyle ':fzf-tab:complete:git-show:*' fzf-preview 'git show --color=always $realpath'
+
+# Enable preview for file completions
+zstyle ':fzf-tab:complete:*:*' fzf-flags '--preview-window=right:60%:wrap' '--preview-window=hidden'
+
+# Register completion function when completion system is available
+if command -v compdef >/dev/null 2>&1; then
   compdef _mem mem
 fi
 
@@ -281,3 +447,21 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Add Docker CLI to PATH (Docker Desktop)
 export PATH="/Applications/Docker.app/Contents/Resources/bin:$PATH"
+
+# Enhanced tool configurations
+export BAT_THEME="Dracula"  # or "TwoDark", "Monokai", etc.
+export BAT_STYLE="numbers,changes,header"
+export EZA_ICON_SPACING=2
+export EZA_COLORS="da=1;34:di=1;34:ex=1;32:fi=0:ln=1;36:or=1;31:pi=1;33:so=1;35:st=1;33:su=1;31:tw=1;34"
+
+# Ripgrep configuration
+export RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
+
+# FZF configuration for better performance
+export FZF_COMPLETION_TRIGGER='**'
+export FZF_COMPLETION_OPTS='--border --info=inline'
+
+# Zoxide configuration
+export _ZO_DATA_DIR="$HOME/.local/share/zoxide"
+export _ZO_ECHO=1
+export _ZO_EXCLUDE_DIRS="$HOME/.git"
