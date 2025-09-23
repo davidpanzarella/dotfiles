@@ -1,0 +1,12 @@
+#compdef init-project
+
+_init-project() {
+  _arguments \
+    '--import-history[Import conversation history from cursor-history]' \
+    '--projects[Comma-separated list of workspaces to import]:workspace:' \
+    '--help[Show help]' \
+    '-h[Show help]' \
+    '1:project name:_files -/'
+}
+
+compdef _init-project init-project

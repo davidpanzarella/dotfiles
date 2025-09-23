@@ -16,6 +16,18 @@ PURPLE='\033[0;35m'
 CYAN='\033[0;36m'
 NC='\033[0m' # No Color
 
+# Run purge with elevation suitable for interactive/non-interactive contexts
+run_purge() {
+    # Check if we're running from Raycast (non-interactive) or terminal (interactive)
+    if [ -t 1 ] && [ -n "${TERM:-}" ]; then
+        # Interactive terminal - use sudo
+        sudo /usr/sbin/purge
+    else
+        # Non-interactive (Raycast) - use AppleScript for admin privileges
+        /usr/bin/osascript -e 'do shell script "/usr/sbin/purge" with administrator privileges'
+    fi
+}
+
 # Function to display help
 show_help() {
     echo -e "${CYAN}Memory Optimizer - macOS Memory Management Tool${NC}"
@@ -66,7 +78,7 @@ memory_cleanup() {
     
     # Purge memory caches
     echo -e "${BLUE}🔄 Purging memory caches...${NC}"
-    if sudo purge; then
+    if run_purge; then
         echo -e "${GREEN}✅ Purge command executed successfully${NC}"
     else
         echo -e "${RED}❌ Purge command failed${NC}"

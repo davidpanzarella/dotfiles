@@ -89,9 +89,9 @@ memclean() {
   echo "🧹 Starting memory optimization..."
   
   # Get initial memory stats
-  local initial_free=$(vm_stat | grep "Pages free" | awk '{print $3}' | sed 's/\.//')
-  local initial_inactive=$(vm_stat | grep "Pages inactive" | awk '{print $3}' | sed 's/\.//')
-  local initial_purgeable=$(vm_stat | grep "Pages purgeable" | awk '{print $3}' | sed 's/\.//')
+  local initial_free=$(vm_stat | /usr/bin/grep "Pages free" | awk '{print $3}' | sed 's/\.//')
+  local initial_inactive=$(vm_stat | /usr/bin/grep "Pages inactive" | awk '{print $3}' | sed 's/\.//')
+  local initial_purgeable=$(vm_stat | /usr/bin/grep "Pages purgeable" | awk '{print $3}' | sed 's/\.//')
   
   echo "📊 Initial state:"
   echo "   Free: $((initial_free * 16 / 1024)) MB"
@@ -100,15 +100,15 @@ memclean() {
   
   # Purge memory caches
   echo "🔄 Purging memory caches..."
-  sudo purge
+  sudo /usr/sbin/purge
   
   # Wait a moment for the system to update
   sleep 1
   
   # Get final memory stats
-  local final_free=$(vm_stat | grep "Pages free" | awk '{print $3}' | sed 's/\.//')
-  local final_inactive=$(vm_stat | grep "Pages inactive" | awk '{print $3}' | sed 's/\.//')
-  local final_purgeable=$(vm_stat | grep "Pages purgeable" | awk '{print $3}' | sed 's/\.//')
+  local final_free=$(vm_stat | /usr/bin/grep "Pages free" | awk '{print $3}' | sed 's/\.//')
+  local final_inactive=$(vm_stat | /usr/bin/grep "Pages inactive" | awk '{print $3}' | sed 's/\.//')
+  local final_purgeable=$(vm_stat | /usr/bin/grep "Pages purgeable" | awk '{print $3}' | sed 's/\.//')
   
   echo "📊 Final state:"
   echo "   Free: $((final_free * 16 / 1024)) MB"
@@ -137,14 +137,14 @@ memstat() {
   
   echo ""
   echo "📈 Detailed Memory Stats:"
-  vm_stat | grep -E "(Pages free|Pages active|Pages inactive|Pages speculative|Pages wired down|Pages purgeable)"
+  vm_stat | /usr/bin/grep -E "(Pages free|Pages active|Pages inactive|Pages speculative|Pages wired down|Pages purgeable)"
   
   echo ""
   echo "💾 Memory Usage Summary:"
-  local free=$(vm_stat | grep "Pages free" | awk '{print $3}' | sed 's/\.//')
-  local active=$(vm_stat | grep "Pages active" | awk '{print $3}' | sed 's/\.//')
-  local inactive=$(vm_stat | grep "Pages inactive" | awk '{print $3}' | sed 's/\.//')
-  local purgeable=$(vm_stat | grep "Pages purgeable" | awk '{print $3}' | sed 's/\.//')
+  local free=$(vm_stat | /usr/bin/grep "Pages free" | awk '{print $3}' | sed 's/\.//')
+  local active=$(vm_stat | /usr/bin/grep "Pages active" | awk '{print $3}' | sed 's/\.//')
+  local inactive=$(vm_stat | /usr/bin/grep "Pages inactive" | awk '{print $3}' | sed 's/\.//')
+  local purgeable=$(vm_stat | /usr/bin/grep "Pages purgeable" | awk '{print $3}' | sed 's/\.//')
   
   echo "   Free: $((free * 16 / 1024)) MB"
   echo "   Active: $((active * 16 / 1024)) MB"
@@ -162,7 +162,7 @@ memtop() {
 
 # Smart memory optimization (only when needed)
 smartmem() {
-  local free=$(vm_stat | grep "Pages free" | awk '{print $3}' | sed 's/\.//')
+  local free=$(vm_stat | /usr/bin/grep "Pages free" | awk '{print $3}' | sed 's/\.//')
   local free_mb=$((free * 16 / 1024))
   
   echo "🧠 Smart Memory Check:"
@@ -184,3 +184,48 @@ memclean-notify() {
     terminal-notifier -title "Memory Optimization" -message "Memory cleanup completed successfully" -sound Glass
   fi
 }
+
+# Init-project completion function
+_init_project_workspaces() {
+  local conversations_dir latest ws_output
+  conversations_dir="$HOME/Library/Preferences/cursor-history-nodejs/conversations"
+  if [[ -d "$conversations_dir" ]]; then
+    latest=$(command ls -d "$conversations_dir"/2025-* 2>/dev/null | sort | tail -1)
+  fi
+
+  if [[ -n "$latest" && -d "$latest" ]]; then
+    ws_output=$(find "$latest" -type f -name "*.md" -print0 2>/dev/null \
+      | xargs -0 grep -h '^_Workspace: `' 2>/dev/null \
+      | sed -E 's/^_Workspace: `([^`]+)`.*/\1/' \
+      | sort -u)
+  fi
+
+  local -a workspaces
+  if [[ -n "$ws_output" ]]; then
+    workspaces=(${(f)ws_output})
+  else
+    workspaces=()
+  fi
+
+  _values -s , 'workspace' $workspaces
+}
+
+_init-project() {
+  local context state line
+  local -a opts
+  
+  opts=(
+    '--import-history[Import conversation history from cursor-history]'
+    '--projects[Comma-separated list of workspaces to import]:workspaces:_init_project_workspaces'
+    '--help[Show help]'
+    '-h[Show help]'
+  )
+
+  _arguments -C \
+    $opts \
+    '1:project name:_files -/'
+}
+
+# Register the completion function
+compdef _init-project init-project
+

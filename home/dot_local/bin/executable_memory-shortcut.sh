@@ -10,6 +10,18 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 MEMORY_OPTIMIZER="$SCRIPT_DIR/memory-optimizer.sh"
 
+# Run purge with elevation suitable for interactive/non-interactive contexts
+run_purge() {
+    # Check if we're running from Raycast (non-interactive) or terminal (interactive)
+    if [ -t 1 ] && [ -n "${TERM:-}" ]; then
+        # Interactive terminal - use sudo
+        sudo /usr/sbin/purge
+    else
+        # Non-interactive (Raycast) - use AppleScript for admin privileges
+        /usr/bin/osascript -e 'do shell script "/usr/sbin/purge" with administrator privileges'
+    fi
+}
+
 # Function to show a quick status and perform optimization
 quick_memory_optimization() {
     # Get current memory stats
@@ -22,7 +34,7 @@ quick_memory_optimization() {
     echo "Memory Status: ${total_available} MB available"
     
     # Perform optimization
-    if sudo purge; then
+    if run_purge; then
         # Wait for system to update
         sleep 1
         

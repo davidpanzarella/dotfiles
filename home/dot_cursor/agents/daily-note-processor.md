@@ -38,21 +38,21 @@ Processes daily notes and extracts structured information into the knowledge bas
 ### Custom Instructions
 
 ````markdown
-EXTRACT STRUCTURED INFORMATION from daily notes and organize into the knowledge base. Use basic-memory MCP tools to create categorized notes from unstructured daily content.
+# MAIN OBJECTIVE
 
-## CRITICAL SUCCESS CRITERIA
+EXTRACT STRUCTURED INFORMATION from daily notes and organize into the knowledge base using basic-memory MCP tools. Return as: Separate notes in appropriate folders with descriptive titles and complete context.
 
-- Read daily note content completely
-- Identify and categorize all content types
-- Create separate notes for each category
-- Use correct folder routing for each content type
-- Confirm processing with detailed report
+Think step-by-step through each content type before creating notes. First identify all content types, then create notes systematically.
+
+===
 
 ## AVAILABLE TOOLS (Use exactly as specified)
 
 - `mcp_basic-memory_write_note` - Create structured notes in appropriate folders
 - `mcp_basic-memory_search_notes` - Search existing notes before creating duplicates
 - `mcp_basic-memory_read_note` - Read specific notes for context
+
+===
 
 ## CONTENT ROUTING RULES (Follow exactly)
 
@@ -86,31 +86,7 @@ EXTRACT STRUCTURED INFORMATION from daily notes and organize into the knowledge 
 - What didn't work, failures
 - Retrospectives, improvements
 
-## STEP-BY-STEP PROCESS
-
-**STEP 1: Read and Analyze**
-
-- Locate today's daily note or specified note
-- Read complete content and analyze structure
-- Identify all extractable content types
-
-**STEP 2: Categorize Content**
-
-- Scan for knowledge, plans, tasks, decisions, lessons
-- Use keyword patterns and context to categorize
-- Create list of content to extract
-
-**STEP 3: Extract and Create Notes**
-
-- Use `mcp_basic-memory_write_note` for each category
-- Choose correct folder for each content type
-- Create descriptive titles and include context
-
-**STEP 4: Confirm Processing**
-
-- Report exact number of notes created
-- List all created notes with folder locations
-- Suggest next steps or follow-ups
+===
 
 ## CONTENT IDENTIFICATION PATTERNS
 
@@ -124,89 +100,57 @@ EXTRACT STRUCTURED INFORMATION from daily notes and organize into the knowledge 
 
 **Lessons Learned**: "What worked:", "What didn't work:", "Success:", "Failure:", "Retrospective:", "Improvement:"
 
-REMEMBER: Extract all content types, create separate notes, use correct folders, confirm with details.
+===
 
-## Content Identification Patterns
+## STEP-BY-STEP PROCESS
 
-### Knowledge/Insights
+**STEP 1: Read and Analyze**
 
-- "I learned that..."
-- "Discovered..."
-- "Found out..."
-- "Realized..."
-- "Insight:"
-- "Best practice:"
+- Locate today's daily note or specified note
+- Read complete content and analyze structure
+- Think through each section to identify extractable content types
 
-### Plans/Strategies
+**STEP 2: Categorize Content**
 
-- "Plan to..."
-- "Goal:"
-- "Roadmap:"
-- "Strategy:"
-- "Next steps:"
-- "Milestone:"
+- Scan for knowledge, plans, tasks, decisions, lessons
+- Use keyword patterns and context to categorize
+- Create systematic list of content to extract
 
-### Tasks/Actions
+**STEP 3: Extract and Create Notes**
 
-- "Need to..."
-- "Should..."
-- "Must..."
-- "Todo:"
-- "Action item:"
-- "Follow up:"
+- Use `mcp_basic-memory_write_note` for each category
+- Choose correct folder for each content type
+- Create descriptive titles and include complete context
 
-### Decisions
+**STEP 4: Confirm Processing**
 
-- "Decided to..."
-- "Chose..."
-- "Will use..."
-- "Going with..."
-- "Decision:"
-- "Selected..."
+- Report exact number of notes created
+- List all created notes with folder locations
+- Suggest next steps or follow-ups
 
-### Lessons Learned
+===
 
-- "What worked:"
-- "What didn't work:"
-- "Success:"
-- "Failure:"
-- "Retrospective:"
-- "Improvement:"
+## EXAMPLE
 
-## Examples
+**Input (Daily Note):**
 
-### Input (Daily Note)
-
-```text
+```
 Today I learned that React hooks should be used at the top level.
 Need to implement user authentication by Friday.
 Decided to use PostgreSQL for the database.
 What worked: Pair programming session was very productive.
 ```
-````
 
-### Output (Structured Notes)
+**Output (Structured Notes):**
 
 1. **Knowledge Note** (`knowledge/`): "React Hooks Best Practices"
 2. **Task Note** (`tasks/`): "Implement User Authentication"
 3. **Decision Note** (`decisions/`): "Database Choice - PostgreSQL"
 4. **Lesson Note** (`lessons-learned/`): "Pair Programming Success"
 
-## Best Practices
+===
 
-- Always ask for clarification if content type is unclear
-- Create descriptive titles that are searchable
-- Include context and rationale when appropriate
-- Link related information when possible
-- Preserve original context and dates
-- Suggest actionable next steps
-
-## Error Handling
-
-- If no daily note found, ask user to specify note location
-- If content type unclear, ask user to clarify
-- If extraction fails, report specific error and suggest alternatives
-- Always confirm successful processing with details
+REMEMBER: Extract all content types, create separate notes, use correct folders, confirm with details.
 
 ```
 
@@ -251,3 +195,4 @@ What worked: Pair programming session was very productive.
 - MCP tools must be available
 - Write access to memories directory
 ```
+````

@@ -131,7 +131,6 @@ alias nv="nvim"
 alias va="vagrant"
 alias vl="vault"
 alias wa="watch "
-alias watch="watch "
 alias wh="which "
 # alias wiki="gq narze/knowledge"
 alias ya='yarn'
@@ -323,8 +322,9 @@ alias mx="mise exec"             # Execute command with specific version
 
 # Modern CLI Tools - Better replacements for standard tools
 alias cat="bat"                  # Better cat with syntax highlighting
-alias find="fd"                  # Better find
-alias grep="rg"                  # Better grep (ripgrep)
+# Keep core grep/find unchanged for compatibility; provide convenience aliases
+alias fdfind="fd"
+alias rga="rg"
 alias top="btop"                 # Better top (if installed)
 alias du="dust"                  # Better du (if installed)
 alias ps="procs"                 # Better ps (if installed)
@@ -416,8 +416,8 @@ alias dimg="docker images"
 alias mem="~/.local/bin/mem"                    # Memory helper commands
 alias setup-memory="~/.local/bin/setup-memory"  # Complete system setup
 alias setup-project="~/.local/bin/setup-project-memory"  # Project setup
-alias init-project="~/.local/bin/init-project-with-best-practices"  # New project with best practices
-alias migrate-conversations="~/.local/bin/migrate-past-conversations"  # Migrate past conversations
+alias init-project="~/.local/bin/init-project.sh"  # New project with memory system
+alias migrate-conversations="~/.local/bin/migrate-past-conversations.sh"  # Migrate past conversations
 # Note: 'bm' is already available as the basic-memory CLI command
 
 # Memory Optimization - System memory management

@@ -40,7 +40,11 @@ show_usage() {
     echo ""
     echo "Options:"
     echo "  --import-history    Import conversation history from cursor-history"
-    echo "  --projects          Comma-separated list of projects to import from"
+    echo "  --projects          Comma-separated list of workspaces to import from"
+    echo ""
+    echo "Notes:"
+    echo "  - If you pass --import-history without --projects, it will automatically"
+    echo "    import conversations from the current project's workspace."
     echo ""
     echo "Examples:"
     echo "  init-project                    # Initialize current directory"
@@ -80,7 +84,12 @@ check_dependencies() {
         exit 1
     fi
     
-    print_success "All dependencies found"
+    # Optional tools
+    if ! command -v fzf &> /dev/null; then
+        print_warning "fzf not found; interactive selection will be skipped"
+    fi
+    
+    print_success "All required dependencies found"
 }
 
 # Function to get project name and path
@@ -168,6 +177,59 @@ update_global_cursor_settings() {
         print_status "Updating global Cursor settings from chezmoi source..."
         bash "$update_script" >/dev/null 2>&1 || print_warning "Could not update Cursor settings (jq may be missing)"
     fi
+}
+
+# Discover latest cursor-history extraction directory
+find_latest_extraction_dir() {
+    local cursor_conversations_dir="$HOME/Library/Preferences/cursor-history-nodejs/conversations"
+    if [[ -d "$cursor_conversations_dir" ]]; then
+        find "$cursor_conversations_dir" -maxdepth 1 -type d -name "2025-*" | sort | tail -1
+    fi
+}
+
+# Interactive selection of workspaces using fzf (multi-select)
+select_projects_interactively() {
+    local latest_extraction
+    latest_extraction=$(find_latest_extraction_dir)
+
+    # Ensure we have an up-to-date extraction before scanning
+    if command -v chi &> /dev/null; then
+        chi --extract >/dev/null 2>&1 || true
+        latest_extraction=$(find_latest_extraction_dir)
+    fi
+
+    if [[ -z "$latest_extraction" || ! -d "$latest_extraction" ]]; then
+        print_warning "No extracted conversations found for interactive selection"
+        return 0
+    fi
+
+    # Build list of unique workspaces from extracted conversations
+    local workspaces
+    workspaces=$(
+        find "$latest_extraction" -type f -name "*.md" -print0 2>/dev/null \
+        | xargs -0 grep -h '^_Workspace: `' 2>/dev/null \
+        | sed -E 's/^_Workspace: `([^`]+)`.*/\1/' \
+        | sort -u
+    )
+
+    if [[ -z "$workspaces" ]]; then
+        print_warning "No workspaces discovered in extracted conversations"
+        return 0
+    fi
+
+    if ! command -v fzf &> /dev/null; then
+        return 0
+    fi
+
+    local selection
+    selection=$(echo "$workspaces" | fzf --multi --prompt "Select workspaces to import » " --header "Space to select, Enter to confirm" || true)
+
+    if [[ -z "$selection" ]]; then
+        return 0
+    fi
+
+    # Convert newline-separated selection to comma-separated
+    echo "$selection" | paste -sd "," -
 }
 
 # Function to create project-specific files
@@ -375,6 +437,9 @@ import_conversation_history() {
     
     cd "$project_path"
     
+    # Temporarily disable exit on error for this function
+    set +e
+    
     # Determine which projects to import from
     local projects_to_import=()
     if [[ -n "$import_projects" ]]; then
@@ -403,31 +468,25 @@ import_conversation_history() {
         if [[ -n "$latest_extraction" && -d "$latest_extraction" ]]; then
             print_status "Found latest extraction: $(basename "$latest_extraction")"
             
-            # Look for conversations that match the specified workspaces
-            local files_found=()
-            while IFS= read -r -d '' file; do
-                files_found+=("$file")
-            done < <(find "$latest_extraction" -name "*.md" -type f -print0)
+            # Create a temporary directory for processing
+            local temp_dir=$(mktemp -d)
             
-            for file in "${files_found[@]}"; do
-                if [[ -f "$file" ]]; then
-                    # Check if this conversation belongs to one of the target workspaces
-                    local file_workspace=""
-                    for workspace in "${projects_to_import[@]}"; do
-                        if grep -q "_Workspace: \`$workspace\`" "$file"; then
-                            file_workspace="$workspace"
-                            break
-                        fi
-                    done
-                    
-                    # Only import if it matches one of our target workspaces
-                    if [[ -n "$file_workspace" ]]; then
-                        filename=$(basename "$file")
-                        local target_file="$project_path/memories/conversations/$filename"
-                        
-                        # Add frontmatter and move the file
-                        {
-                            cat << FRONTMATTER
+            # Import conversations from specified workspaces only
+            print_status "Importing conversations from workspaces: ${projects_to_import[*]}"
+            
+            # Process conversation files for specified workspaces only
+            for workspace in "${projects_to_import[@]}"; do
+                print_status "Processing workspace: $workspace"
+                
+                for file in "$latest_extraction"/*.md; do
+                    if [[ -f "$file" ]]; then
+                        # Check if this file belongs to the current workspace
+                        if head -20 "$file" | grep -q "_Workspace: \`$workspace\`_"; then
+                            local filename=$(basename "$file")
+                            local target_file="$project_path/memories/conversations/$filename"
+                            
+                            # Create the file with frontmatter
+                            cat > "$target_file" << EOF
 ---
 type: conversation
 category: ai-discussion
@@ -438,18 +497,21 @@ tags: [conversation, ai, discussion, imported]
 participants: [user, ai-assistant]
 context: $filename
 source: cursor-history
-workspace: $file_workspace
+workspace: $workspace
 ---
 
-FRONTMATTER
-                            cat "$file"
-                        } > "$target_file"
-                        
-                        echo "✅ Imported: $filename (workspace: $file_workspace)"
-                        ((moved_count++))
+EOF
+                            cat "$file" >> "$target_file"
+                            
+                            echo "✅ Imported: $filename (workspace: $workspace)"
+                            ((moved_count++))
+                        fi
                     fi
-                fi
+                done
             done
+            
+            # Clean up temp directory
+            rm -rf "$temp_dir"
             
             print_success "Imported $moved_count conversations from workspaces: ${projects_to_import[*]}"
         else
@@ -458,6 +520,9 @@ FRONTMATTER
     else
         print_warning "No cursor-history conversations directory found"
     fi
+    
+    # Re-enable exit on error
+    set -e
 }
 
 # Function to create initial memory files
@@ -609,6 +674,13 @@ main() {
     
     # Import history if requested
     if [[ "$import_history" == true ]]; then
+        if [[ -z "$import_projects" ]]; then
+            # Default to current project workspace
+            import_projects="$project_name"
+            print_status "Importing conversation history for current project: $project_name"
+        else
+            print_status "Importing conversation history from specified workspaces: ${import_projects//,/ , }"
+        fi
         import_conversation_history "$project_path" "$project_name" "$import_projects"
     fi
     

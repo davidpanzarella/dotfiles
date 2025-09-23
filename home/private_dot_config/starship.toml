@@ -2,6 +2,9 @@
 # Shows relevant info based on current directory context
 # Organized alphabetically for easy maintenance
 
+# Disable automatic newline between prompts
+add_newline = false
+
 format = """
 $directory\
 $git_branch\
