@@ -73,10 +73,23 @@ detect_extensions = true
 detect_files = ["package.json", "Cargo.toml", "go.mod", "composer.json"]
 
 # Disable modules that aren't useful in chat
-[aws] = { disabled = true }
-[gcloud] = { disabled = true }
-[kubernetes] = { disabled = true }
-[terraform] = { disabled = true }
-[conda] = { disabled = true }
-[memory_usage] = { disabled = true }
-[time] = { disabled = true }
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[terraform]
+disabled = true
+
+[conda]
+disabled = true
+
+[memory_usage]
+disabled = true
+
+[time]
+disabled = true
