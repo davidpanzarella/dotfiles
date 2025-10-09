@@ -48,17 +48,17 @@ style = "bold yellow"
 [git_status]
 format = '([\[$all_status$ahead_behind\]]($style) )'
 style = "bold red"
-conflicted = "🏳"
-ahead = "🏎💨"
-behind = "😰"
-diverged = "😵"
+conflicted = "="
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
 up_to_date = "✓"
-untracked = "🤷"
-stashed = "📦"
-modified = "📝"
+untracked = "?"
+stashed = "$"
+modified = "!"
 staged = '[++\($count\)](green)'
-renamed = "👅"
-deleted = "🗑"
+renamed = "»"
+deleted = "✘"
 
 # Command duration
 [cmd_duration]
