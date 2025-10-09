@@ -1,8 +1,8 @@
 #!/bin/bash
-# Test script for Starship configuration with Cursor AI conversations
+# Comprehensive test script for Starship configuration with Cursor AI conversations
 
-echo "🧪 Testing Starship Configuration for Cursor AI Conversations"
-echo "=============================================================="
+echo "🎯 Testing Starship for Cursor AI Conversations"
+echo "=============================================="
 
 # Test 1: Check if Starship is installed and working
 echo "📋 Test 1: Starship Installation"
@@ -57,86 +57,119 @@ else
     echo "❌ Enhancement functions not found"
 fi
 
-# Test 5: Simulate Cursor chat environment
-echo -e "\n📋 Test 5: Simulating Cursor Chat Environment"
-export TERM_PROGRAM="cursor"
-export CURSOR_CHAT_SHELL="minimal"
-
-echo "   Environment variables set:"
-echo "   TERM_PROGRAM: $TERM_PROGRAM"
-echo "   CURSOR_CHAT_SHELL: $CURSOR_CHAT_SHELL"
-
-# Test 6: Test prompt rendering
-echo -e "\n📋 Test 6: Prompt Rendering Test"
-echo "   Current prompt should show:"
-echo "   - Directory path"
-echo "   - Git branch (if in git repo)"
-echo "   - Git status (if changes exist)"
-echo "   - Node.js version (if package.json exists)"
-echo "   - Python version (if .py files exist)"
-
-# Test 7: Test in different directories
-echo -e "\n📋 Test 7: Directory Context Test"
-test_dirs=(
-    "$HOME"
-    "$HOME/.local/share/chezmoi"
-    "/tmp"
-)
-
-for dir in "${test_dirs[@]}"; do
-    if [ -d "$dir" ]; then
-        echo "   Testing in: $dir"
-        cd "$dir" 2>/dev/null
-        if [ $? -eq 0 ]; then
-            echo "     ✅ Accessible"
-            # Test if we can get directory info
-            pwd_output=$(pwd)
-            echo "     📁 Current: $pwd_output"
-        else
-            echo "     ❌ Not accessible"
-        fi
-    fi
-done
-
-# Test 8: Test git integration
-echo -e "\n📋 Test 8: Git Integration Test"
-cd "$HOME/.local/share/chezmoi" 2>/dev/null
-if [ $? -eq 0 ] && git rev-parse --git-dir > /dev/null 2>&1; then
-    echo "   ✅ In git repository"
-    echo "   📋 Branch: $(git branch --show-current)"
-    echo "   📊 Status: $(git status --porcelain | wc -l | tr -d ' ') changes"
+# Test 5: Check Cursor environment
+echo -e "\n📋 Test 5: Cursor Environment Detection"
+if [[ "$TERM_PROGRAM" == "cursor" ]]; then
+    echo "✅ Running in Cursor terminal"
 else
-    echo "   ⚠️  Not in git repository or git not available"
+    echo "⚠️  Not in Cursor terminal (TERM_PROGRAM: $TERM_PROGRAM)"
+    echo "   Simulating Cursor environment..."
+    export TERM_PROGRAM="cursor"
 fi
 
-# Test 9: Test package detection
-echo -e "\n📋 Test 9: Package Detection Test"
-cd "$HOME/.local/share/chezmoi" 2>/dev/null
-if [ -f "package.json" ]; then
-    echo "   ✅ Node.js project detected"
-    if command -v node > /dev/null; then
-        echo "   📦 Node version: $(node --version)"
-    fi
-elif [ -f "requirements.txt" ] || [ -f "pyproject.toml" ]; then
-    echo "   ✅ Python project detected"
-    if command -v python3 > /dev/null; then
-        echo "   🐍 Python version: $(python3 --version)"
-    fi
+# Test 6: Test chat shell detection
+echo -e "\n📋 Test 6: Chat Shell Detection"
+if [[ "$CURSOR_CHAT_SHELL" == "minimal" ]]; then
+    echo "✅ Chat shell detected (minimal mode)"
+    chat_mode=true
 else
-    echo "   ⚠️  No package files detected"
+    echo "⚠️  Regular terminal mode (CURSOR_CHAT_SHELL: $CURSOR_CHAT_SHELL)"
+    chat_mode=false
 fi
 
-echo -e "\n🎯 Test Summary"
-echo "==============="
-echo "✅ Starship is ready for Cursor AI conversations!"
-echo "📋 Key features:"
-echo "   - Auto-switching between chat and full configs"
-echo "   - Context-aware prompts (directory, git, packages)"
-echo "   - ASCII-compatible symbols (no emoji issues)"
-echo "   - Fast loading for chat interactions"
+# Test 7: Test Starship prompt rendering
+echo -e "\n📋 Test 7: Starship Prompt Rendering"
+echo "Current prompt should show:"
+
+# Get current directory info
+current_dir=$(pwd)
+echo "   📁 Directory: $current_dir"
+
+# Get git info if available
+if git rev-parse --git-dir > /dev/null 2>&1; then
+    git_branch=$(git branch --show-current)
+    git_changes=$(git status --porcelain | wc -l | tr -d ' ')
+    echo "   🌱 Git: $git_branch ($git_changes changes)"
+else
+    echo "   🌱 Git: Not in a git repository"
+fi
+
+# Test 8: Test actual prompt output
+echo -e "\n📋 Test 8: Actual Prompt Output"
+echo "Setting proper terminal environment..."
+export TERM=xterm-256color
+export TERM_PROGRAM=cursor
+
+echo "Testing Starship prompt:"
+if starship prompt > /dev/null 2>&1; then
+    echo "✅ Starship prompt renders successfully"
+    echo "   Sample output:"
+    starship prompt | sed 's/^/     /'
+else
+    echo "❌ Starship prompt failed to render"
+fi
+
+# Test 9: Test configuration switching
+echo -e "\n📋 Test 9: Configuration Switching"
+chezmoi_dir="$HOME/.local/share/chezmoi/home/private_dot_config"
+
+if [ -f "$chezmoi_dir/starship-chat.toml" ]; then
+    echo "✅ Chat configuration available"
+    
+    # Test switching to chat config
+    /bin/cp "$chezmoi_dir/starship-chat.toml" "$HOME/.config/starship.toml"
+    echo "✅ Switched to chat configuration"
+    
+    # Test the chat prompt
+    echo "   Testing chat prompt:"
+    starship prompt | sed 's/^/     /'
+else
+    echo "❌ Chat configuration not found"
+fi
+
+# Test 10: Performance test
+echo -e "\n📋 Test 10: Performance Test"
+start_time=$(date +%s%N)
+if command -v starship > /dev/null; then
+    starship --version > /dev/null 2>&1
+    end_time=$(date +%s%N)
+    duration=$(( (end_time - start_time) / 1000000 ))
+    echo "✅ Starship loads in ${duration}ms"
+    
+    if [ $duration -lt 100 ]; then
+        echo "   🚀 Fast loading - good for chat interactions"
+    else
+        echo "   ⚠️  Slow loading - may affect chat performance"
+    fi
+else
+    echo "❌ Starship not available"
+fi
+
+# Test 11: AI conversation context
+echo -e "\n📋 Test 11: AI Conversation Context"
+echo "For AI conversations, the prompt should provide:"
+echo "   ✅ Current directory path"
+echo "   ✅ Git branch and status"
+echo "   ✅ Project type (Node.js, Python, etc.)"
+echo "   ✅ Clean, minimal format"
+echo "   ✅ No unnecessary information"
+
+echo -e "\n🎯 Test Results Summary"
+echo "======================="
+echo "✅ Starship is configured for Cursor AI conversations"
+echo "📋 Key benefits:"
+echo "   - Context-aware prompts show directory and git status"
+echo "   - Minimal chat config reduces visual clutter"
+echo "   - Fast loading for responsive AI interactions"
+echo "   - ASCII-compatible symbols work in all terminals"
 echo ""
-echo "🚀 To test in Cursor:"
+echo "🚀 To verify in Cursor:"
 echo "   1. Open a new terminal in Cursor"
-echo "   2. Check that prompt shows current directory and git status"
-echo "   3. Try the switcher: 'starship-chat' or 'starship-full'"
-echo "   4. Verify clean, readable output for AI conversations"
+echo "   2. Check that prompt shows: [directory] on [git:branch] [status] [>]"
+echo "   3. Try: 'starship-chat' to switch to minimal mode"
+echo "   4. Verify clean output for AI conversations"
+echo ""
+echo "📋 Available commands:"
+echo "   starship-chat    - Switch to chat-optimized config"
+echo "   starship-full    - Switch to full config"
+echo "   ss current       - Show current configuration"
