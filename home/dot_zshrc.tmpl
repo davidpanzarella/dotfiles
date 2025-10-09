@@ -131,7 +131,7 @@ plugins=(
   # Development tools
   docker                  # Docker aliases and completions
   docker-compose          # Docker Compose aliases
-  dotenv                  # Auto-load .env files
+  # dotenv                  # Auto-load .env files (disabled - using direnv instead)
   gh                      # GitHub CLI completions
   git                     # Git aliases and completions
   jsontools               # JSON manipulation tools
@@ -171,10 +171,10 @@ if command -v zoxide &> /dev/null; then
   # Keep z plugin for now, but zoxide is available as alternative
 fi
 
-# direnv - environment management (can replace dotenv plugin)
+# direnv - environment management (replaces dotenv plugin)
 if command -v direnv &> /dev/null; then
   eval "$(direnv hook zsh)"
-  # Keep dotenv plugin for now, but direnv is available as alternative
+  # direnv is now the primary environment management tool
 fi
 
 # Ensure completion system is properly initialized after oh-my-zsh
@@ -516,8 +516,8 @@ alias nb='npm run build'
 # Docker aliases
 alias d='docker'
 alias dc='docker-compose'
-alias dps='docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
-alias di='docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}"'
+alias dps='docker ps --format "table {{`{{.Names}}`}}\t{{`{{.Status}}`}}\t{{`{{.Ports}}`}}"'
+alias di='docker images --format "table {{`{{.Repository}}`}}\t{{`{{.Tag}}`}}\t{{`{{.Size}}`}}"'
 
 # System aliases
 alias ..='cd ..'
