@@ -950,7 +950,7 @@
     "PATH": "/opt/homebrew/bin:/opt/homebrew/sbin:/Users/davidpanzarella/.local/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Applications/Docker.app/Contents/Resources/bin:/Users/davidpanzarella/Library/pnpm",
     "TERM": "xterm-256color",
     "TERM_PROGRAM": "cursor",
-    "ZDOTDIR": "/Users/davidpanzarella"
+    "ZDOTDIR": "/Users/davidpanzarella/.config/zsh"
   },
   "terminal.integrated.fontFamily": "MesloLGS NF",
   "terminal.integrated.fontSize": 16,
