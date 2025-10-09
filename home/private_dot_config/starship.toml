@@ -1,34 +1,27 @@
 # Clean Starship configuration
 add_newline = false
 format = """
-$username\
-$hostname\
 $directory\
 $git_branch\
 $git_status\
 $character"""
 
 [username]
-style_user = "blue bold"
-style_root = "red bold"
-format = "[$user]($style) "
-disabled = false
-show_always = true
+disabled = true
 
 [hostname]
-ssh_only = true
-format = "on [$hostname](bold yellow) "
-disabled = false
+disabled = true
 
 [directory]
 style = "bold cyan"
 format = "[$path]($style)[$read_only]($read_only_style) "
 truncation_length = 3
 truncation_symbol = "…/"
+home_symbol = "~"
 
 [git_branch]
 symbol = " "
-format = "on [$symbol$branch]($style) "
+format = "[$symbol$branch]($style) "
 style = "bold purple"
 
 [git_status]
