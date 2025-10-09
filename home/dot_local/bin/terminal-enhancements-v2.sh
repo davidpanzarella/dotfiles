@@ -97,3 +97,53 @@ term_precmd() {
 
 # Export functions
 export -f term_separator term_cd term_git_status term_highlight_command term_highlight_output term_session_start term_json_format term_preexec term_precmd
+
+# Starship configuration switcher
+switch_starship_config() {
+    local config_type=${1:-full}
+    local config_dir="$HOME/.config"
+    
+    case "$config_type" in
+        "chat"|"minimal")
+            echo -e "${TERM_CYAN}🎯 Switching to chat-optimized Starship config${TERM_RESET}"
+            cp "$HOME/.local/share/chezmoi/home/private_dot_config/starship-chat.toml" "$config_dir/starship.toml"
+            ;;
+        "full"|"default")
+            echo -e "${TERM_CYAN}🚀 Switching to full Starship config${TERM_RESET}"
+            cp "$HOME/.local/share/chezmoi/home/private_dot_config/starship.toml" "$config_dir/starship.toml"
+            ;;
+        "current")
+            echo -e "${TERM_CYAN}📋 Current Starship config:${TERM_RESET}"
+            if [ -f "$config_dir/starship.toml" ]; then
+                head -5 "$config_dir/starship.toml"
+            else
+                echo "No Starship config found"
+            fi
+            ;;
+        *)
+            echo -e "${TERM_YELLOW}Usage: switch_starship_config [chat|full|current]${TERM_RESET}"
+            echo -e "${TERM_GRAY}  chat    - Minimal config for AI conversations${TERM_RESET}"
+            echo -e "${TERM_GRAY}  full    - Full config with all features${TERM_RESET}"
+            echo -e "${TERM_GRAY}  current - Show current config${TERM_RESET}"
+            return 1
+            ;;
+    esac
+    
+    # Reload Starship if it's already initialized
+    if command -v starship > /dev/null; then
+        echo -e "${TERM_GREEN}✅ Starship config updated. Restart terminal to see changes.${TERM_RESET}"
+    fi
+}
+
+# Auto-detect if we're in a chat environment and switch config
+auto_starship_config() {
+    if [[ -n "$CURSOR_CHAT_SHELL" || "$TERM_PROGRAM" == "cursor" ]]; then
+        # Check if we're in a minimal chat shell
+        if [[ "$CURSOR_CHAT_SHELL" == "minimal" ]]; then
+            switch_starship_config chat > /dev/null 2>&1
+        fi
+    fi
+}
+
+# Export the new functions
+export -f switch_starship_config auto_starship_config

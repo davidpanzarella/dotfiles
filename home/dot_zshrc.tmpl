@@ -540,3 +540,22 @@ alias myip='curl -s https://ipinfo.io/ip'
 alias ports='lsof -i -P -n | grep LISTEN'
 alias cpu='top -l 1 | grep "CPU usage"'
 alias mem='top -l 1 | grep "PhysMem"'
+
+# Auto-configure Starship based on environment
+if [[ -n "$CURSOR_CHAT_SHELL" && "$CURSOR_CHAT_SHELL" == "minimal" ]]; then
+  # Use minimal config for Cursor chat integration
+  if [[ -f "$HOME/.local/share/chezmoi/home/private_dot_config/starship-chat.toml" ]]; then
+    export STARSHIP_CONFIG="$HOME/.local/share/chezmoi/home/private_dot_config/starship-chat.toml"
+  fi
+else
+  # Use full config for regular terminal use
+  if [[ -f "$HOME/.local/share/chezmoi/home/private_dot_config/starship.toml" ]]; then
+    export STARSHIP_CONFIG="$HOME/.local/share/chezmoi/home/private_dot_config/starship.toml"
+  fi
+fi
+
+# Starship configuration switcher aliases
+alias starship-chat='switch_starship_config chat'
+alias starship-full='switch_starship_config full'
+alias starship-current='switch_starship_config current'
+alias ss='switch_starship_config'  # Short alias

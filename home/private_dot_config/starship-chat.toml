@@ -1,0 +1,82 @@
+# Starship configuration optimized for AI chat conversations
+# Minimal, clean, and informative for better AI context
+
+# Disable automatic newline for cleaner chat output
+add_newline = false
+
+# Compact format for chat environments
+format = """
+$directory$git_branch$git_status$nodejs$python$character
+"""
+
+# Directory - show current path clearly
+[directory]
+format = "[$path]($style) "
+style = "bold cyan"
+truncation_length = 3
+truncation_symbol = "…/"
+
+# Git branch - essential for AI context
+[git_branch]
+format = "on [$symbol$branch]($style) "
+symbol = "🌱 "
+style = "bold green"
+
+# Git status - show if there are changes
+[git_status]
+format = "([\\[$all_status$ahead_behind\\]]($style) )"
+style = "bold yellow"
+conflicted = "🏳"
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+up_to_date = "✓"
+untracked = "?"
+stashed = "\\$"
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+
+# Node.js - show version for AI context
+[nodejs]
+format = "via [$symbol($version )]($style)"
+symbol = "⬢ "
+style = "bold green"
+detect_extensions = ["js", "mjs", "cjs", "ts", "jsx", "tsx", "json"]
+
+# Python - show version for AI context  
+[python]
+format = "via [$symbol($version )]($style)"
+symbol = "🐍 "
+style = "bold blue"
+detect_extensions = ["py", "pyi", "pyc", "pyd", "pyo", "pyw", "pyz"]
+
+# Character - clean prompt symbol
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vicmd_symbol = "[❮](bold yellow)"
+
+# Command duration - show for long commands
+[cmd_duration]
+min_time = 1
+format = "took [$duration](bold yellow) "
+show_milliseconds = false
+
+# Package - show if in a package directory
+[package]
+format = "is [$symbol$version]($style) "
+symbol = "📦 "
+style = "bold 208"
+detect_extensions = true
+detect_files = ["package.json", "Cargo.toml", "go.mod", "composer.json"]
+
+# Disable modules that aren't useful in chat
+[aws] = { disabled = true }
+[gcloud] = { disabled = true }
+[kubernetes] = { disabled = true }
+[terraform] = { disabled = true }
+[conda] = { disabled = true }
+[memory_usage] = { disabled = true }
+[time] = { disabled = true }

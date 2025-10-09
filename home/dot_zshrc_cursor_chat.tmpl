@@ -34,3 +34,13 @@ function dump_zsh_state() {
 export -f dump_zsh_state
 
 
+
+# Starship prompt for chat environment
+if command -v starship > /dev/null; then
+  # Use chat-optimized Starship config
+  export STARSHIP_CONFIG="$HOME/.local/share/chezmoi/home/private_dot_config/starship-chat.toml"
+  eval "$(starship init zsh)"
+else
+  # Fallback to simple prompt
+  export PS1='%F{cyan}%~%f %F{green}❯%f '
+fi
