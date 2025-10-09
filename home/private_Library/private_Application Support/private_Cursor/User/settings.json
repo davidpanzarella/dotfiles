@@ -958,8 +958,8 @@
   "terminal.integrated.minimumContrastRatio": 7,
   "terminal.integrated.profiles.osx": {
     "zsh": {
-      "args": ["-l", "-c", "source ~/.zshrc && exec zsh"],
-      "path": "/bin/zsh"
+      "path": "/bin/zsh",
+      "args": ["-c", "source ~/.zshrc && exec zsh"]
     }
   },
   "terminal.integrated.scrollback": 4000,
