@@ -324,3 +324,35 @@ format = "took [$duration]($style) "
 [direnv]
 format = "[direnv $loaded/$allowed]($style) "
 disabled = false
+
+# Enhanced command execution time
+[cmd_duration]
+min_time = 2
+format = "took [$duration](bold yellow)"
+show_milliseconds = false
+
+# Enhanced git status
+[git_status]
+conflicted = "🏳"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+up_to_date = "✓"
+untracked = "🤷"
+stashed = "📦"
+modified = "📝"
+staged = '[++\($count\)](green)'
+renamed = "👅"
+deleted = "🗑"
+
+# Directory with better formatting
+[directory]
+format = "[$path]($style)[$read_only]($read_only_style) "
+style = "bold cyan"
+read_only = "🔒"
+read_only_style = "red"
+
+# Enhanced character for better visibility
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"

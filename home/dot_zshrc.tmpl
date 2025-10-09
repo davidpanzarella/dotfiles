@@ -463,3 +463,80 @@ export FZF_COMPLETION_OPTS='--border --info=inline'
 export _ZO_DATA_DIR="$HOME/.local/share/zoxide"
 export _ZO_ECHO=1
 export _ZO_EXCLUDE_DIRS="$HOME/.git"
+
+# Terminal Enhancement Functions
+# Source terminal enhancement functions if available
+if [[ -f "$HOME/.local/bin/terminal-enhancements-v2.sh" ]]; then
+  source "$HOME/.local/bin/terminal-enhancements-v2.sh"
+  
+  # Set up command execution time tracking
+  autoload -Uz add-zsh-hook
+  add-zsh-hook preexec term_preexec
+  add-zsh-hook precmd term_precmd
+  
+  # Enhanced aliases for better readability
+  alias cd='term_cd'
+  alias gs='term_git_status'
+  alias sep='term_separator'
+  alias hl='term_highlight_command'
+  alias hlo='term_highlight_output'
+  
+  # Log formatting aliases
+  alias json='term_json_format'
+  alias jlog='term_json_format'
+  
+  # Session start notification
+  term_session_start
+fi
+
+# Development aliases with better formatting
+alias ll='ls -la --color=auto'
+alias la='ls -la --color=auto'
+alias l='ls -l --color=auto'
+
+# Git aliases with visual feedback
+alias gst='git status --short --branch'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gcm='git commit -m'
+alias gaa='git add .'
+alias gpu='git push -u origin'
+alias gpl='git pull'
+alias gd='git diff --color=always | less -R'
+alias gl='git log --oneline --graph --decorate --color=always | head -20'
+
+# Package manager aliases with highlighting
+alias ni='npm install'
+alias nu='npm update'
+alias nr='npm run'
+alias ns='npm start'
+alias nt='npm test'
+alias nb='npm run build'
+
+# Docker aliases
+alias d='docker'
+alias dc='docker-compose'
+alias dps='docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}"'
+alias di='docker images --format "table {{.Repository}}\t{{.Tag}}\t{{.Size}}"'
+
+# System aliases
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias ~='cd ~'
+alias -- -='cd -'
+
+# Enhanced history search
+alias h='history | grep'
+alias hg='history | grep'
+
+# Quick file operations
+alias c='code'
+alias o='open'
+alias e='echo'
+
+# Network and system info
+alias myip='curl -s https://ipinfo.io/ip'
+alias ports='lsof -i -P -n | grep LISTEN'
+alias cpu='top -l 1 | grep "CPU usage"'
+alias mem='top -l 1 | grep "PhysMem"'
