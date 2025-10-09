@@ -1,5 +1,5 @@
 # Starship configuration optimized for AI chat conversations
-# Minimal, clean, and informative for better AI context
+# Using ASCII-compatible symbols for better compatibility
 
 # Disable automatic newline for cleaner chat output
 add_newline = false
@@ -19,44 +19,44 @@ truncation_symbol = "…/"
 # Git branch - essential for AI context
 [git_branch]
 format = "on [$symbol$branch]($style) "
-symbol = "🌱 "
+symbol = "git:"
 style = "bold green"
 
 # Git status - show if there are changes
 [git_status]
 format = "([\\[$all_status$ahead_behind\\]]($style) )"
 style = "bold yellow"
-conflicted = "🏳"
-ahead = "⇡${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-behind = "⇣${count}"
+conflicted = "C"
+ahead = "↑${count}"
+diverged = "↕↑${ahead_count}↓${behind_count}"
+behind = "↓${count}"
 up_to_date = "✓"
 untracked = "?"
-stashed = "\\$"
+stashed = "$"
 modified = "!"
 staged = "+"
 renamed = "»"
-deleted = "✘"
+deleted = "✗"
 
 # Node.js - show version for AI context
 [nodejs]
 format = "via [$symbol($version )]($style)"
-symbol = "⬢ "
+symbol = "node:"
 style = "bold green"
 detect_extensions = ["js", "mjs", "cjs", "ts", "jsx", "tsx", "json"]
 
 # Python - show version for AI context  
 [python]
 format = "via [$symbol($version )]($style)"
-symbol = "🐍 "
+symbol = "py:"
 style = "bold blue"
 detect_extensions = ["py", "pyi", "pyc", "pyd", "pyo", "pyw", "pyz"]
 
 # Character - clean prompt symbol
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
-vicmd_symbol = "[❮](bold yellow)"
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+vicmd_symbol = "[<](bold yellow)"
 
 # Command duration - show for long commands
 [cmd_duration]
@@ -67,7 +67,7 @@ show_milliseconds = false
 # Package - show if in a package directory
 [package]
 format = "is [$symbol$version]($style) "
-symbol = "📦 "
+symbol = "pkg:"
 style = "bold 208"
 detect_extensions = true
 detect_files = ["package.json", "Cargo.toml", "go.mod", "composer.json"]

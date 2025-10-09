@@ -25,7 +25,7 @@ term_separator() {
 term_cd() {
     builtin cd "$@"
     if [ $? -eq 0 ]; then
-        echo -e "${TERM_BLUE}📁 ${TERM_BOLD}$(pwd)${TERM_RESET}"
+        echo -e "${TERM_BLUE}DIR: ${TERM_BOLD}$(pwd)${TERM_RESET}"
         term_separator $TERM_CYAN
     fi
 }
@@ -37,9 +37,9 @@ term_git_status() {
         local current_branch=$(git branch --show-current)
         if [ -n "$git_status_output" ]; then
             local change_count=$(echo "$git_status_output" | wc -l | tr -d ' ')
-            echo -e "${TERM_YELLOW}📝 Git: ${current_branch} (${change_count} changes)${TERM_RESET}"
+            echo -e "${TERM_YELLOW}GIT: Git: ${current_branch} (${change_count} changes)${TERM_RESET}"
         else
-            echo -e "${TERM_GREEN}✅ Git: ${current_branch} (clean)${TERM_RESET}"
+            echo -e "${TERM_GREEN}OK: Git: ${current_branch} (clean)${TERM_RESET}"
         fi
     fi
 }
@@ -65,7 +65,7 @@ term_highlight_output() {
 
 # Session start notification
 term_session_start() {
-    echo -e "${TERM_BOLD}${TERM_CYAN}🚀 Terminal Session Started${TERM_RESET}"
+    echo -e "${TERM_BOLD}${TERM_CYAN}START: Terminal Session Started${TERM_RESET}"
     echo -e "${TERM_GRAY}$(date '+%Y-%m-%d %H:%M:%S')${TERM_RESET}"
     term_separator $TERM_CYAN
 }
@@ -89,7 +89,7 @@ term_precmd() {
         local end_time=$(date +%s)
         local duration=$((end_time - TERM_CMD_START_TIME))
         if [ $duration -gt 2 ]; then
-            echo -e "${TERM_GRAY}⏱️  Command took ${TERM_YELLOW}${duration}s${TERM_RESET}"
+            echo -e "${TERM_GRAY}TIME:  Command took ${TERM_YELLOW}${duration}s${TERM_RESET}"
         fi
         unset TERM_CMD_START_TIME
     fi
@@ -109,7 +109,7 @@ switch_starship_config() {
             cp "$HOME/.local/share/chezmoi/home/private_dot_config/starship-chat.toml" "$config_dir/starship.toml"
             ;;
         "full"|"default")
-            echo -e "${TERM_CYAN}🚀 Switching to full Starship config${TERM_RESET}"
+            echo -e "${TERM_CYAN}START: Switching to full Starship config${TERM_RESET}"
             cp "$HOME/.local/share/chezmoi/home/private_dot_config/starship.toml" "$config_dir/starship.toml"
             ;;
         "current")
@@ -131,7 +131,7 @@ switch_starship_config() {
     
     # Reload Starship if it's already initialized
     if command -v starship > /dev/null; then
-        echo -e "${TERM_GREEN}✅ Starship config updated. Restart terminal to see changes.${TERM_RESET}"
+        echo -e "${TERM_GREEN}OK: Starship config updated. Restart terminal to see changes.${TERM_RESET}"
     fi
 }
 

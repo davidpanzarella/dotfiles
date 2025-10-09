@@ -73,7 +73,7 @@ truncation_length = 4
 truncation_symbol = "…/"
 home_symbol = "~"
 style = "bold cyan"
-read_only = " 🔒"
+read_only = " LOCK"
 read_only_style = "red"
 
 # Docker - only show when in Docker context
@@ -127,7 +127,7 @@ behind = "⇣"
 diverged = "⇕"
 up_to_date = "✓"
 untracked = "?"
-stashed = "📦"
+stashed = "$"
 modified = "!"
 staged = "+"
 renamed = "»"
@@ -311,9 +311,9 @@ symbol = " "
 
 # Custom character styling
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
-vimcmd_symbol = "[❮](bold yellow)"
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+vimcmd_symbol = "[<](bold yellow)"
 
 # Command duration for long-running commands
 [cmd_duration]
@@ -333,26 +333,26 @@ show_milliseconds = false
 
 # Enhanced git status
 [git_status]
-conflicted = "🏳"
-ahead = "🏎💨"
-behind = "😰"
-diverged = "😵"
+conflicted = "C"
+ahead = "↑"
+behind = "↓"
+diverged = "↕"
 up_to_date = "✓"
-untracked = "🤷"
-stashed = "📦"
-modified = "📝"
+untracked = "?"
+stashed = "$"
+modified = "!"
 staged = '[++\($count\)](green)'
-renamed = "👅"
-deleted = "🗑"
+renamed = "»"
+deleted = "✗"
 
 # Directory with better formatting
 [directory]
 format = "[$path]($style)[$read_only]($read_only_style) "
 style = "bold cyan"
-read_only = "🔒"
+read_only = "LOCK"
 read_only_style = "red"
 
 # Enhanced character for better visibility
 [character]
-success_symbol = "[❯](bold green)"
-error_symbol = "[❯](bold red)"
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
