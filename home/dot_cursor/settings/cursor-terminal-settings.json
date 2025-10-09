@@ -1,0 +1,31 @@
+{
+  "// Terminal Configuration": "Terminal-specific settings managed by Chezmoi",
+  "terminal.integrated.defaultProfile.osx": "zsh",
+  "terminal.integrated.profiles.osx": {
+    "zsh": {
+      "path": "/bin/zsh",
+      "args": ["-l", "-c", "source ~/.zshrc && exec zsh"]
+    }
+  },
+  "terminal.integrated.inheritEnv": true,
+  "terminal.integrated.shellIntegration.enabled": false,
+  "terminal.integrated.shellIntegration.decorationsEnabled": false,
+  "terminal.integrated.shellIntegration.history": false,
+  "terminal.integrated.fontFamily": "MesloLGS NF",
+  "terminal.integrated.fontSize": 16,
+  "terminal.integrated.scrollback": 4000,
+  "terminal.integrated.tabs.enabled": true,
+  "terminal.integrated.minimumContrastRatio": 7,
+  "terminal.integrated.env.osx": {
+    "EDITOR": "code -w",
+    "HOMEBREW_CELLAR": "/opt/homebrew/Cellar",
+    "HOMEBREW_PREFIX": "/opt/homebrew",
+    "HOMEBREW_REPOSITORY": "/opt/homebrew",
+    "LANG": "en_US.UTF-8",
+    "LC_ALL": "en_US.UTF-8",
+    "PATH": "/opt/homebrew/bin:/opt/homebrew/sbin:/Users/davidpanzarella/.local/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/Library/Apple/usr/bin:/Applications/Docker.app/Contents/Resources/bin:/Users/davidpanzarella/Library/pnpm",
+    "TERM": "xterm-256color",
+    "ZDOTDIR": "/Users/davidpanzarella",
+    "TERM_PROGRAM": "cursor"
+  }
+}

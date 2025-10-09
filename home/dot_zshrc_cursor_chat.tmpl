@@ -1,0 +1,36 @@
+# Minimal ZSH configuration for Cursor's chat integration
+# This provides basic functionality without interfering with AI operations
+
+# Basic completion
+autoload -Uz compinit
+compinit -C
+
+# Basic history
+HISTFILE={{ .chezmoi.homeDir }}/.zsh_history
+HISTSIZE=1000
+SAVEHIST=1000
+setopt appendhistory
+
+# Basic options
+setopt interactive_comments
+unsetopt BEEP
+
+# Essential PATH
+export PATH="/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+export PATH="{{ .chezmoi.homeDir }}/.local/bin:$PATH"
+
+# Basic aliases only
+alias ll='ls -la'
+alias la='ls -la'
+alias ..='cd ..'
+alias ...='cd ../..'
+
+# Cursor-specific dump_zsh_state function (minimal)
+function dump_zsh_state() {
+  export ZSH_STATE_DIRECTORY="$PWD"
+  export ZSH_STATE_HISTORY="$HISTFILE"
+  export ZSH_STATE_ENV="$(env | grep '^(PATH|HOME|USER|SHELL|TERM|ZDOTDIR)=' | sort)"
+}
+export -f dump_zsh_state
+
+

@@ -4,12 +4,12 @@
 # https://www.youtube.com/watch?v=MSPu-lYF-A8
 
 # 1) Only interactive shells run the rest
-[[ -o interactive ]] || return
+# [[ -o interactive ]] || return  # Commented out for Cursor compatibility
 
-# 2) Cursor/VS Code shell integration (don't move below prompt/plugins)
-if [[ -n "$VSCODE_SHELL_INTEGRATION" && -r "$VSCODE_SHELL_INTEGRATION" ]]; then
-  . "$VSCODE_SHELL_INTEGRATION"
-fi
+# 2) Cursor/VS Code shell integration disabled to prevent conflicts
+# if [[ -n "$VSCODE_SHELL_INTEGRATION" && -r "$VSCODE_SHELL_INTEGRATION" ]]; then
+#   . "$VSCODE_SHELL_INTEGRATION"
+# fi
 
 # 3) Don't clobber preexec/precmd — append hooks instead of overwriting
 autoload -Uz add-zsh-hook
@@ -48,8 +48,6 @@ setopt interactive_comments
 
 # beeping is annoying
 unsetopt BEEP
-
-
 
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
