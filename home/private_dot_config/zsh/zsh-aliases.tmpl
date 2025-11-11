@@ -79,6 +79,7 @@ alias brs="brew search"
 alias cl="clear"
 alias c='cd {{ .chezmoi.homeDir }}/Development && ls'
 alias c.="code ."
+alias code="cursor"
 alias ca="cursor-agent"
 alias cd.="code --user-data-dir /tmp/code-data/ --disable-extensions ."
 alias cur="cursor ."
@@ -222,7 +223,7 @@ alias lt='eza --tree --icons'
 alias path='echo -e ${PATH//:/\\n}'
 
 # Get macOS Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
-alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; asdf plugin update --all; mas upgrade;'
+alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; mise plugins update; mas upgrade;'
 
 alias vtop="vtop --theme wizard"
 

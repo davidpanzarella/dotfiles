@@ -1,0 +1,14 @@
+# pnpm configuration for performance optimization
+# Limit virtual store directory length to prevent long path issues
+virtual-store-dir-max-length=80
+
+# Store configuration
+store-dir=~/.pnpm-store
+
+# Performance optimizations
+prefer-frozen-lockfile=true
+strict-peer-dependencies=false
+
+# Network configuration
+registry=https://registry.npmjs.org/
+

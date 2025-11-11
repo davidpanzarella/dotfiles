@@ -876,7 +876,8 @@
     "/node_modules": true,
     "/node_modules/": true,
     "/pnpm-store": true,
-    "/pnpm-store/": true
+    "/pnpm-store/": true,
+    "**/.github": true
   },
   "files.insertFinalNewline": true,
   "files.watcherExclude": {
@@ -886,6 +887,7 @@
     "**/coverage/**": true,
     "**/dist/**": true,
     "**/pnpm-store/**": true,
+    "**/.github/**": true,
     "/node_modules/": true
   },
   "geminicodeassist.displayInlineContextHint": false,

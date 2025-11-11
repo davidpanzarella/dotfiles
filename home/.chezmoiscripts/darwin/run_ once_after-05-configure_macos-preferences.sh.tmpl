@@ -23,9 +23,9 @@ set -eufo pipefail
 
 #!/usr/bin/env bash
 
-# Close any open System Preferences panes, to prevent them from overriding
-# settings we’re about to change
-osascript -e 'tell application "System Preferences" to quit'
+# Close any open System Settings panes, to prevent them from overriding
+# settings we're about to change
+osascript -e 'tell application "System Settings" to quit'
 
 # Ask for the administrator password upfront
 sudo -v
@@ -122,7 +122,7 @@ defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
 defaults write com.apple.finder FXPreferredViewStyle -string "Nlsv"
 
 # Sort files by name in list view
-# TODO
+defaults write com.apple.finder FXArrangeGroupViewBy -string "Name"
 
 # Enable spring loading for directories
 defaults write NSGlobalDomain com.apple.springing.enabled -bool true
@@ -147,7 +147,7 @@ chflags nohidden ~/Library
 # Change minimize/maximize window effect
 defaults write com.apple.dock mineffect -string "genie"
 
-# Minimize windows into their application’s icon
+# Minimize windows into their application's icon
 defaults write com.apple.dock minimize-to-application -bool true
 
 # Enable spring loading for all Dock items
@@ -160,7 +160,7 @@ defaults write com.apple.dock show-process-indicators -bool true
 # Useful for setting up new Macs. Optionally relaunch dock with `killall Dock`.
 defaults write com.apple.dock persistent-apps -array
 
-# Don’t animate opening applications from the Dock
+# Don't animate opening applications from the Dock
 defaults write com.apple.dock launchanim -bool false
 
 # Speed up Mission Control animations
@@ -169,13 +169,9 @@ defaults write com.apple.dock expose-animation-duration -float 0.1
 # Group windows by application in Mission Control
 defaults write com.apple.dock expose-group-by-app -bool true
 
-# Disable Dashboard
-defaults write com.apple.dashboard mcx-disabled -bool true
+# Dashboard was removed in macOS Monterey - no longer needed
 
-# Don’t show Dashboard as a Space
-defaults write com.apple.dock dashboard-in-overlay -bool true
-
-# Don’t automatically rearrange Spaces based on most recent use
+# Don't automatically rearrange Spaces based on most recent use
 defaults write com.apple.dock mru-spaces -bool false
 
 # Remove the auto-hiding Dock delay
@@ -190,7 +186,7 @@ defaults write com.apple.dock autohide -bool true
 # Make Dock icons of hidden applications translucent
 defaults write com.apple.dock showhidden -bool true
 
-# Don’t show recent applications in Dock
+# Don't show recent applications in Dock
 defaults write com.apple.dock show-recents -bool false
 
 # Hot corners
@@ -240,6 +236,101 @@ defaults write com.apple.TextEdit RichText -int 0
 # Open and save files as UTF-8 in TextEdit
 defaults write com.apple.TextEdit PlainTextEncoding -int 4
 defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
+
+###############################################################################
+# Development & Productivity Settings                                        #
+###############################################################################
+
+# Remove quarantine from trusted development tools
+xattr -d com.apple.quarantine /Applications/Cursor.app 2>/dev/null || true
+xattr -d com.apple.quarantine /Applications/iTerm.app 2>/dev/null || true
+xattr -d com.apple.quarantine /Applications/Warp.app 2>/dev/null || true
+xattr -d com.apple.quarantine /Applications/Xcode.app 2>/dev/null || true
+xattr -d com.apple.quarantine /Applications/Docker.app 2>/dev/null || true
+xattr -d com.apple.quarantine /Applications/TablePlus.app 2>/dev/null || true
+
+# Disable Gatekeeper entirely (for development)
+defaults write com.apple.security.revocationCheck -int 0
+
+# Enable developer mode for Xcode and other development tools
+defaults write com.apple.dt.Xcode DVTEnableCoreDevice -bool true
+
+# Show all files in Open/Save dialogs
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForSaveMode2 -bool true
+
+# Expand save dialog by default
+defaults write NSGlobalDomain NSNavPanelExpandedStateForOpenMode -bool true
+defaults write NSGlobalDomain NSNavPanelExpandedStateForOpenMode2 -bool true
+
+# Save to disk (not to iCloud) by default
+defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+###############################################################################
+# Terminal & Development Tools                                               #
+###############################################################################
+
+# Enable 24-bit color in Terminal (macOS Tahoe feature)
+defaults write com.apple.Terminal "Default Window Settings" -string "Pro"
+defaults write com.apple.Terminal "Startup Window Settings" -string "Pro"
+
+# Disable the crash reporter
+defaults write com.apple.CrashReporter DialogType -string "none"
+
+###############################################################################
+# Spotlight & Search                                                         #
+###############################################################################
+
+# Disable Spotlight indexing for certain directories (improve performance)
+# Note: Some system volumes may be protected and cannot have indexing disabled
+sudo mdutil -i off /System/Volumes/Data/Applications 2>/dev/null || true
+
+# Skip /System volume as it's often protected and causes errors
+# sudo mdutil -i off /System/Volumes/Data/System  # Commented out - system protected
+
+# Re-enable Spotlight indexing for user directory
+sudo mdutil -i on /System/Volumes/Data/Users 2>/dev/null || true
+
+###############################################################################
+# Accessibility & Productivity                                               #
+###############################################################################
+
+# Disable automatic termination of inactive apps
+defaults write NSGlobalDomain NSDisableAutomaticTermination -bool true
+
+###############################################################################
+# Memory System & Cursor Integration                                         #
+###############################################################################
+
+# Set default text editor to Cursor for development
+defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType="public.plain-text";LSHandlerRoleAll="com.todesktop.230313mzl4w4u92";}'
+
+# Configure file associations for development files
+defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType="public.json";LSHandlerRoleAll="com.todesktop.230313mzl4w4u92";}'
+defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType="public.javascript-source";LSHandlerRoleAll="com.todesktop.230313mzl4w4u92";}'
+defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType="public.typescript-source";LSHandlerRoleAll="com.todesktop.230313mzl4w4u92";}'
+
+# Set Cursor as default for markdown files (for memory system)
+defaults write com.apple.LaunchServices/com.apple.launchservices.secure LSHandlers -array-add '{LSHandlerContentType="public.markdown";LSHandlerRoleAll="com.todesktop.230313mzl4w4u92";}'
+
+###############################################################################
+# Additional Productivity Settings                                           #
+###############################################################################
+
+# Disable the sound effects on boot
+sudo nvram SystemAudioVolume=" "
+
+# Enable the debug menu in Safari
+defaults write com.apple.Safari IncludeInternalDebugMenu -bool true
+
+# Enable the Develop menu in Safari
+defaults write com.apple.Safari IncludeDevelopMenu -bool true
+
+# Enable WebKit Developer Extras in Safari
+defaults write com.apple.Safari WebKitDeveloperExtrasEnabledPreferenceKey -bool true
+
+# Enable the WebKit Inspector in Safari
+defaults write com.apple.Safari WebKitInspectorEnabledPreferenceKey -bool true
 
 echo "Done. Note that some of these changes require a logout/restart to take effect."
 
